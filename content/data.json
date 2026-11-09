@@ -90,7 +90,7 @@
     },
     {
       "label": "Bahasa",
-      "value": "Indonesia"
+      "value": "Indonesia, Jawa, Sunda"
     },
     {
       "label": "Game Favorit",
@@ -167,14 +167,14 @@
     {
       "tahun": "2026",
       "judul": "Creator Official Silver Palace",
-      "deskripsi": "Kebanggaan tersendir.",
+      "deskripsi": "Kebanggaan tersendiri.",
       "gambar": "assets/pencapaian/silverpalace.webp",
       "kredit": "© Elementa / Silver Studio"
     },
     {
       "tahun": "2026",
       "judul": "Bisa Buat Rumah Untuk Ortu",
-      "deskripsi": "Di titik ini gua seneng bisa jadi salahsatunya.",
+      "deskripsi": "Di titik ini gua seneng bisa jadi salah satunya.",
       "gambar": "assets/pencapaian/rumah.svg",
       "kredit": ""
     }

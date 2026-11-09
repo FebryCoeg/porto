@@ -181,3 +181,31 @@ window.initSite = function (c) {
   render(c);
   setupInteractions(c);
 };
+
+// Navigasi bersih: klik menu/tombol "#bagian" tetap meluncur ke bagiannya,
+// tapi alamat di browser tidak berubah (tanpa #tentang, #pencapaian, dll.)
+(function () {
+  const smooth = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
+  const go = (id) => {
+    if (!id || id === "top") return window.scrollTo({ top: 0, behavior: smooth() });
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: smooth(), block: "start" });
+  };
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const id = decodeURIComponent(a.getAttribute("href").slice(1));
+    if (id && id !== "top" && !document.getElementById(id)) return;
+    e.preventDefault();
+    go(id);
+  });
+  // kalau ada yang membuka link lama berisi #bagian: tetap menuju bagiannya, lalu bersihkan alamatnya
+  const clean = (delay) => {
+    if (!location.hash) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    history.replaceState(null, "", location.pathname + location.search);
+    setTimeout(() => go(id), delay);
+  };
+  if (location.hash) addEventListener("load", () => clean(300));
+  addEventListener("hashchange", () => clean(0));
+})();

@@ -10,7 +10,7 @@ window.initHero = function (CONFIG) {
 
   // ---------- Teks ----------
   const initials = c.nama.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
-  $("hbAvatar").innerHTML = c.foto ? `<img src="${esc(c.foto)}" alt="Foto ${esc(c.nama)}">` : esc(initials);
+  $("hbAvatar").innerHTML = c.foto ? `<img src="${esc(c.foto)}" alt="Photo of ${esc(c.nama)}">` : esc(initials);
   $("hbName").textContent = c.nama;
   if (c.logo) $("hbName").closest(".hb-logo").innerHTML = `<img class="hb-logo-img" src="${esc(c.logo)}" alt="${esc(c.nama)}">`;
   if (c.logo) animateLogo(document.querySelector(".hb-logo-img"));
@@ -26,10 +26,10 @@ window.initHero = function (CONFIG) {
   // tumpukan logo platform donasi (kanan atas)
   const don = (c.donasi || []).slice(0, 5);
   const icons = don
-    .map((d) => `<a class="stat-don" href="${esc(d.url)}" target="_blank" rel="noopener" title="${esc(d.nama)}" aria-label="Donasi lewat ${esc(d.nama)}" style="--c:${donasiColor(d)}">${donasiBadge(d)}</a>`)
+    .map((d) => `<a class="stat-don" href="${esc(d.url)}" target="_blank" rel="noopener" title="${esc(d.nama)}" aria-label="Donate via ${esc(d.nama)}" style="--c:${donasiColor(d)}">${donasiBadge(d)}</a>`)
     .join("");
   $("statStack").innerHTML = icons + (h.statAngka ? `<span class="stat-num">${esc(h.statAngka)}</span>` : "");
-  $("statJudul").textContent = h.statJudul || "Dukung aku di sini";
+  $("statJudul").textContent = h.statJudul || "Support me here";
   $("statSub").textContent = h.statSub || don.map((d) => d.nama).join(" · ");
   $("statJudul").closest(".hero-stat").hidden = don.length === 0;
 
@@ -169,7 +169,7 @@ function makePetals(el, n) {
 
 // Maskot kucing orisinal (SVG) — ganti warna di sini kalau mau
 var MASCOT_SVG = `
-<svg class="mascot" viewBox="0 0 400 480" role="img" aria-label="Maskot kucing yang mengikuti kursor">
+<svg class="mascot" viewBox="0 0 400 480" role="img" aria-label="Cat mascot">
   <defs>
     <clipPath id="faceClip"><ellipse cx="200" cy="205" rx="132" ry="118"/></clipPath>
     <radialGradient id="faceShade" cx="45%" cy="35%" r="75%">

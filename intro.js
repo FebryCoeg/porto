@@ -74,7 +74,7 @@ window.animateLogo = function (img, delay) {
       logo.src = c.logo;
       animateLogo(logo, "0.9s");
     }
-    const tpl = esc(cfg.subjudul || "di halaman {nama}");
+    const tpl = esc(cfg.subjudul || "to {nama}'s page");
     sub.innerHTML = tpl.replace("{nama}", `<strong>${esc(c.nama)}</strong>`);
     setTimeout(finish, Math.max(0, MIN - (performance.now() - start)));
   };

@@ -18,8 +18,8 @@
     console.error("Gagal memuat content/data.json", e);
     document.getElementById("top").insertAdjacentHTML(
       "beforeend",
-      `<p class="load-error">Isi website gagal dimuat. Kalau kamu membuka file ini langsung dari komputer,
-       jalankan lewat server lokal atau hosting (lihat README).</p>`
+      `<p class="load-error">The site content failed to load. If you opened this file directly from your computer,
+       please run it through a local server or a web host.</p>`
     );
     return;
   }

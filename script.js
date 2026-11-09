@@ -46,7 +46,7 @@ const donasiBadge = (d) => DONATE_ICONS[d.ikon]
   : `<span class="don-initial">${esc((d.nama || "?").trim().charAt(0).toUpperCase())}</span>`;
 
 function render(c) {
-  document.title = `${c.nama} — Portofolio`;
+  document.title = `${c.nama} — Portfolio`;
   $("brand").textContent = c.nama.split(" ")[0];
   if (c.logo) {
     $("brand").innerHTML = `<img class="brand-logo" src="${esc(c.logo)}" alt="${esc(c.nama)}">`;
@@ -141,7 +141,7 @@ function renderToko(t) {
       <p class="toko-desc">${esc(t.deskripsi || "")}</p>
       <div class="toko-stats">${(t.statistik || []).map((s) => `<div><strong>${esc(s.angka)}</strong><small>${esc(s.label)}</small></div>`).join("")}</div>
       <div class="toko-games">${(t.game || []).map((g) => `<span>${esc(g)}</span>`).join("")}</div>
-      <a class="btn btn-primary toko-cta" href="${esc(t.url)}" target="_blank" rel="noopener">${icon("toko")}${esc(t.tombol || "Kunjungi Toko")} <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-primary toko-cta" href="${esc(t.url)}" target="_blank" rel="noopener">${icon("toko")}${esc(t.tombol || "Visit Store")} <span aria-hidden="true">↗</span></a>
     </div>
     <ul class="toko-perks">${(t.keunggulan || []).map((k) => `
       <li><span class="toko-perk-icon">${icon(k.ikon)}</span><div><strong>${esc(k.judul)}</strong><small>${esc(k.deskripsi || "")}</small></div></li>`).join("")}
@@ -170,7 +170,7 @@ function renderGame(g) {
         ${x.genre ? `<span class="gp-genre">${esc(x.genre)}</span>` : ""}
         <h3>${esc(x.nama)}</h3>
         ${x.deskripsi ? `<p>${esc(x.deskripsi)}</p>` : ""}
-        ${x.uid ? `<button type="button" class="gp-uid" data-uid="${esc(x.uid)}" aria-label="Salin UID ${esc(x.uid)}"><small>UID</small><strong>${esc(x.uid)}</strong><span>Salin</span></button>` : ""}
+        ${x.uid && String(x.uid).trim() !== "-" ? `<button type="button" class="gp-uid" data-uid="${esc(x.uid)}" aria-label="Copy UID ${esc(x.uid)}"><small>UID</small><strong>${esc(x.uid)}</strong><span>Copy</span></button>` : ""}
         ${stats.length ? `<dl class="gp-stats">${stats.map((d) => `<div><dt>${esc(d.label)}</dt><dd>${esc(d.nilai)}</dd></div>`).join("")}</dl>` : ""}
       </div>
       <span class="gp-count" aria-hidden="true">${String(i + 1).padStart(2, "0")} / ${String(list.length).padStart(2, "0")}</span>
@@ -196,20 +196,20 @@ function renderGame(g) {
     const b = e.target.closest(".gp-uid");
     if (!b || !b.closest(".game-panel.active")) return;
     const uid = b.dataset.uid;
-    const done = () => { b.classList.add("copied"); setTimeout(() => b.classList.remove("copied"), 1600); toast("UID disalin: " + uid); };
+    const done = () => { b.classList.add("copied"); setTimeout(() => b.classList.remove("copied"), 1600); toast("UID copied: " + uid); };
     if (navigator.clipboard) navigator.clipboard.writeText(uid).then(done, () => toast("UID: " + uid));
     else toast("UID: " + uid);
   });
 }
 
-// "3 hari lalu" dari tanggal ISO
+// "3 days ago" dari tanggal ISO
 function waktuLalu(iso) {
   const t = Date.parse(iso);
   if (!t) return "";
   const s = Math.max(0, (Date.now() - t) / 1000);
-  const u = [[31536000, "tahun"], [2592000, "bulan"], [604800, "minggu"], [86400, "hari"], [3600, "jam"], [60, "menit"]];
-  for (const [n, nama] of u) if (s >= n) return `${Math.floor(s / n)} ${nama} lalu`;
-  return "baru saja";
+  const u = [[31536000, "year"], [2592000, "month"], [604800, "week"], [86400, "day"], [3600, "hour"], [60, "minute"]];
+  for (const [n, nama] of u) if (s >= n) { const k = Math.floor(s / n); return `${k} ${nama}${k > 1 ? "s" : ""} ago`; }
+  return "just now";
 }
 
 // Dasbor YouTube: info channel + video terbaru berjajar, diputar di jendela pop-up
@@ -234,30 +234,30 @@ function renderYoutube(cfg, yt) {
           <a href="${esc(url)}" target="_blank" rel="noopener">${esc(ch.handle || "")}</a>
         </div>
         <div class="yt-stats">
-          ${stat(ch.subscriber, "Subscriber")}
-          ${stat(ch.video, "Video")}
-          ${stat(waktuLalu(list[0].tanggal), "Upload terakhir")}
+          ${stat(ch.subscriber, "Subscribers")}
+          ${stat(ch.video, "Videos")}
+          ${stat(waktuLalu(list[0].tanggal), "Last upload")}
         </div>
         <a class="btn yt-sub" href="${esc(url)}?sub_confirmation=1" target="_blank" rel="noopener">${ytIcon}Subscribe</a>
       </div>
     </div>
     <div class="yt-bar">
-      <span class="yt-bar-title"><i class="yt-live"></i>Video terbaru</span>
+      <span class="yt-bar-title"><i class="yt-live"></i>Latest uploads</span>
       <div class="yt-nav">
-        <button type="button" class="yt-arrow" data-dir="-1" aria-label="Video sebelumnya">‹</button>
-        <button type="button" class="yt-arrow" data-dir="1" aria-label="Video berikutnya">›</button>
+        <button type="button" class="yt-arrow" data-dir="-1" aria-label="Previous videos">‹</button>
+        <button type="button" class="yt-arrow" data-dir="1" aria-label="Next videos">›</button>
       </div>
     </div>
     <div class="yt-row" id="ytRow">${list.map((v, i) => `
       <a class="yt-video" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener" data-id="${v.id}" data-judul="${esc(v.judul)}">
         <span class="yt-thumb">
           <img src="https://i.ytimg.com/vi/${v.id}/hq720.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/mqdefault.jpg'">
-          ${i === 0 ? `<b class="yt-new">BARU</b>` : ""}
+          ${i === 0 ? `<b class="yt-new">NEW</b>` : ""}
           ${v.durasi ? `<b class="yt-dur">${esc(String(v.durasi).replace(".", ":"))}</b>` : ""}
           <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
         </span>
         <span class="yt-title">${esc(v.judul)}</span>
-        <span class="yt-meta">${v.ditonton ? `${esc(v.ditonton)} x ditonton · ` : ""}${waktuLalu(v.tanggal)}</span>
+        <span class="yt-meta">${v.ditonton ? `${esc(v.ditonton)} views · ` : ""}${waktuLalu(v.tanggal)}</span>
       </a>`).join("")}
     </div>`;
 
@@ -276,13 +276,13 @@ function renderYoutube(cfg, yt) {
   let modal = $("ytModal");
   if (!modal) {
     document.body.insertAdjacentHTML("beforeend", `
-      <div class="yt-modal" id="ytModal" hidden role="dialog" aria-modal="true" aria-label="Pemutar video">
+      <div class="yt-modal" id="ytModal" hidden role="dialog" aria-modal="true" aria-label="Video player">
         <div class="yt-modal-box">
           <div class="yt-frame"></div>
           <div class="yt-modal-foot">
             <strong class="yt-modal-title"></strong>
-            <a class="yt-modal-open" target="_blank" rel="noopener">Buka di YouTube ↗</a>
-            <button type="button" class="yt-close" aria-label="Tutup">✕</button>
+            <a class="yt-modal-open" target="_blank" rel="noopener">Open on YouTube ↗</a>
+            <button type="button" class="yt-close" aria-label="Close">✕</button>
           </div>
         </div>
       </div>`);
@@ -311,10 +311,10 @@ function setupInteractions(c) {
   $("contactForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const pesan = $("cfPesan").value.trim();
-    if (!pesan) { $("cfPesan").focus(); toast("Tulis pesannya dulu ya"); return; }
+    if (!pesan) { $("cfPesan").focus(); toast("Please write your message first"); return; }
     const nama = $("cfNama").value.trim();
     const panggilan = (c.nama || "").split(" ")[0];
-    const subjek = $("cfSubjek").value.trim() || `Halo ${panggilan}!` + (nama ? ` (dari ${nama})` : "");
+    const subjek = $("cfSubjek").value.trim() || `Hi ${panggilan}!` + (nama ? ` (from ${nama})` : "");
     const isi = pesan + (nama ? `\n\n— ${nama}` : "");
     const via = (e.submitter && e.submitter.dataset.via) || "gmail";
     const q = (o) => Object.entries(o).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join("&");

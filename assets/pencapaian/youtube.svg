@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8db7"/>
+      <stop offset="0.55" stop-color="#c79cf0"/>
+      <stop offset="1" stop-color="#8fb4ff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f2f4ff"/>
+    </linearGradient>
+    <linearGradient id="tri" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5f9e"/>
+      <stop offset="1" stop-color="#d94f8a"/>
+    </linearGradient>
+    <g id="petal"><path d="M0 0c-9-12-6-27 0-31 6 4 9 19 0 31z"/></g>
+    <g id="flower" fill="#fff">
+      <use href="#petal"/><use href="#petal" transform="rotate(72)"/><use href="#petal" transform="rotate(144)"/>
+      <use href="#petal" transform="rotate(216)"/><use href="#petal" transform="rotate(288)"/>
+    </g>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <!-- pola titik -->
+  <g fill="#fff" opacity="0.18">
+    <circle cx="80" cy="70" r="4"/><circle cx="140" cy="120" r="3"/><circle cx="860" cy="90" r="5"/><circle cx="900" cy="160" r="3"/>
+    <circle cx="120" cy="440" r="5"/><circle cx="820" cy="460" r="4"/><circle cx="760" cy="60" r="3"/><circle cx="220" cy="60" r="3"/>
+  </g>
+  <circle cx="480" cy="270" r="260" fill="url(#glow)"/>
+  <!-- bunga sakura -->
+  <use href="#flower" transform="translate(150 130) scale(1.2)" opacity="0.55"/>
+  <use href="#flower" transform="translate(820 400) scale(1.6) rotate(20)" opacity="0.5"/>
+  <use href="#flower" transform="translate(790 120) scale(0.8)" opacity="0.6"/>
+  <use href="#flower" transform="translate(190 420) scale(0.7) rotate(-15)" opacity="0.6"/>
+  <!-- layar video di belakang -->
+  <rect x="300" y="128" width="360" height="236" rx="28" fill="#fff" opacity="0.22" transform="rotate(-6 480 246)"/>
+  <!-- tombol play -->
+  <g transform="translate(480 270)">
+    <rect x="-150" y="-104" width="300" height="208" rx="62" fill="#1d2548" opacity="0.18" transform="translate(10 16)"/>
+    <rect x="-150" y="-104" width="300" height="208" rx="62" fill="url(#btn)"/>
+    <path d="M-34 -52 L62 0 L-34 52 Z" fill="url(#tri)" stroke="url(#tri)" stroke-width="14" stroke-linejoin="round"/>
+  </g>
+  <!-- gelembung suka & lonceng -->
+  <g transform="translate(700 175)">
+    <circle r="44" fill="#fff"/>
+    <path d="M0 18s-22-13-22-28a12 12 0 0 1 22-7 12 12 0 0 1 22 7c0 15-22 28-22 28z" fill="#ff5f9e"/>
+  </g>
+  <g transform="translate(265 370)">
+    <circle r="40" fill="#fff"/>
+    <path d="M-16 10v-12a16 16 0 0 1 32 0v12l6 8h-44z M-6 22a6 6 0 0 0 12 0" fill="none" stroke="#6f8fe0" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <!-- kilau -->
+  <g fill="#fff">
+    <path d="M640 330l7 18 18 7-18 7-7 18-7-18-18-7 18-7z" opacity="0.9"/>
+    <path d="M330 140l5 12 12 5-12 5-5 12-5-12-12-5 12-5z" opacity="0.8"/>
+  </g>
+</svg>

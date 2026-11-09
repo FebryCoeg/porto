@@ -17,7 +17,7 @@ JUMLAH = int(cfg.get("jumlah") or 12)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
-    "Accept-Language": "id-ID,id;q=0.9",
+    "Accept-Language": "en-US,en;q=0.9",
     "Cookie": "CONSENT=YES+cb; SOCS=CAI",
 }
 
@@ -45,12 +45,13 @@ def text(o):
     return (o or {}).get("content") or (o or {}).get("simpleText") or ""
 
 
-UNITS = {"detik": "seconds", "menit": "minutes", "jam": "hours", "hari": "days", "minggu": "weeks", "bulan": "months", "tahun": "years"}
+UNITS = {"detik": "seconds", "menit": "minutes", "jam": "hours", "hari": "days", "minggu": "weeks", "bulan": "months", "tahun": "years",
+         "second": "seconds", "minute": "minutes", "hour": "hours", "day": "days", "week": "weeks", "month": "months", "year": "years"}
 
 
 def kira_tanggal(rel, now):
-    """'2 minggu lalu' -> perkiraan tanggal ISO (dihitung ulang jadi 'x lalu' di browser)."""
-    m = re.search(r"(\d+)\s*(detik|menit|jam|hari|minggu|bulan|tahun)", rel or "")
+    """'2 weeks ago' -> perkiraan tanggal ISO (dihitung ulang jadi 'x ago' di browser)."""
+    m = re.search(r"(\d+)\s*(detik|menit|jam|hari|minggu|bulan|tahun|second|minute|hour|day|week|month|year)", rel or "")
     if not m:
         return now.isoformat(timespec="seconds")
     n, u = int(m.group(1)), UNITS[m.group(2)]
@@ -66,7 +67,7 @@ def kira_tanggal(rel, now):
 def main():
     m = None
     for _ in range(4):  # YouTube kadang mengirim halaman tanpa data, coba ulang
-        html = fetch(f"https://www.youtube.com/{HANDLE}/videos")
+        html = fetch(f"https://www.youtube.com/{HANDLE}/videos?hl=en&gl=US")
         m = re.search(r"var ytInitialData = (\{.*?\});</script>", html, re.S)
         if m:
             break
@@ -79,7 +80,7 @@ def main():
     rows = find(head.get("metadata"), "metadataParts")
     parts = [text(p.get("text")) for row in rows for p in row]
     sub = next((p for p in parts if "subscriber" in p.lower()), "")
-    vid = next((p for p in parts if re.search(r"\bvideo\b", p.lower())), "")
+    vid = next((p for p in parts if re.search(r"\bvideos?\b", p.lower())), "")
     avatar = find(head.get("image"), "sources")
     banner = find(head.get("banner"), "sources")
     channel = {

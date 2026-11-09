@@ -1,0 +1,337 @@
+# Panel edit website (Pages CMS) — buka https://app.pagescms.org, login GitHub, pilih repo ini.
+media:
+  input: assets
+  output: /assets
+
+content:
+  - name: website
+    label: Isi Website
+    type: file
+    path: content/data.json
+    format: json
+    fields:
+      # ---------- Profil ----------
+      - name: nama
+        label: Nama
+        type: string
+        required: true
+      - name: username
+        label: Username
+        type: string
+      - name: tagline
+        label: Tagline
+        type: string
+      - name: logo
+        label: Logo (PNG tanpa background)
+        type: image
+        description: Tampil di bar atas, menu, layar sambutan, dan footer. Kosongkan untuk memakai nama.
+      - name: foto
+        label: Foto profil (bulat di pojok kiri atas)
+        type: image
+        description: Kosongkan untuk memakai inisial nama.
+      - name: lokasi
+        label: Lokasi
+        type: string
+        description: Cukup negara/provinsi saja, jangan alamat lengkap.
+
+      # ---------- Layar sambutan ----------
+      - name: intro
+        label: Layar Sambutan
+        type: object
+        fields:
+          - name: aktif
+            label: Tampilkan layar sambutan
+            type: boolean
+          - name: sapaan
+            label: Teks sambutan (kata terakhir berwarna)
+            type: string
+          - name: subjudul
+            label: Teks kecil di bawahnya
+            type: string
+            description: Tulis {nama} untuk menampilkan namamu otomatis.
+          - name: sekaliPerSesi
+            label: Hanya tampil sekali per kunjungan
+            type: boolean
+            description: Kalau dimatikan, sambutan muncul setiap kali halaman dibuka/di-refresh.
+
+      # ---------- Landing page ----------
+      - name: hero
+        label: Landing Page
+        type: object
+        fields:
+          - name: label
+            label: Label kecil di atas judul
+            type: string
+          - name: judul
+            label: Judul besar (satu kata per baris, baris terakhir berwarna)
+            type: string
+            list: true
+          - name: deskripsi
+            label: Deskripsi
+            type: text
+          - name: tombolUtama
+            label: Tombol utama
+            type: object
+            fields:
+              - name: teks
+                label: Teks
+                type: string
+              - name: link
+                label: Link (mis. #sosmed atau https://...)
+                type: string
+          - name: tombolKedua
+            label: Tombol kedua
+            type: object
+            fields:
+              - name: teks
+                label: Teks
+                type: string
+              - name: link
+                label: Link
+                type: string
+          - name: statAngka
+            label: Label kecil di samping logo donasi (opsional, mis. ♥)
+            type: string
+          - name: statJudul
+            label: Judul di bawah logo donasi (kanan atas)
+            type: string
+          - name: statSub
+            label: Teks kecil di bawahnya
+            type: string
+            description: Kosongkan untuk otomatis menampilkan nama-nama platform donasi.
+          - name: gambar
+            label: Foto pengganti maskot (PNG tanpa background)
+            type: image
+            description: Hanya dipakai kalau Gambar latar di bawah dikosongkan.
+          - name: latar
+            label: Gambar latar landing page
+            type: object
+            fields:
+              - name: gambar
+                label: Gambar latar
+                type: image
+                description: Gambar lebar, idealnya 1920px atau lebih. Kosongkan untuk memakai maskot kucing.
+              - name: kredit
+                label: Kredit gambar
+                type: string
+                description: Wajib diisi kalau gambar bukan milikmu (mis. karakter game).
+              - name: fokusDesktop
+                label: Titik fokus di laptop (0 = kiri/atas, 1 = kanan/bawah)
+                type: object
+                fields:
+                  - name: x
+                    type: number
+                  - name: y
+                    type: number
+              - name: fokusMobile
+                label: Titik fokus di HP (arahkan ke wajah karakter)
+                type: object
+                fields:
+                  - name: x
+                    type: number
+                  - name: y
+                    type: number
+              - name: rambut
+                label: Area yang bergoyang tertiup angin (piksel gambar)
+                type: object
+                fields:
+                  - name: x
+                    type: number
+                  - name: y
+                    type: number
+                  - name: radius
+                    type: number
+                  - name: kekuatan
+                    type: number
+                    description: 0 = mati, 5 = halus
+              - name: parallax
+                label: Kekuatan parallax (0 = mati)
+                type: number
+          - name: kartu
+            label: Kartu kecil di kanan bawah
+            type: object
+            list: true
+            fields:
+              - name: ikon
+                label: Ikon
+                type: select
+                options:
+                  values: [sosmed, trofi, cangkir, hati, bintang, game, musik, kamera, video, surat, tautan, kode, sakura, febry, toko, harga, bayar, promo, instan]
+              - name: emoji
+                label: Emoji (opsional)
+                type: string
+                description: Hanya dipakai kalau Ikon dikosongkan.
+              - name: judul
+                label: Judul
+                type: string
+              - name: deskripsi
+                label: Deskripsi
+                type: string
+              - name: link
+                label: Link
+                type: string
+
+      # ---------- Tentang ----------
+      - name: tentang
+        label: Tentang aku
+        type: text
+      - name: biodata
+        label: Biodata
+        type: object
+        list: true
+        description: Hindari data sensitif (tanggal lahir lengkap, alamat, sekolah, nomor HP).
+        fields:
+          - name: label
+            label: Label
+            type: string
+          - name: value
+            label: Isi
+            type: string
+
+      # ---------- Sosial media ----------
+      - name: sosmed
+        label: Sosial Media
+        type: object
+        list: true
+        fields:
+          - name: platform
+            label: Platform (menentukan ikon & warna)
+            type: select
+            options:
+              values: [instagram, tiktok, youtube, twitter, facebook, discord, twitch, github, linkedin, whatsapp, telegram, spotify, email, website]
+          - name: label
+            label: Nama yang ditampilkan
+            type: string
+          - name: handle
+            label: Username / keterangan
+            type: string
+          - name: url
+            label: Link
+            type: string
+
+      # ---------- Pencapaian ----------
+      - name: pencapaian
+        label: Pencapaian
+        type: object
+        list: true
+        fields:
+          - name: tahun
+            label: Tahun
+            type: string
+          - name: judul
+            label: Judul
+            type: string
+          - name: deskripsi
+            label: Deskripsi
+            type: text
+          - name: gambar
+            label: Gambar (tampil di kanan kartu)
+            type: image
+            description: Gambar melebar (mis. 16:9). Kosongkan kalau tidak perlu gambar.
+          - name: kredit
+            label: Kredit gambar (opsional)
+            type: string
+            description: Isi kalau gambar milik pihak lain, mis. © nama studio.
+
+      # ---------- Toko top up ----------
+      - name: toko
+        label: Toko Top Up
+        type: object
+        fields:
+          - name: aktif
+            label: Tampilkan bagian toko
+            type: boolean
+          - name: nama
+            label: Nama toko
+            type: string
+          - name: ikon
+            label: Ikon toko bergaya tema
+            type: select
+            options:
+              values: [febry, toko, game, bintang]
+          - name: logo
+            label: Logo toko (dipakai kalau Ikon dikosongkan)
+            type: image
+          - name: tagline
+            label: Tagline
+            type: string
+          - name: deskripsi
+            label: Deskripsi
+            type: text
+          - name: url
+            label: Link toko
+            type: string
+          - name: tombol
+            label: Teks tombol
+            type: string
+          - name: statistik
+            label: Angka-angka
+            type: object
+            list: true
+            fields:
+              - name: angka
+                label: Angka (mis. 50+)
+                type: string
+              - name: label
+                label: Keterangan
+                type: string
+          - name: game
+            label: Game populer (chip)
+            type: string
+            list: true
+          - name: keunggulan
+            label: Keunggulan
+            type: object
+            list: true
+            fields:
+              - name: ikon
+                label: Ikon
+                type: select
+                options:
+                  values: [harga, bayar, promo, instan, toko, bintang, hati, game, trofi]
+              - name: judul
+                label: Judul
+                type: string
+              - name: deskripsi
+                label: Deskripsi
+                type: string
+
+      # ---------- Donasi ----------
+      - name: donasiJudul
+        label: Judul bagian donasi
+        type: string
+      - name: donasiPesan
+        label: Pesan donasi
+        type: text
+      - name: donasi
+        label: Link donasi
+        type: object
+        list: true
+        fields:
+          - name: nama
+            label: Nama (mis. Saweria)
+            type: string
+          - name: ikon
+            label: Ikon bergaya tema
+            type: select
+            options:
+              values: [sociabuzz, trakteer, saweria, hati, cangkir, hadiah]
+          - name: logo
+            label: Logo platform (persegi, PNG/SVG)
+            type: image
+            description: Dipakai kalau Ikon dikosongkan. Kalau keduanya kosong, tampil huruf depan nama.
+          - name: url
+            label: Link
+            type: string
+          - name: warna
+            label: Warna titik (kode hex, mis. #f5a623)
+            type: string
+      - name: qris
+        label: Gambar QRIS (opsional)
+        type: image
+
+      # ---------- Kontak ----------
+      - name: email
+        label: Email publik
+        type: string
+        description: Sebaiknya email khusus untuk publik, bukan email pribadi utama.

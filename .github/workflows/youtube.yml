@@ -1,0 +1,39 @@
+name: Perbarui video YouTube
+
+on:
+  schedule:
+    - cron: "17 */6 * * *" # tiap 6 jam
+  workflow_dispatch: # bisa dijalankan manual dari tab Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: youtube
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ambil video terbaru
+        run: python scripts/youtube.py
+
+      - name: Simpan kalau ada perubahan
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/youtube.json
+          if git diff --cached --quiet; then
+            echo "Tidak ada perubahan."
+          else
+            git commit -m "chore(youtube): perbarui daftar video terbaru"
+            git pull --rebase --autostash
+            git push
+          fi

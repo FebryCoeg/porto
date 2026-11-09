@@ -1,0 +1,263 @@
+{
+  "nama": "Febri Riansyah",
+  "username": "@febrycoeg",
+  "tagline": "Content Creator • Gamer ",
+  "foto": "",
+  "logo": "assets/logo-tema.png",
+  "lokasi": "Indonesia",
+  "intro": {
+    "aktif": true,
+    "sapaan": "Selamat Datang",
+    "subjudul": "di halaman {nama}",
+    "sekaliPerSesi": true
+  },
+  "hero": {
+    "label": "PORTOFOLIO PRIBADI",
+    "judul": [
+      "CREATE.",
+      "PLAY.",
+      "SHARE."
+    ],
+    "deskripsi": "Halo, aku Febri — content creator yang suka main game dan bikin guide game. Selamat datang di halaman kecilku!",
+    "tombolUtama": {
+      "teks": "MULAI",
+      "link": "#sosmed"
+    },
+    "tombolKedua": {
+      "teks": "SUPPORT AKU",
+      "link": "#donasi"
+    },
+    "statAngka": "",
+    "statJudul": "Dukung aku di sini",
+    "statSub": "",
+    "gambar": "",
+    "latar": {
+      "gambar": "assets/ayaka.webp",
+      "kredit": "Ilustrasi: Kamisato Ayaka — Genshin Impact © HoYoverse",
+      "fokusDesktop": {
+        "x": 0.38,
+        "y": 0.4
+      },
+      "fokusMobile": {
+        "x": 0.49,
+        "y": 0.35
+      },
+      "rambut": {
+        "x": 930,
+        "y": 470,
+        "radius": 260,
+        "kekuatan": 5
+      },
+      "parallax": 7
+    },
+    "kartu": [
+      {
+        "ikon": "sosmed",
+        "emoji": "",
+        "judul": "Sosmedku",
+        "deskripsi": "Follow semua akunku",
+        "link": "#sosmed"
+      },
+      {
+        "ikon": "trofi",
+        "emoji": "",
+        "judul": "Pencapaian",
+        "deskripsi": "Perjalanan sejauh ini",
+        "link": "#pencapaian"
+      },
+      {
+        "ikon": "cangkir",
+        "emoji": "",
+        "judul": "Traktir Aku",
+        "deskripsi": "Dukung karyaku",
+        "link": "#donasi"
+      }
+    ]
+  },
+  "tentang": "Halo! Aku suka bikin konten, main game, dan belajar hal baru. Website ini berisi info tentang aku, sosial media, dan beberapa pencapaian kecilku. Terima kasih sudah mampir!",
+  "biodata": [
+    {
+      "label": "Panggilan",
+      "value": "Febri"
+    },
+    {
+      "label": "Asal",
+      "value": "Indonesia"
+    },
+    {
+      "label": "Hobi",
+      "value": "Gaming, Buat Video, Musik"
+    },
+    {
+      "label": "Bahasa",
+      "value": "Indonesia"
+    },
+    {
+      "label": "Game Favorit",
+      "value": "Genshin Impact, Wuthering Waves, Neverness TO Everness, Silver Palace"
+    }
+  ],
+  "sosmed": [
+    {
+      "platform": "instagram",
+      "label": "Instagram",
+      "handle": "@febrycoegyt",
+      "url": "https://www.instagram.com/febrycoegyt/"
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "handle": "@febryplay_",
+      "url": "https://www.tiktok.com/@febryplay_"
+    },
+    {
+      "platform": "youtube",
+      "label": "YouTube",
+      "handle": "Febry Coeg",
+      "url": "https://www.youtube.com/@FebryCoeg"
+    },
+    {
+      "platform": "twitter",
+      "label": "X / Twitter",
+      "handle": "@febrycoegyt",
+      "url": "https://x.com/febrycoegyt"
+    },
+    {
+      "platform": "discord",
+      "label": "Discord",
+      "handle": "Server Komunitas",
+      "url": "https://discord.gg/SnfbaSwvGd"
+    },
+    {
+      "platform": "facebook",
+      "label": "Facebook",
+      "handle": "Febri Riansyah",
+      "url": "https://www.facebook.com/profile.php?id=100089984042769&locale=id_ID"
+    }
+  ],
+  "pencapaian": [
+    {
+      "tahun": "2015",
+      "judul": "Berhasil Membuat Komunitas Wibu Besar",
+      "deskripsi": "Dulu aku pengelola Fanspage Anime Sekai.",
+      "gambar": "assets/pencapaian/sao.webp",
+      "kredit": "© Reki Kawahara/KADOKAWA/SAO Project"
+    },
+    {
+      "tahun": "2017",
+      "judul": "Berhasil Membuat Channel Youtube",
+      "deskripsi": "Youtube Febry Coeg.",
+      "gambar": "assets/pencapaian/youtube.svg",
+      "kredit": ""
+    },
+    {
+      "tahun": "2022",
+      "judul": "Creator Official Tower OF Fantasy",
+      "deskripsi": "Kebanggaan tersendiri.",
+      "gambar": "assets/pencapaian/tof.webp",
+      "kredit": "© Hotta Studio, a Perfect World Company"
+    },
+    {
+      "tahun": "2026",
+      "judul": "Creator Official Neverness To Everness",
+      "deskripsi": "Kebanggaan tersendiri.",
+      "gambar": "assets/pencapaian/nte.webp",
+      "kredit": "© Hotta Studio / Perfect World"
+    },
+    {
+      "tahun": "2026",
+      "judul": "Creator Official Silver Palace",
+      "deskripsi": "Kebanggaan tersendir.",
+      "gambar": "assets/pencapaian/silverpalace.webp",
+      "kredit": "© Elementa / Silver Studio"
+    },
+    {
+      "tahun": "2026",
+      "judul": "Bisa Buat Rumah Untuk Ortu",
+      "deskripsi": "Di titik ini gua seneng bisa jadi salahsatunya.",
+      "gambar": "assets/pencapaian/rumah.svg",
+      "kredit": ""
+    }
+  ],
+  "toko": {
+    "aktif": true,
+    "nama": "Febry Store",
+    "ikon": "febry",
+    "logo": "https://febry.store/assets/images/1719849285_81946724b128b7bbe57d.png",
+    "tagline": "Top up game favoritmu, murah & instan",
+    "deskripsi": "Toko top up milikku untuk Genshin Impact, Honkai Star Rail, Wuthering Waves, Mobile Legends, dan puluhan game lainnya. Bayar pakai e-wallet, transfer bank, atau minimarket — pesanan langsung diproses.",
+    "url": "https://febry.store/",
+    "tombol": "Top Up Sekarang",
+    "statistik": [
+      {
+        "angka": "50+",
+        "label": "Game"
+      },
+      {
+        "angka": "1000+",
+        "label": "Produk"
+      },
+      {
+        "angka": "Instan",
+        "label": "Pengiriman"
+      }
+    ],
+    "game": [
+      "Genshin Impact",
+      "Honkai Star Rail",
+      "Wuthering Waves",
+      "Zenless Zone Zero",
+      "Mobile Legends",
+      "Free Fire"
+    ],
+    "keunggulan": [
+      {
+        "ikon": "harga",
+        "judul": "Harga Termurah",
+        "deskripsi": "Produk berkualitas dengan harga bersahabat."
+      },
+      {
+        "ikon": "bayar",
+        "judul": "Banyak Metode Bayar",
+        "deskripsi": "E-wallet, transfer bank, sampai minimarket."
+      },
+      {
+        "ikon": "promo",
+        "judul": "Promo Menarik",
+        "deskripsi": "Diskon & penawaran untuk pelanggan setia."
+      },
+      {
+        "ikon": "instan",
+        "judul": "Proses Instan",
+        "deskripsi": "Pesanan diproses begitu pembayaran selesai."
+      }
+    ]
+  },
+  "donasiJudul": "Traktir aku secangkir teh",
+  "donasiPesan": "Kalau kamu suka kontenku dan mau support, kamu bisa traktir aku lewat salah satu link di bawah. Setiap dukungan sangat berarti!",
+  "donasi": [
+    {
+      "nama": "Sociabuzz",
+      "ikon": "sociabuzz",
+      "logo": "assets/donasi/sociabuzz.png",
+      "url": "https://sociabuzz.com/febcoeg",
+      "warna": "#008000"
+    },
+    {
+      "nama": "Trakteer",
+      "ikon": "trakteer",
+      "logo": "assets/donasi/trakteer.png",
+      "url": "https://trakteer.id/febrycoeg",
+      "warna": "#e3324c"
+    },
+    {
+      "nama": "Saweria",
+      "ikon": "saweria",
+      "logo": "assets/donasi/saweria.png",
+      "url": "https://saweria.co/febrycoegyt",
+      "warna": "#f5a623"
+    }
+  ],
+  "qris": "",
+  "email": "febririansyah1999@gmail.com"
+}

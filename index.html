@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portofolio</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=16" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=16" />
+  <meta name="description" content="Biodata, sosial media, pencapaian, dan link donasi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=16" />
+  <script>
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    // layar sambutan: tampil sekali per kunjungan (per tab)
+    try { document.documentElement.classList.add(sessionStorage.getItem("introSeen") ? "no-intro" : "intro-active"); }
+    catch (e) { document.documentElement.classList.add("intro-active"); }
+  </script>
+</head>
+<body>
+  <!-- LAYAR SAMBUTAN (lihat intro.js) -->
+  <div class="intro" id="intro" role="dialog" aria-label="Selamat datang">
+    <div class="intro-petals" id="introPetals" aria-hidden="true"></div>
+    <div class="intro-inner">
+      <img class="intro-logo" id="introLogo" alt="" hidden />
+      <svg class="intro-flower" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sakuraFlower" /></svg>
+      <div class="intro-title" id="introTitle">Selamat Datang</div>
+      <p class="intro-sub" id="introSub">di halamanku</p>
+      <div class="intro-bar" aria-hidden="true"><span></span></div>
+    </div>
+    <button class="intro-skip" type="button">Lewati →</button>
+  </div>
+  <script src="intro.js?v=16"></script>
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+
+  <!-- Nav yang muncul setelah melewati landing page -->
+  <header class="nav" id="stickyNav">
+    <a href="#top" class="brand" id="brand">Porto</a>
+    <nav class="nav-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#sosmed">Sosmed</a>
+      <a href="#pencapaian">Pencapaian</a>
+      <a href="#toko">Toko</a>
+      <a href="#donasi" class="nav-cta">Donate</a>
+    </nav>
+    <button class="theme-btn theme-toggle" aria-label="Ganti tema">◐</button>
+  </header>
+
+  <!-- LANDING PAGE -->
+  <section class="hero hero--image" id="top">
+    <div class="hero-scene" id="heroScene"></div>
+    <div class="hero-shade"></div>
+    <div class="hero-petals" id="heroPetals" aria-hidden="true"></div>
+    <div class="hero-glow" id="heroGlow"></div>
+
+    <div class="hero-bar">
+      <div class="hb-left">
+        <div class="hb-avatar" id="hbAvatar"></div>
+        <nav class="pill-nav">
+          <a href="#top" class="active">Home</a>
+          <a href="#tentang">Tentang</a>
+          <a href="#pencapaian">Pencapaian</a>
+          <a href="#toko">Toko</a>
+        </nav>
+      </div>
+      <a class="hb-logo" href="#top"><span class="hb-dot"></span><span id="hbName"></span></a>
+      <div class="hb-right">
+        <a class="pill" href="#sosmed">Sosmed</a>
+        <a class="pill" href="#donasi">Donate</a>
+        <button class="pill pill-icon theme-toggle" aria-label="Ganti tema">◐</button>
+      </div>
+    </div>
+
+    <div class="hero-left">
+      <p class="hero-label"><span class="hero-label-dot">★</span><span id="heroLabel"></span></p>
+      <h1 class="hero-title" id="heroTitle"></h1>
+      <p class="hero-desc" id="heroDesc"></p>
+      <div class="hero-cta">
+        <a class="cta-main" id="ctaMain" href="#sosmed"></a>
+        <a class="cta-play" id="ctaSecond" href="#donasi"><span class="cta-play-btn">▶</span><span id="ctaSecondText"></span></a>
+      </div>
+    </div>
+
+    <div class="hero-stage" id="heroStage"></div>
+
+    <div class="hero-stat">
+      <div class="stat-stack" id="statStack"></div>
+      <strong id="statJudul"></strong>
+      <small id="statSub"></small>
+    </div>
+
+    <div class="hero-cards" id="heroCards"></div>
+
+    <a class="scroll-badge" href="#tentang" aria-label="Scroll ke bawah">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="circlePath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
+        <text><textPath href="#circlePath">SCROLL KE BAWAH • SCROLL KE BAWAH • </textPath></text>
+      </svg>
+      <span>↓</span>
+    </a>
+
+    <p class="hero-credit" id="heroCredit"></p>
+  </section>
+
+  <main>
+
+    <!-- TENTANG -->
+    <section id="tentang" class="section reveal">
+      <h2 class="section-title"><span>01</span> Tentang Aku</h2>
+      <div class="about-grid">
+        <p class="card about-text" id="tentangText"></p>
+        <div class="card biodata" id="biodata"></div>
+      </div>
+    </section>
+
+    <!-- SOSMED -->
+    <section id="sosmed" class="section reveal">
+      <h2 class="section-title"><span>02</span> Sosial Media</h2>
+      <div class="social-grid" id="socialGrid"></div>
+    </section>
+
+    <!-- PENCAPAIAN -->
+    <section id="pencapaian" class="section reveal">
+      <h2 class="section-title"><span>03</span> Pencapaian</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- DONASI -->
+    <section id="toko" class="section reveal">
+      <h2 class="section-title"><span>04</span> Toko Top Up</h2>
+      <div class="card toko-card" id="tokoCard"></div>
+    </section>
+
+    <section id="donasi" class="section reveal">
+      <h2 class="section-title"><span>05</span> Dukung Aku</h2>
+      <div class="card donate-card">
+        <svg class="donate-sakura" viewBox="-50 -50 100 100" aria-hidden="true">
+          <g id="sakuraFlower">
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(72)" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(144)" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(216)" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(288)" />
+          </g>
+        </svg>
+        <div class="donate-head">
+          <div class="donate-icon">
+            <svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sakuraFlower" /></svg>
+          </div>
+          <div>
+            <h3 id="donasiJudul">Traktir aku secangkir teh</h3>
+            <p id="donasiPesan"></p>
+          </div>
+        </div>
+        <div class="donate-buttons" id="donateButtons"></div>
+        <div class="qris" id="qrisWrap" hidden>
+          <img id="qrisImg" alt="QRIS untuk donasi" />
+          <p><strong>Scan QRIS</strong><br />Bisa dari semua e-wallet dan m-banking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section id="kontak" class="section reveal contact">
+      <h2 class="section-title"><span>06</span> Kontak</h2>
+      <p>Mau kolaborasi atau sekadar menyapa? Tulis pesanmu di sini.</p>
+      <form class="card contact-form" id="contactForm" novalidate>
+        <div class="cf-row">
+          <label>Nama
+            <input id="cfNama" type="text" maxlength="60" placeholder="Nama kamu" autocomplete="name" />
+          </label>
+          <label>Subjek
+            <input id="cfSubjek" type="text" maxlength="100" placeholder="Kolaborasi, pertanyaan, atau sekadar halo" />
+          </label>
+        </div>
+        <label>Pesan
+          <textarea id="cfPesan" rows="5" maxlength="2000" placeholder="Tulis pesanmu di sini..." required></textarea>
+        </label>
+        <div class="cf-actions">
+          <button type="submit" class="btn btn-primary" data-via="gmail">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5l8.5 6 8.5-6M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5z"/></svg>
+            Kirim lewat Gmail
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img class="footer-logo" id="footerLogo" alt="" hidden />
+    <p>© <span id="year"></span> <span id="footerName"></span>. Dibuat dengan 💛</p>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js?v=16"></script>
+  <script src="hero-image.js?v=16"></script>
+  <script src="hero.js?v=16"></script>
+  <script src="swarm.js?v=16"></script>
+  <script src="app.js?v=16"></script>
+</body>
+</html>

@@ -775,16 +775,18 @@ main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 
 /* SWARM REBUILD (lihat swarm.js) */
 .swarm-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 25; }
-.swarm-on .section:not(.built) .swarm-piece { opacity: 0; transition: none; }
-.swarm-on .built .swarm-piece {
-  animation: materialize 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: var(--d, 0s);
+.swarm-on .swarm-piece:not(.sw-show) { opacity: 0; }
+.swarm-on .swarm-piece.sw-show:not(.sw-type) { animation: sw-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes sw-in {
+  0%   { opacity: 0; filter: blur(6px) brightness(1.6); }
+  100% { opacity: 1; filter: none; }
 }
-@keyframes materialize {
-  0%   { opacity: 0; clip-path: inset(-40px -40px 100% -40px); filter: blur(8px) brightness(1.8); }
-  55%  { opacity: 1; filter: blur(1.5px) brightness(1.25); }
-  100% { opacity: 1; clip-path: inset(-40px -40px -40px -40px); filter: none; }
-}
+/* teks yang diketik huruf demi huruf */
+sw-t, sw-c { display: inline; }
+.swarm-on .sw-type sw-c { visibility: hidden; }
+.swarm-on .sw-type sw-c.on, .swarm-on .sw-type.sw-typed sw-c { visibility: visible; }
+.swarm-on .sw-type sw-c.on { animation: sw-key 0.25s ease-out both; }
+@keyframes sw-key { from { color: var(--accent); text-shadow: 0 0 8px var(--accent); } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }

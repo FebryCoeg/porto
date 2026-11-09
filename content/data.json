@@ -179,6 +179,187 @@
       "kredit": ""
     }
   ],
+  "game": {
+    "aktif": true,
+    "judul": "Game yang Aku Mainkan",
+    "petunjuk": "Arahkan kursor ke kartu untuk melihat data akunku.",
+    "daftar": [
+      {
+        "nama": "Genshin Impact",
+        "singkat": "Genshin",
+        "genre": "Open World · Action RPG",
+        "warna": "#6f9dff",
+        "gambar": "assets/ayaka.webp",
+        "kredit": "© HoYoverse",
+        "deskripsi": "Petualangan di Teyvat bareng waifu kesayangan, Kamisato Ayaka.",
+        "uid": "800592739",
+        "data": [
+          {
+            "label": "Adventure Rank",
+            "nilai": "60"
+          },
+          {
+            "label": "Server",
+            "nilai": "Asia"
+          },
+          {
+            "label": "Main sejak",
+            "nilai": "2020"
+          },
+          {
+            "label": "Favorit",
+            "nilai": "Ayaka"
+          }
+        ]
+      },
+      {
+        "nama": "Tower of Fantasy",
+        "singkat": "ToF",
+        "genre": "Open World · MMORPG",
+        "warna": "#8c7bff",
+        "gambar": "assets/game/tof.webp",
+        "kredit": "© Hotta Studio, a Perfect World Company",
+        "deskripsi": "Game pertama tempat aku jadi Creator Official.",
+        "uid": "1600315051",
+        "data": [
+          {
+            "label": "Level",
+            "nilai": "100"
+          },
+          {
+            "label": "Server",
+            "nilai": "Southeast Asia"
+          },
+          {
+            "label": "Main sejak",
+            "nilai": "2022"
+          },
+          {
+            "label": "Status",
+            "nilai": "Creator Official"
+          }
+        ]
+      },
+      {
+        "nama": "Neverness to Everness",
+        "singkat": "NTE",
+        "genre": "Urban Open World · RPG",
+        "warna": "#ff5f9e",
+        "gambar": "assets/pencapaian/nte.webp",
+        "kredit": "© Hotta Studio / Perfect World",
+        "deskripsi": "Kota supernatural yang penuh misteri, dan aku ikut jadi Creator Official-nya.",
+        "uid": "218210637444",
+        "data": [
+          {
+            "label": "Level",
+            "nilai": "57"
+          },
+          {
+            "label": "Server",
+            "nilai": "SEA"
+          },
+          {
+            "label": "Main sejak",
+            "nilai": "2026"
+          },
+          {
+            "label": "Status",
+            "nilai": "Creator Official"
+          }
+        ]
+      },
+      {
+        "nama": "Silver Palace",
+        "singkat": "Silver",
+        "genre": "Anime · RPG",
+        "warna": "#d6a84f",
+        "gambar": "assets/pencapaian/silverpalace.webp",
+        "kredit": "© Elementa / Silver Studio",
+        "deskripsi": "Game terbaru di daftarku, juga sebagai Creator Official.",
+        "uid": "-",
+        "data": [
+          {
+            "label": "Level",
+            "nilai": "-"
+          },
+          {
+            "label": "Server",
+            "nilai": "Asia"
+          },
+          {
+            "label": "Main sejak",
+            "nilai": "2026"
+          },
+          {
+            "label": "Status",
+            "nilai": "Creator Official"
+          }
+        ]
+      },
+      {
+        "nama": "Aniimo",
+        "singkat": "Aniimo",
+        "genre": "Open World · Creature Collecting",
+        "warna": "#b48cff",
+        "gambar": "assets/game/aniimo.webp",
+        "kredit": "© Pawprints Studio",
+        "deskripsi": "Petualangan santai bareng para Aniimo yang super gemoy.",
+        "uid": "411000100056",
+        "data": [
+          {
+            "label": "Level",
+            "nilai": "60"
+          },
+          {
+            "label": "Server",
+            "nilai": "Asia"
+          },
+          {
+            "label": "Main sejak",
+            "nilai": "2026"
+          },
+          {
+            "label": "Favorit",
+            "nilai": "Lunara"
+          }
+        ]
+      },
+      {
+        "nama": "Ananta",
+        "singkat": "Ananta",
+        "genre": "Urban Open World · Action",
+        "warna": "#e5484d",
+        "gambar": "assets/game/ananta.webp",
+        "kredit": "© NetEase Games / Naked Rain",
+        "deskripsi": "Aksi seru di kota modern yang bebas dijelajahi.",
+        "uid": "-",
+        "data": [
+          {
+            "label": "Level",
+            "nilai": "30"
+          },
+          {
+            "label": "Server",
+            "nilai": "Asia"
+          },
+          {
+            "label": "Main sejak",
+            "nilai": "2027"
+          },
+          {
+            "label": "Favorit",
+            "nilai": "Comming"
+          }
+        ]
+      }
+    ]
+  },
+  "youtube": {
+    "aktif": true,
+    "judul": "Video Terbaru di YouTube",
+    "handle": "@FebryCoeg",
+    "jumlah": 12
+  },
   "toko": {
     "aktif": true,
     "nama": "Febry Store",

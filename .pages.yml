@@ -233,6 +233,81 @@ content:
             type: string
             description: Isi kalau gambar milik pihak lain, mis. © nama studio.
 
+      # ---------- Game yang dimainkan ----------
+      - name: game
+        label: Game yang Dimainkan
+        type: object
+        fields:
+          - name: aktif
+            label: Tampilkan bagian game
+            type: boolean
+          - name: judul
+            label: Judul bagian
+            type: string
+          - name: petunjuk
+            label: Teks petunjuk di bawah judul
+            type: string
+          - name: daftar
+            label: Daftar game
+            type: object
+            list: true
+            fields:
+              - name: nama
+                label: Nama game
+                type: string
+              - name: singkat
+                label: Judul besar di belakang (singkat, mis. Genshin / ToF)
+                type: string
+              - name: genre
+                label: Genre
+                type: string
+              - name: warna
+                label: Warna khas panel (kode hex, mis. #6f9dff)
+                type: string
+              - name: gambar
+                label: Gambar latar
+                type: image
+                description: Gambar melebar (mis. 16:9) dengan resolusi cukup besar.
+              - name: kredit
+                label: Kredit gambar (opsional)
+                type: string
+              - name: deskripsi
+                label: Deskripsi singkat
+                type: string
+              - name: uid
+                label: UID / ID akun (bisa disalin pengunjung)
+                type: string
+              - name: data
+                label: Data akun lainnya
+                type: object
+                list: true
+                fields:
+                  - name: label
+                    label: Nama data (mis. Level, Server, Rank)
+                    type: string
+                  - name: nilai
+                    label: Isi
+                    type: string
+
+      # ---------- YouTube ----------
+      - name: youtube
+        label: Dasbor YouTube
+        type: object
+        description: Daftar video diambil otomatis dari channel setiap 6 jam (tidak perlu diisi manual).
+        fields:
+          - name: aktif
+            label: Tampilkan dasbor YouTube
+            type: boolean
+          - name: judul
+            label: Judul bagian
+            type: string
+          - name: handle
+            label: Handle channel (mis. @FebryCoeg)
+            type: string
+          - name: jumlah
+            label: Jumlah video yang ditampilkan
+            type: number
+
       # ---------- Toko top up ----------
       - name: toko
         label: Toko Top Up

@@ -101,6 +101,12 @@ function render(c) {
   // toko top up
   renderToko(c.toko);
 
+  // game yang dimainkan
+  renderGame(c.game);
+
+  // dasbor youtube
+  renderYoutube(c.youtube, c.youtubeData);
+
   // kontak
 
 }
@@ -140,6 +146,164 @@ function renderToko(t) {
     <ul class="toko-perks">${(t.keunggulan || []).map((k) => `
       <li><span class="toko-perk-icon">${icon(k.ikon)}</span><div><strong>${esc(k.judul)}</strong><small>${esc(k.deskripsi || "")}</small></div></li>`).join("")}
     </ul>`;
+}
+
+// Game yang dimainkan: panel-panel yang melebar saat disorot (klik/tap di HP)
+function renderGame(g) {
+  const sec = $("game");
+  const list = (g && g.aktif !== false && Array.isArray(g.daftar) ? g.daftar : []).filter((x) => x && x.nama);
+  if (!list.length) { sec.hidden = true; return; }
+  sec.hidden = false;
+  if (g.judul) $("gameJudul").textContent = g.judul;
+  if (g.petunjuk !== undefined) { $("gameHint").textContent = g.petunjuk; $("gameHint").hidden = !g.petunjuk; }
+  const acc = $("gameAcc");
+  acc.innerHTML = list.map((x, i) => {
+    const warna = /^#[0-9a-f]{3,8}$/i.test(x.warna || "") ? `--g:${x.warna};` : "";
+    const img = x.gambar ? String(x.gambar).replace(/^\/+(?!\/)/, "") : "";
+    const stats = (x.data || []).filter((d) => d && d.label && d.nilai);
+    return `
+    <article class="game-panel${i === 0 ? " active" : ""}" tabindex="0" style="${warna}" aria-label="${esc(x.nama)}">
+      <div class="gp-bg">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : ""}</div>
+      <span class="gp-word" aria-hidden="true">${esc(x.singkat || x.nama)}</span>
+      <div class="gp-tab" aria-hidden="true"><span class="gp-num">${String(i + 1).padStart(2, "0")}</span><span class="gp-name">${esc(x.nama)}</span><span class="gp-plus">+</span></div>
+      <div class="gp-info">
+        ${x.genre ? `<span class="gp-genre">${esc(x.genre)}</span>` : ""}
+        <h3>${esc(x.nama)}</h3>
+        ${x.deskripsi ? `<p>${esc(x.deskripsi)}</p>` : ""}
+        ${x.uid ? `<button type="button" class="gp-uid" data-uid="${esc(x.uid)}" aria-label="Salin UID ${esc(x.uid)}"><small>UID</small><strong>${esc(x.uid)}</strong><span>Salin</span></button>` : ""}
+        ${stats.length ? `<dl class="gp-stats">${stats.map((d) => `<div><dt>${esc(d.label)}</dt><dd>${esc(d.nilai)}</dd></div>`).join("")}</dl>` : ""}
+      </div>
+      <span class="gp-count" aria-hidden="true">${String(i + 1).padStart(2, "0")} / ${String(list.length).padStart(2, "0")}</span>
+      ${x.kredit ? `<small class="gp-credit">${esc(x.kredit)}</small>` : ""}
+    </article>`;
+  }).join("");
+
+  const panels = [...acc.querySelectorAll(".game-panel")];
+  const open = (p) => panels.forEach((q) => q.classList.toggle("active", q === p));
+  const canHover = matchMedia("(hover: hover)");
+  panels.forEach((p) => {
+    p.addEventListener("mouseenter", () => canHover.matches && open(p));
+    p.addEventListener("focus", () => open(p));
+    p.addEventListener("click", () => open(p));
+    p.addEventListener("keydown", (e) => {
+      const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!k || e.target !== p) return;
+      e.preventDefault();
+      panels[(panels.indexOf(p) + k + panels.length) % panels.length].focus();
+    });
+  });
+  acc.addEventListener("click", (e) => {
+    const b = e.target.closest(".gp-uid");
+    if (!b || !b.closest(".game-panel.active")) return;
+    const uid = b.dataset.uid;
+    const done = () => { b.classList.add("copied"); setTimeout(() => b.classList.remove("copied"), 1600); toast("UID disalin: " + uid); };
+    if (navigator.clipboard) navigator.clipboard.writeText(uid).then(done, () => toast("UID: " + uid));
+    else toast("UID: " + uid);
+  });
+}
+
+// "3 hari lalu" dari tanggal ISO
+function waktuLalu(iso) {
+  const t = Date.parse(iso);
+  if (!t) return "";
+  const s = Math.max(0, (Date.now() - t) / 1000);
+  const u = [[31536000, "tahun"], [2592000, "bulan"], [604800, "minggu"], [86400, "hari"], [3600, "jam"], [60, "menit"]];
+  for (const [n, nama] of u) if (s >= n) return `${Math.floor(s / n)} ${nama} lalu`;
+  return "baru saja";
+}
+
+// Dasbor YouTube: info channel + video terbaru berjajar, diputar di jendela pop-up
+function renderYoutube(cfg, yt) {
+  const sec = $("youtube");
+  const list = (yt && Array.isArray(yt.video) ? yt.video : []).filter((v) => /^[\w-]{11}$/.test(v.id || ""));
+  if ((cfg && cfg.aktif === false) || !list.length) { sec.hidden = true; return; }
+  sec.hidden = false;
+  if (cfg && cfg.judul) $("ytJudul").textContent = cfg.judul;
+  const ch = yt.channel || {};
+  const url = ch.url || "https://www.youtube.com/";
+  const ytIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${ICONS.youtube.p}"/></svg>`;
+  const stat = (angka, label) => (angka ? `<div class="yt-stat"><strong>${esc(angka)}</strong><small>${label}</small></div>` : "");
+
+  $("ytDash").innerHTML = `
+    <div class="yt-head">
+      ${ch.banner ? `<img class="yt-banner" src="${esc(ch.banner)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
+      <div class="yt-channel">
+        <a class="yt-avatar" href="${esc(url)}" target="_blank" rel="noopener">${ch.avatar ? `<img src="${esc(ch.avatar)}" alt="${esc(ch.nama || "Channel")}" referrerpolicy="no-referrer">` : ytIcon}</a>
+        <div class="yt-name">
+          <h3>${esc(ch.nama || "YouTube")}</h3>
+          <a href="${esc(url)}" target="_blank" rel="noopener">${esc(ch.handle || "")}</a>
+        </div>
+        <div class="yt-stats">
+          ${stat(ch.subscriber, "Subscriber")}
+          ${stat(ch.video, "Video")}
+          ${stat(waktuLalu(list[0].tanggal), "Upload terakhir")}
+        </div>
+        <a class="btn yt-sub" href="${esc(url)}?sub_confirmation=1" target="_blank" rel="noopener">${ytIcon}Subscribe</a>
+      </div>
+    </div>
+    <div class="yt-bar">
+      <span class="yt-bar-title"><i class="yt-live"></i>Video terbaru</span>
+      <div class="yt-nav">
+        <button type="button" class="yt-arrow" data-dir="-1" aria-label="Video sebelumnya">‹</button>
+        <button type="button" class="yt-arrow" data-dir="1" aria-label="Video berikutnya">›</button>
+      </div>
+    </div>
+    <div class="yt-row" id="ytRow">${list.map((v, i) => `
+      <a class="yt-video" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener" data-id="${v.id}" data-judul="${esc(v.judul)}">
+        <span class="yt-thumb">
+          <img src="https://i.ytimg.com/vi/${v.id}/hq720.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/mqdefault.jpg'">
+          ${i === 0 ? `<b class="yt-new">BARU</b>` : ""}
+          ${v.durasi ? `<b class="yt-dur">${esc(String(v.durasi).replace(".", ":"))}</b>` : ""}
+          <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+        </span>
+        <span class="yt-title">${esc(v.judul)}</span>
+        <span class="yt-meta">${v.ditonton ? `${esc(v.ditonton)} x ditonton · ` : ""}${waktuLalu(v.tanggal)}</span>
+      </a>`).join("")}
+    </div>`;
+
+  const row = $("ytRow");
+  const arrows = [...$("ytDash").querySelectorAll(".yt-arrow")];
+  const syncArrows = () => {
+    arrows[0].disabled = row.scrollLeft < 8;
+    arrows[1].disabled = row.scrollLeft + row.clientWidth > row.scrollWidth - 8;
+  };
+  arrows.forEach((b) => (b.onclick = () => row.scrollBy({ left: +b.dataset.dir * row.clientWidth * 0.85, behavior: "smooth" })));
+  row.addEventListener("scroll", syncArrows, { passive: true });
+  addEventListener("resize", syncArrows);
+  syncArrows();
+
+  // pemutar pop-up
+  let modal = $("ytModal");
+  if (!modal) {
+    document.body.insertAdjacentHTML("beforeend", `
+      <div class="yt-modal" id="ytModal" hidden role="dialog" aria-modal="true" aria-label="Pemutar video">
+        <div class="yt-modal-box">
+          <div class="yt-frame"></div>
+          <div class="yt-modal-foot">
+            <strong class="yt-modal-title"></strong>
+            <a class="yt-modal-open" target="_blank" rel="noopener">Buka di YouTube ↗</a>
+            <button type="button" class="yt-close" aria-label="Tutup">✕</button>
+          </div>
+        </div>
+      </div>`);
+    modal = $("ytModal");
+    const close = () => { modal.hidden = true; modal.querySelector(".yt-frame").innerHTML = ""; document.body.classList.remove("yt-lock"); };
+    modal.addEventListener("click", (e) => { if (e.target === modal || e.target.closest(".yt-close")) close(); });
+    addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.hidden) close(); });
+  }
+  row.addEventListener("click", (e) => {
+    const a = e.target.closest(".yt-video");
+    if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    const id = a.dataset.id;
+    modal.querySelector(".yt-frame").innerHTML =
+      `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${esc(a.dataset.judul)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    modal.querySelector(".yt-modal-title").textContent = a.dataset.judul;
+    modal.querySelector(".yt-modal-open").href = a.href;
+    modal.hidden = false;
+    document.body.classList.add("yt-lock");
+    modal.querySelector(".yt-close").focus();
+  });
 }
 
 function setupInteractions(c) {

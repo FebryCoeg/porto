@@ -51,7 +51,6 @@ window.initHero = function (CONFIG) {
     stage.remove();
     scene = createImageHero($("heroScene"), h.latar);
     if (h.latar.kredit) $("heroCredit").textContent = h.latar.kredit;
-    makePetals($("heroPetals"), reduceMotion ? 0 : innerWidth < 860 ? 10 : 18);
   } else if (h.gambar) {
     heroEl.classList.remove("hero--image");
     stage.innerHTML = `<img class="hero-img" id="heroImg" src="${esc(h.gambar)}" alt="${esc(c.nama)}">`;

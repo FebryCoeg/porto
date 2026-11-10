@@ -7,33 +7,32 @@
   "lokasi": "Indonesia",
   "intro": {
     "aktif": true,
-    "sapaan": "Welcome",
-    "subjudul": "to {nama}'s page",
+    "sapaan": "Hey there",
+    "subjudul": "welcome to {nama}'s page",
     "sekaliPerSesi": true
   },
   "hero": {
-    "label": "PERSONAL PORTFOLIO",
+    "label": "@FEBRYCOEG",
     "judul": [
-      "CREATE.",
-      "PLAY.",
-      "SHARE."
+      "I PLAY.",
+      "YOU WIN."
     ],
-    "deskripsi": "Hi, I'm Febri — a content creator who loves playing games and making game guides. Welcome to my little corner of the internet!",
+    "deskripsi": "I'm Febri. I play gacha games way too much, then turn what I learn into guides on YouTube so you don't waste your pulls.",
     "tombolUtama": {
-      "teks": "EXPLORE",
+      "teks": "FIND ME ONLINE",
       "link": "#sosmed"
     },
     "tombolKedua": {
-      "teks": "SUPPORT ME",
+      "teks": "TIP JAR",
       "link": "#donasi"
     },
     "statAngka": "",
-    "statJudul": "Support me here",
+    "statJudul": "Tip jar",
     "statSub": "",
     "gambar": "",
     "latar": {
       "gambar": "assets/ayaka.webp",
-      "kredit": "Illustration: Kamisato Ayaka — Genshin Impact © HoYoverse",
+      "kredit": "Illustration: Kamisato Ayaka, Genshin Impact © HoYoverse",
       "fokusDesktop": {
         "x": 0.38,
         "y": 0.4
@@ -54,27 +53,27 @@
       {
         "ikon": "sosmed",
         "emoji": "",
-        "judul": "My Socials",
-        "deskripsi": "Follow all my accounts",
+        "judul": "Socials",
+        "deskripsi": "Where I post",
         "link": "#sosmed"
       },
       {
         "ikon": "trofi",
         "emoji": "",
-        "judul": "Achievements",
-        "deskripsi": "My journey so far",
+        "judul": "Milestones",
+        "deskripsi": "How it started",
         "link": "#pencapaian"
       },
       {
         "ikon": "cangkir",
         "emoji": "",
-        "judul": "Treat Me",
-        "deskripsi": "Support my work",
+        "judul": "Tip Jar",
+        "deskripsi": "Keeps the guides coming",
         "link": "#donasi"
       }
     ]
   },
-  "tentang": "Hi! I love creating content, playing games, and learning new things. This site is all about me — where to find me online and a few milestones along the way. Thanks for stopping by!",
+  "tentang": "I've been making videos since 2017, mostly guides, builds and first looks at gacha games. Right now that's a lot of Neverness to Everness, with Silver Palace and Tower of Fantasy in the mix. Before YouTube I ran Anime Sekai, an anime fan page on Facebook. These days I'm also an official creator for a few games, and I run a small top-up store on the side.",
   "biodata": [
     {
       "label": "Nickname",
@@ -138,51 +137,51 @@
   "pencapaian": [
     {
       "tahun": "2015",
-      "judul": "Built a Large Anime Community",
-      "deskripsi": "I used to run the Anime Sekai fan page.",
+      "judul": "Ran a big anime community",
+      "deskripsi": "I managed Anime Sekai, an anime fan page on Facebook, back when fan pages were where everyone hung out.",
       "gambar": "assets/pencapaian/sao.webp",
       "kredit": "© Reki Kawahara/KADOKAWA/SAO Project"
     },
     {
       "tahun": "2017",
-      "judul": "Launched My YouTube Channel",
-      "deskripsi": "Febry Coeg on YouTube.",
+      "judul": "Started my YouTube channel",
+      "deskripsi": "Uploaded my first video as Febry Coeg. More than 3,600 videos later, I'm still at it.",
       "gambar": "assets/pencapaian/youtube.svg",
       "kredit": ""
     },
     {
       "tahun": "2022",
-      "judul": "Official Creator — Tower of Fantasy",
-      "deskripsi": "A proud milestone for me.",
+      "judul": "Tower of Fantasy official creator",
+      "deskripsi": "My first official creator program. This is where the guide grind really started.",
       "gambar": "assets/pencapaian/tof.webp",
       "kredit": "© Hotta Studio, a Perfect World Company"
     },
     {
       "tahun": "2026",
-      "judul": "Official Creator — Neverness to Everness",
-      "deskripsi": "A proud milestone for me.",
+      "judul": "Neverness to Everness official creator",
+      "deskripsi": "Most of my uploads these days are NTE guides, so this one fits.",
       "gambar": "assets/pencapaian/nte.webp",
       "kredit": "© Hotta Studio / Perfect World"
     },
     {
       "tahun": "2026",
-      "judul": "Official Creator — Silver Palace",
-      "deskripsi": "A proud milestone for me.",
+      "judul": "Silver Palace official creator",
+      "deskripsi": "Got picked up for Silver Palace too, and I've been covering it since.",
       "gambar": "assets/pencapaian/silverpalace.webp",
       "kredit": "© Elementa / Silver Studio"
     },
     {
       "tahun": "2026",
-      "judul": "Built a Home for My Parents",
-      "deskripsi": "Reaching this point, I'm truly grateful I could make it happen.",
+      "judul": "Built a home for my parents",
+      "deskripsi": "The one I'm proudest of. Everything above helped make it happen.",
       "gambar": "assets/pencapaian/rumah.svg",
       "kredit": ""
     }
   ],
   "game": {
     "aktif": true,
-    "judul": "Games I Play",
-    "petunjuk": "Hover over a card to see my account details.",
+    "judul": "Games I play",
+    "petunjuk": "Hover a card (or tap it on your phone) to see my UID and stats.",
     "daftar": [
       {
         "nama": "Genshin Impact",
@@ -191,7 +190,7 @@
         "warna": "#6f9dff",
         "gambar": "assets/ayaka.webp",
         "kredit": "© HoYoverse",
-        "deskripsi": "Adventuring across Teyvat with my favorite waifu, Kamisato Ayaka.",
+        "deskripsi": "Playing since 2020. Ayaka is still my main.",
         "uid": "800592739",
         "data": [
           {
@@ -219,7 +218,7 @@
         "warna": "#8c7bff",
         "gambar": "assets/game/tof.webp",
         "kredit": "© Hotta Studio, a Perfect World Company",
-        "deskripsi": "The first game where I became an Official Creator.",
+        "deskripsi": "The game that got me into creator programs.",
         "uid": "1600315051",
         "data": [
           {
@@ -247,7 +246,7 @@
         "warna": "#ff5f9e",
         "gambar": "assets/pencapaian/nte.webp",
         "kredit": "© Hotta Studio / Perfect World",
-        "deskripsi": "A mysterious supernatural city — and I'm one of its Official Creators.",
+        "deskripsi": "My main game right now and where most of my guides come from.",
         "uid": "218210637444",
         "data": [
           {
@@ -275,7 +274,7 @@
         "warna": "#d6a84f",
         "gambar": "assets/pencapaian/silverpalace.webp",
         "kredit": "© Elementa / Silver Studio",
-        "deskripsi": "The newest game on my list, also as an Official Creator.",
+        "deskripsi": "The newest one on my list. Still figuring out the best builds.",
         "uid": "-",
         "data": [
           {
@@ -303,7 +302,7 @@
         "warna": "#b48cff",
         "gambar": "assets/game/aniimo.webp",
         "kredit": "© Pawprints Studio",
-        "deskripsi": "Laid-back adventures with the super adorable Aniimo.",
+        "deskripsi": "A chill creature-collecting game I play to relax.",
         "uid": "411000100056",
         "data": [
           {
@@ -331,7 +330,7 @@
         "warna": "#e5484d",
         "gambar": "assets/game/ananta.webp",
         "kredit": "© NetEase Games / Naked Rain",
-        "deskripsi": "Thrilling action in a modern city you can freely explore.",
+        "deskripsi": "Open-world city action. Not out yet, but I'm watching it closely.",
         "uid": "-",
         "data": [
           {
@@ -356,7 +355,7 @@
   },
   "youtube": {
     "aktif": true,
-    "judul": "Latest YouTube Videos",
+    "judul": "Latest on YouTube",
     "handle": "@FebryCoeg",
     "jumlah": 12
   },
@@ -365,10 +364,10 @@
     "nama": "Febry Store",
     "ikon": "febry",
     "logo": "https://febry.store/assets/images/1719849285_81946724b128b7bbe57d.png",
-    "tagline": "Top up your favorite games — cheap & instant",
-    "deskripsi": "My own top-up store for Genshin Impact, Honkai Star Rail, Wuthering Waves, Mobile Legends, and dozens of other games. Pay by e-wallet, bank transfer, or at convenience stores — orders are processed right away.",
+    "tagline": "Top up your games without the hassle",
+    "deskripsi": "My own top-up store. Genshin, Honkai Star Rail, Wuthering Waves, Mobile Legends and 50+ other games. Pay with an e-wallet, bank transfer or at a convenience store, and your order goes through on its own.",
     "url": "https://febry.store/",
-    "tombol": "Top Up Now",
+    "tombol": "Go to Febry Store",
     "statistik": [
       {
         "angka": "50+",
@@ -393,29 +392,24 @@
     ],
     "keunggulan": [
       {
-        "ikon": "harga",
-        "judul": "Lowest Prices",
-        "deskripsi": "Quality products at friendly prices."
+        "ikon": "instan",
+        "judul": "Automatic delivery",
+        "deskripsi": "Your order goes through as soon as you pay."
       },
       {
         "ikon": "bayar",
-        "judul": "Many Payment Options",
-        "deskripsi": "E-wallets, bank transfers, even convenience stores."
+        "judul": "Lots of ways to pay",
+        "deskripsi": "E-wallets, bank transfer, convenience stores."
       },
       {
         "ikon": "promo",
-        "judul": "Great Promos",
-        "deskripsi": "Discounts & deals for loyal customers."
-      },
-      {
-        "ikon": "instan",
-        "judul": "Instant Processing",
-        "deskripsi": "Orders are processed as soon as payment is complete."
+        "judul": "Promos for regulars",
+        "deskripsi": "Discounts drop every now and then."
       }
     ]
   },
-  "donasiJudul": "Buy me a cup of tea",
-  "donasiPesan": "If you enjoy my content and want to show some support, you can treat me through one of the links below. Every bit of support means a lot!",
+  "donasiJudul": "Tip jar",
+  "donasiPesan": "If one of my guides saved your pulls, you can leave a tip here. It helps me keep making videos.",
   "donasi": [
     {
       "nama": "Sociabuzz",

@@ -46,7 +46,7 @@ const donasiBadge = (d) => DONATE_ICONS[d.ikon]
   : `<span class="don-initial">${esc((d.nama || "?").trim().charAt(0).toUpperCase())}</span>`;
 
 function render(c) {
-  document.title = `${c.nama} — Portfolio`;
+  document.title = `${c.nama} | Portfolio`;
   $("brand").textContent = c.nama.split(" ")[0];
   if (c.logo) {
     $("brand").innerHTML = `<img class="brand-logo" src="${esc(c.logo)}" alt="${esc(c.nama)}">`;
@@ -315,7 +315,7 @@ function setupInteractions(c) {
     const nama = $("cfNama").value.trim();
     const panggilan = (c.nama || "").split(" ")[0];
     const subjek = $("cfSubjek").value.trim() || `Hi ${panggilan}!` + (nama ? ` (from ${nama})` : "");
-    const isi = pesan + (nama ? `\n\n— ${nama}` : "");
+    const isi = pesan + (nama ? `\n\n${nama}` : "");
     const via = (e.submitter && e.submitter.dataset.via) || "gmail";
     const q = (o) => Object.entries(o).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join("&");
     if (via === "app") {

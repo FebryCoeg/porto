@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-11T06:13:03+00:00",
+  "diperbarui": "2026-11-11T14:21:47+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,30 +11,37 @@
   },
   "video": [
     {
+      "id": "lN8B3XOHt7I",
+      "judul": "ALL 1.5 VEHICLES - NEVERNESS TO EVERNESS",
+      "ditonton": "375",
+      "durasi": "10:05",
+      "tanggal": "2026-11-11T11:21:47+00:00"
+    },
+    {
       "id": "BI_uCXMfNwE",
       "judul": "YOU NEED TO KNOW THIS! - NEVERNESS TO EVERNESS",
-      "ditonton": "1.1K",
+      "ditonton": "3.3K",
       "durasi": "5:59",
       "tanggal": "2026-11-11T01:13:03+00:00"
     },
     {
       "id": "-maAfoMxGH8",
       "judul": "FEATURES THAT WILL HELP YOU IN 1.5 - NEVERNESS TO EVERNESS",
-      "ditonton": "2.5K",
+      "ditonton": "3.2K",
       "durasi": "8:11",
       "tanggal": "2026-11-10T11:42:04+00:00"
     },
     {
       "id": "sz_t6Rq9dU8",
       "judul": "NEW HOBBY LOGISTICS HUB GUIDE - NEVERNESS TO EVERNESS",
-      "ditonton": "3.1K",
+      "ditonton": "3.5K",
       "durasi": "8:52",
       "tanggal": "2026-11-09T06:55:44+00:00"
     },
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "4.2K",
+      "ditonton": "4.9K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "6.1K",
       "durasi": "12:37",
       "tanggal": "2026-10-28T20:55:44+00:00"
-    },
-    {
-      "id": "43Xr8hpk0C8",
-      "judul": "AKANE RIN AWAKENING 6 - NEVERNESS TO EVERNESS",
-      "ditonton": "1.9K",
-      "durasi": "8:52",
-      "tanggal": "2026-10-26T20:55:44+00:00"
     }
   ]
 }

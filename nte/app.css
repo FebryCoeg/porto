@@ -828,3 +828,11 @@ main { flex: 1; width: 100%; max-width: 1320px; margin: 0 auto; padding: clamp(1
 }
 
 .kv-inner { min-width: 0; width: 100%; }
+
+/* logo NTE Indonesia (buatan sendiri) */
+.logo-img { height: 46px; width: auto; flex: none; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.4)); transition: transform 0.2s; }
+.logo:hover .logo-img { transform: rotate(-2deg) scale(1.04); }
+.glitch span + span { background: none; color: inherit; -webkit-background-clip: border-box; background-clip: border-box; }
+.glitch > span:only-child { background: linear-gradient(90deg, #fff 0%, #c8b6ff 50%, var(--cyan) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (max-width: 600px) { .logo-img { height: 38px; } .logo-text small { display: none; } }
+@media (max-width: 380px) { .logo-text { display: none; } .logo-img { height: 36px; } }

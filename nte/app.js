@@ -201,7 +201,7 @@
         <div class="kv-fx" aria-hidden="true"></div>
         <div class="kv-inner">
           <span class="kv-tag">${S("DATABASE FAN-MADE", "FAN-MADE DATABASE")} · NEVERNESS TO EVERNESS</span>
-          <h1 class="glitch" data-text="ARSIP HETHEREAU"><span>ARSIP</span><span>HETHEREAU</span></h1>
+          <h1 class="glitch" data-text="HETHEREAU"><span>HETHEREAU</span></h1>
           <p>${S("Esper, Arc, Modul, Item, Cerita, Anomali, Pencapaian, sampai Makanan. Semua data langsung dari file game, lengkap dalam Bahasa Indonesia.", "Espers, Arcs, Modules, Items, Story, Anomalies, Achievements and Food, straight from the game files.")}</p>
           <div class="kv-btns">
             <a class="kbtn cyan" href="/esper" data-link><b>${S("Jelajahi Database", "Explore Database")}</b><small>ESPER · ARC · ITEM</small></a>

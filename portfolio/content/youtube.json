@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-12T00:40:46+00:00",
+  "diperbarui": "2026-11-12T15:11:06+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,37 +11,44 @@
   },
   "video": [
     {
+      "id": "Tl3juNUiVD0",
+      "judul": "COMPLETE LILY BUILD, TEAM, BUILD - WUTHERING WAVES [TOP-UP AT FEBRY.STORE]",
+      "ditonton": "1.7K",
+      "durasi": "12:26",
+      "tanggal": "2026-11-12T05:11:06+00:00"
+    },
+    {
       "id": "lN8B3XOHt7I",
       "judul": "ALL 1.5 VEHICLES - NEVERNESS TO EVERNESS",
-      "ditonton": "1K",
+      "ditonton": "1.6K",
       "durasi": "10:05",
       "tanggal": "2026-11-11T11:21:47+00:00"
     },
     {
       "id": "BI_uCXMfNwE",
       "judul": "YOU NEED TO KNOW THIS! - NEVERNESS TO EVERNESS",
-      "ditonton": "4.1K",
+      "ditonton": "5.1K",
       "durasi": "5:59",
       "tanggal": "2026-11-11T01:13:03+00:00"
     },
     {
       "id": "-maAfoMxGH8",
       "judul": "FEATURES THAT WILL HELP YOU IN 1.5 - NEVERNESS TO EVERNESS",
-      "ditonton": "3.4K",
+      "ditonton": "3.6K",
       "durasi": "8:11",
       "tanggal": "2026-11-10T11:42:04+00:00"
     },
     {
       "id": "sz_t6Rq9dU8",
       "judul": "NEW HOBBY LOGISTICS HUB GUIDE - NEVERNESS TO EVERNESS",
-      "ditonton": "3.7K",
+      "ditonton": "4K",
       "durasi": "8:52",
       "tanggal": "2026-11-09T06:55:44+00:00"
     },
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "5.3K",
+      "ditonton": "5.7K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
@@ -62,7 +69,7 @@
     {
       "id": "GBTlVsmsGPE",
       "judul": "ELYMS BETA TEST REVIEW - NEVERNESS TO EVERNESS",
-      "ditonton": "4.4K",
+      "ditonton": "4.5K",
       "durasi": "9:14",
       "tanggal": "2026-11-06T20:55:44+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "3.2K",
       "durasi": "4:32",
       "tanggal": "2026-10-31T20:55:44+00:00"
-    },
-    {
-      "id": "1pRTT784mQc",
-      "judul": "SPECIAL PROGRAM 1.5 SUMMARY - NEVERNESS TO EVERNESS",
-      "ditonton": "6.1K",
-      "durasi": "12:37",
-      "tanggal": "2026-10-28T20:55:44+00:00"
     }
   ]
 }

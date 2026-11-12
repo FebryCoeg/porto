@@ -736,3 +736,95 @@ main { flex: 1; width: 100%; max-width: 1320px; margin: 0 auto; padding: clamp(1
 /* penghitung kunjungan di footer */
 .visits { margin-top: 6px; font: 600 0.66rem var(--mono); letter-spacing: 0.06em; color: var(--muted); }
 .visits::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #3fc285; box-shadow: 0 0 6px #3fc285; vertical-align: 1px; }
+
+/* ============================================================
+   RESPONSIF HP (perbaikan)
+   ============================================================ */
+@media (max-width: 920px) {
+  .dossier, .arc-detail, .home-hero { grid-template-columns: minmax(0, 1fr); }
+  .dossier-art, .arc-card-img { max-width: min(460px, 100%); }
+}
+@media (max-width: 600px) {
+  .top { gap: 8px; padding: 8px 12px; }
+  .top-actions { gap: 6px; }
+  .icon-btn { height: 38px; min-width: 38px; padding: 0 9px; }
+  .icon-btn svg { width: 17px; height: 17px; }
+  .lang-toggle { padding: 0 10px; }
+  .logo { gap: 8px; min-width: 0; }
+  .logo-stamp { width: 36px; height: 36px; font-size: 0.62rem; }
+  .logo-text { min-width: 0; }
+  .logo-text b { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  main { padding: 16px 14px 48px; }
+  .page-head { margin-bottom: 16px; padding-bottom: 14px; }
+  .page-head h1 { font-size: clamp(1.6rem, 8.4vw, 2.4rem); }
+  .page-head p { font-size: 0.9rem; }
+  .count-tag { font-size: 0.66rem; padding: 6px 12px; }
+  .toolbar { padding: 8px; gap: 8px; border-radius: 22px; }
+  .filter-input { flex-basis: 100%; height: 40px; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; padding: 3px 2px; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { height: 34px; padding: 0 12px; font-size: 0.78rem; }
+  .chip-sep { display: none; }
+  .sheet-body { padding: 18px 18px 28px; }
+  .sheet-body h2 { font-size: 1.25rem; }
+  .entry, .story { padding: 14px 16px; border-radius: 18px; }
+  .dossier-head h1 { font-size: clamp(2rem, 11vw, 3rem); }
+  .tabs { border-radius: 22px; }
+  .tab { padding: 0 14px; font-size: 0.72rem; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* beranda */
+  .kv { padding: 34px 14px 60px; }
+  .kv-tag { font-size: 0.56rem; padding: 5px 10px; }
+  .glitch { font-size: clamp(1.9rem, 10.6vw, 3.4rem); }
+  .kv-inner > p { font-size: 0.92rem; }
+  .kv-btns { gap: 10px; }
+  .kbtn { flex: 1 1 100%; height: 58px; padding: 0 18px; border-radius: 16px 16px 16px 4px; }
+  .kbtn b { font-size: 0.95rem; }
+  .kv .home-stats { gap: 6px; }
+  .home-stats div { padding: 6px 12px; }
+  .home-stats div b { font-size: 0.95rem; }
+  .roster { padding: 28px 14px 34px; gap: 18px; }
+  .ro-art { height: 300px; }
+  .ro-glyph { font-size: 3.4rem; top: 4%; }
+  .ro-rank b { font-size: 2.4rem; }
+  .ro-name { gap: 10px; }
+  .ro-name h2 { font-size: clamp(1.8rem, 10vw, 2.6rem); }
+  .ro-quote { font-size: 1rem; }
+  .ro-desc { max-height: 130px; font-size: 0.86rem; }
+  .ro-band { top: 0; height: 340px; }
+  .cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cat-card { min-height: 128px; padding: 14px; border-radius: 20px; }
+  .cat-card h3 { font-size: 0.86rem; }
+  .cat-card p { display: none; }
+  .cat-card .cat-thumbs img { width: 34px; height: 34px; margin-left: -10px; }
+  .cat-card .num { font-size: 1.3rem; right: 12px; bottom: 10px; }
+  .cta-band { padding: 20px; border-radius: 24px; }
+  .section-title { margin: 26px 0 12px; }
+  /* daftar */
+  .wide-grid, .icon-grid { grid-template-columns: minmax(0, 1fr); }
+  .fashion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .fcard .fmeta { padding: 8px 10px 10px; }
+  .fcard b { font-size: 0.74rem; }
+  .story-grid { grid-template-columns: minmax(0, 1fr); }
+  .chapter .cap b { font-size: 0.98rem; }
+  .esper-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .esper-meta b { font-size: 0.82rem; }
+  .icard { padding: 8px 14px 8px 8px; gap: 12px; }
+  .ach-head h2 { font-size: 1.05rem; }
+  .ach-row { gap: 10px; padding: 8px 8px 8px 8px; min-height: 0; }
+  .ach-row b { font-size: 0.8rem; }
+  .ach-row p { font-size: 0.78rem; }
+  .ach-row .reward { font-size: 0.74rem; gap: 6px; }
+  .ach-row .reward img { width: 30px; height: 30px; }
+  .ach-progress { padding: 12px 14px; border-radius: 20px; }
+  .item-layout { gap: 12px; }
+  .cat-side { padding: 6px; gap: 6px; }
+  .cat-side button { height: 38px; font-size: 0.8rem; padding: 0 14px; }
+  .foot-inner { padding: 20px 14px; }
+}
+@media (max-width: 380px) {
+  .logo-text { display: none; }
+  .tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.kv-inner { min-width: 0; width: 100%; }

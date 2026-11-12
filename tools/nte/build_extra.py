@@ -305,7 +305,7 @@ def main():
         print(f"{key}: {n} entri")
     missing = B.build_images()
     if missing:
-        bad = {B.IMAGES[m][0] for m in missing}
+        bad = set(missing)
         for key in data:
             f = B.OUT_DATA / f"{key}.json"
             t = f.read_text(encoding="utf-8")
@@ -317,7 +317,7 @@ def main():
     src = json.loads(src_file.read_text(encoding="utf-8"))
     resolve = B.image_resolver()
     src["data"] = sorted(set(src["data"]) | B.USED)
-    for rel, (o, _) in B.IMAGES.items():
+    for o, (rel, _) in B.IMAGES.items():
         real = resolve(rel)
         if real:
             src["images"][real] = o

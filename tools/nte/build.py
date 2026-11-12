@@ -145,7 +145,7 @@ def T(s, ctx=""):
     return s
 
 # ------------------------------------------------------------------ gambar
-IMAGES = {}  # path repo (png) -> (path output, ukuran maks)
+IMAGES = {}  # path output -> (path repo png, ukuran maks); satu gambar game boleh dipakai di beberapa output
 
 def asset(path, kind, size):
     """'/Game/UI/UI_Icon/Item/x.x' -> 'img/<kind>/x.webp' (dicatat untuk diunduh)."""
@@ -159,7 +159,7 @@ def asset(path, kind, size):
     rel = p[len("/Game/UI/"):] + ".png"
     name = Path(rel).stem.lower()
     out = f"img/{kind}/{name}.webp"
-    IMAGES[rel] = (out, size)
+    IMAGES[out] = (rel, size)
     return out
 
 def image_resolver():
@@ -174,7 +174,7 @@ def image_resolver():
 
 def build_images():
     from PIL import Image
-    todo = [(rel, out, size) for rel, (out, size) in IMAGES.items() if not (ROOT / "nte" / out).exists()]
+    todo = [(rel, out, size) for out, (rel, size) in IMAGES.items() if not (ROOT / "nte" / out).exists()]
     print(f"gambar: {len(IMAGES)} total, {len(todo)} perlu dibuat")
     missing = []
 
@@ -186,7 +186,7 @@ def build_images():
         try:
             data = fetch(real or rel, binary=True)
         except Exception:
-            missing.append(rel)
+            missing.append(out)
             return
         im = Image.open(io.BytesIO(data))
         im = im.convert("RGBA")
@@ -582,7 +582,7 @@ def main():
     missing = set() if NO_IMAGES else build_images()
     if missing:
         # kosongkan path gambar yang gagal supaya website tidak menampilkan gambar rusak
-        bad = {IMAGES[m][0] for m in missing}
+        bad = set(missing)
         for f in OUT_DATA.glob("*.json"):
             s = f.read_text(encoding="utf-8")
             for b in bad:
@@ -599,7 +599,7 @@ def main():
     # daftar file sumber yang dipakai, supaya check_update.py hanya melaporkan perubahan yang relevan
     resolve = image_resolver()
     images = {}
-    for rel, (out, _) in IMAGES.items():
+    for out, (rel, _) in IMAGES.items():
         real = resolve(rel)
         if real:
             images[real] = out

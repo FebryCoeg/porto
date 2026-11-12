@@ -219,16 +219,23 @@
         <div class="kv-marquee" aria-hidden="true"><span>NEVERNESS TO EVERNESS · ARSIP HETHEREAU · NEVERNESS TO EVERNESS · ARSIP HETHEREAU · </span><span>NEVERNESS TO EVERNESS · ARSIP HETHEREAU · NEVERNESS TO EVERNESS · ARSIP HETHEREAU · </span></div>
       </section>
 
-      <section class="showcase" id="showcase">
-        <div class="sc-art"><img id="scImg" alt=""></div>
-        <div class="sc-info">
-          <span class="kv-tag">${S("BERKAS ESPER", "ESPER FILES")}</span>
-          <h2 id="scName"></h2>
-          <div class="tags" id="scTags"></div>
-          <p class="lede txt" id="scDesc"></p>
-          <a class="btn" id="scLink" data-link>${S("Buka berkas →", "Open file →")}</a>
-          <div class="sc-list" id="scList">${espers.map((e, i) => `<button type="button" data-i="${i}" class="${elClass(e.element)}" aria-label="${esc(e.name)}"><img src="${img(e.icon)}" alt="" loading="lazy"></button>`).join("")}</div>
+      <section class="roster" id="showcase">
+        <div class="ro-deco" aria-hidden="true"><span>NEVERNESS TO EVERNESS</span><span>ESPER FILES</span><span>HETHEREAU</span></div>
+        ${bgs[1] ? `<div class="ro-band" aria-hidden="true"><img src="${img(bgs[1])}" alt="" loading="lazy"></div>` : ""}
+        <div class="ro-glyph" id="roGlyph" aria-hidden="true"></div>
+        <div class="ro-rail">
+          <button class="ro-arrow" type="button" data-dir="-1" aria-label="${S("Esper sebelumnya", "Previous Esper")}"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11l6-6 6 6"/></svg></button>
+          <div class="ro-list" id="scList">${espers.map((e, i) => `<button type="button" data-i="${i}" class="${elClass(e.element)}" aria-label="${esc(e.name)}"><img src="${img(e.icon)}" alt="" loading="lazy"></button>`).join("")}</div>
+          <button class="ro-arrow" type="button" data-dir="1" aria-label="${S("Esper berikutnya", "Next Esper")}"><svg viewBox="0 0 24 24"><path d="M12 5v13M6 13l6 6 6-6"/></svg></button>
         </div>
+        <div class="ro-info">
+          <div class="ro-name"><span class="ro-rank" id="scRank"><b></b><small>RANK</small></span><h2 id="scName"></h2><img id="scType" alt=""></div>
+          <div class="ro-line"><i></i></div>
+          <p class="ro-quote" id="scQuote"></p>
+          <div class="ro-desc txt" id="scDesc"></div>
+          <div class="ro-meta"><div class="tags" id="scTags"></div><a class="btn" id="scLink" data-link>${S("Buka berkas →", "Open file →")}</a></div>
+        </div>
+        <div class="ro-art"><img id="scImg" alt=""></div>
       </section>
 
       <div class="section-title"><h2>${S("Indeks arsip", "Archive index")}</h2><span class="mono">${cats.length} ${S("KATEGORI", "CATEGORIES")}</span></div>
@@ -257,18 +264,35 @@
         slides[k].classList.remove("on"); k = (k + 1) % slides.length; slides[k].classList.add("on");
       }, 6000);
     }
-    // etalase Esper
+    // etalase Esper (rail ikon bulat + panah, seperti halaman karakter situs resmi)
+    let cur = 0;
     const pick = (i) => {
-      const e = espers[i];
-      $("#scImg").src = img(e.portrait || e.icon); $("#scImg").alt = e.name;
+      cur = (i + espers.length) % espers.length;
+      const e = espers[cur], p = e.profile || {};
+      const art = $("#scImg");
+      art.classList.remove("in"); void art.offsetWidth;
+      art.src = img(e.portrait || e.icon); art.alt = e.name; art.classList.add("in");
       $("#scName").textContent = e.name;
-      $("#scTags").innerHTML = `<span class="tag"><span class="dot"></span>${esc(e.element)}</span><span class="tag">Arc ${esc(e.arcType)}</span><span class="tag">Rank ${esc(e.rank)}</span>`;
-      $("#scDesc").innerHTML = rich(String(e.desc || "").split("\n")[0]);
+      $("#scRank b").textContent = e.rank;
+      $("#scRank").className = `ro-rank rank-${e.rank}`;
+      $("#scType").src = e.arcTypeIcon ? img(e.arcTypeIcon) : ""; $("#scType").hidden = !e.arcTypeIcon;
+      $("#roGlyph").textContent = e.name.toUpperCase();
+      $("#scQuote").innerHTML = rich(p.intro || e.title || "");
+      $("#scDesc").innerHTML = rich(e.desc || p.impression || "").split("\n").filter(Boolean).map((t) => `<p>${t}</p>`).join("");
+      $("#scDesc").scrollTop = 0;
+      $("#scTags").innerHTML = `<span class="tag"><span class="dot"></span>${esc(e.element)}</span><span class="tag">${e.arcTypeIcon ? `<img src="${img(e.arcTypeIcon)}" alt="">` : ""}Arc ${esc(e.arcType)}</span>`;
       $("#scLink").setAttribute("href", `/esper/${e.slug}`);
-      $("#showcase").className = `showcase ${elClass(e.element)}`;
-      $$("#scList button").forEach((b) => b.setAttribute("aria-pressed", +b.dataset.i === i));
+      $("#showcase").className = `roster ${elClass(e.element)}`;
+      $$("#scList button").forEach((b) => b.setAttribute("aria-pressed", +b.dataset.i === cur));
+      const btn = $(`#scList button[data-i="${cur}"]`), list = $("#scList");
+      if (btn) {
+        const vertical = list.scrollHeight > list.clientHeight + 4;
+        if (vertical) list.scrollTo({ top: btn.offsetTop - list.clientHeight / 2 + btn.offsetHeight / 2, behavior: "smooth" });
+        else list.scrollTo({ left: btn.offsetLeft - list.clientWidth / 2 + btn.offsetWidth / 2, behavior: "smooth" });
+      }
     };
     $("#scList").addEventListener("click", (ev) => { const b = ev.target.closest("button"); if (b) pick(+b.dataset.i); });
+    $$(".ro-arrow", main).forEach((b) => (b.onclick = () => pick(cur + +b.dataset.dir)));
     pick(Math.max(0, espers.findIndex((e) => e.slug === (picks[0] || {}).slug)));
   }
 

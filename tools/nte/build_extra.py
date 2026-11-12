@@ -231,6 +231,19 @@ def build_fashion():
         if n and not re.fullmatch(r"Fashion \d+ Name", n) and "Test Fashion" not in n:
             out.append({"id": f"{m.group(1)}_{m.group(2)}", "char": names.get(m.group(1), m.group(1)),
                         "name": name(n), "desc": pair(d, "deskripsi-fashion") if d and "Test Fashion" not in d else None})
+    # ilustrasi kostum dari tabel penampilan game
+    app = B.table("DataTable/Character/Appearance/DT_AppearanceData.json")
+    try:
+        ports = {e["id"]: e.get("portrait") or e.get("icon", "") for e in json.loads((B.OUT_DATA / "espers.json").read_text(encoding="utf-8"))}
+    except Exception:
+        ports = {}
+    for x in out:
+        row = app.get(f"Fashion_{x['id']}", {})
+        art = next((row.get(k) for k in ("SmallPortraitImg", "DisplayIcon", "ItemIcon") if (row.get(k) or {}).get("AssetPathName")), None)
+        x["image"] = pic(art, "fashion", 720) if art else ""
+        x["fallback"] = ports.get(x["id"].split("_")[0], "")  # dipakai bila ilustrasi belum ada di file game
+        x["head"] = pic(row.get("HeadIconBig"), "fashion", 200) if (row.get("HeadIconBig") or {}).get("AssetPathName") else ""
+        x["rarity"] = B.quality(row) if row else 1
     out.sort(key=lambda x: (x["char"], x["id"]))
     return out
 
@@ -283,6 +296,8 @@ def main():
         "achievements": build_achievements(),
         "fashion": build_fashion(),
         "food": build_food(),
+        # latar beranda: ilustrasi layar loading game
+        "home": {"bg": [pic(f"/Game/UI/UI/loading/res/UI_YH_Loading_Image_{n}", "home", 1920) for n in ("005", "014", "016", "006", "001", "012")]},
     }
     for key, obj in data.items():
         B.save(key, finalize(obj))

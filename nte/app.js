@@ -14,6 +14,8 @@
   const rich = (s) => String(s ?? "").replace(/<(?!\/?(b|i)>)/g, "&lt;");
   const elClass = (e) => "el-" + String(e || "").toLowerCase();
 
+  const LINK = { donate: "https://trakteer.id/febrycoeg", community: "https://www.facebook.com/groups/nteindo?locale=id_ID" };
+  const QCOLOR = { 1: "Abu-abu", 2: "Hijau", 3: "Biru", 4: "Ungu", 5: "Emas", 6: "Merah" };
   const LABEL = {
     element: { Cosmos: "Cosmos", Anima: "Anima", Incantation: "Incantation", Chaos: "Chaos", Psyche: "Psyche", Lakshana: "Lakshana" },
     group: { basic: "Serangan Dasar", reflexive: "Respons Refleks", redirect: "Redirect Skill", ultimate: "Ultimate", support: "Support Skill", passive: "Pasif" },
@@ -168,12 +170,13 @@
   function setCount(n) { const c = $("#countTag"); if (c) c.textContent = `${n} ENTRI`; }
 
   // ---------------- BERANDA ----------------
+  let kvTimer = null;
   async function viewHome() {
     setTitle("");
-    const [espers, arcs, mods, items, furn, veh, prop, story, anomalies, glossary, achievements, fashion, food] = await Promise.all([
-      "espers", "arcs", "modules", "items", "furniture", "vehicles", "property", "story", "anomalies", "glossary", "achievements", "fashion", "food"
+    const [espers, arcs, mods, items, furn, veh, prop, story, anomalies, glossary, achievements, fashion, food, home] = await Promise.all([
+      "espers", "arcs", "modules", "items", "furniture", "vehicles", "property", "story", "anomalies", "glossary", "achievements", "fashion", "food", "home"
     ].map(load));
-    const picks = ["iroi", "elyms", "crimson", "chiz", "lacrimosa", "sakiri"].map((s) => espers.find((e) => e.slug === s)).filter(Boolean).slice(0, 3);
+    const picks = ["elyms", "exe", "chaos", "linko", "iroi", "crimson"].map((s) => espers.find((e) => e.slug === s)).filter(Boolean).slice(0, 3);
     while (picks.length < 3 && espers[picks.length]) picks.push(espers[picks.length]);
     const thumbs = (arr, key = "icon") => arr.filter((x) => x[key]).slice(0, 3).map((x) => `<img src="${img(x[key])}" alt="" loading="lazy">`).join("");
     const cats = [
@@ -183,43 +186,90 @@
       ["/item", "04", S("Item", "Items"), S("Material, hadiah, koleksi, dan lainnya", "Materials, gifts, collectibles & more"), items.items.length, thumbs(items.items.filter((i) => i.rarity >= 4))],
       ["/furnitur", "05", S("Furnitur", "Furniture"), S("Isi rumahmu di Hethereau", "Decorate your home in Hethereau"), furn.length, thumbs(furn.filter((i) => i.rarity >= 4))],
       ["/kendaraan", "06", S("Kendaraan", "Vehicles"), S("Mobil dan motor beserta mereknya", "Cars & bikes by brand"), veh.length, thumbs(veh)],
-      ["/properti", "07", S("Properti", "Property"), S("Apartemen dan rumah yang bisa dibeli", "Buyable apartments & houses"), prop.length, ""],
-      ["/cerita", "08", S("Cerita", "Story"), S("Ringkasan bab Prolog, Main Story 1.0–1.5, dan Spinoff", "Prologue, Main Story 1.0–1.5 & Spinoff recaps"), story.length, ""],
-      ["/anomali", "09", S("Anomali", "Anomalies"), S("Katalog Anomaly, kode, kutipan, dan data monster/boss", "Anomaly database, codes, lore & bosses"), anomalies.anomalies.length + anomalies.monsters.length, ""],
-      ["/istilah", "10", S("Istilah", "Glossary"), S("Panduan istilah resmi dunia Neverness to Everness", "Official terminology manual of NTE"), glossary.length, ""],
-      ["/pencapaian", "11", S("Pencapaian", "Achievements"), S("Daftar achievement per kategori dan syaratnya", "Achievements by category & conditions"), achievements.items.length, ""],
-      ["/fashion", "12", "Fashion", S("Kostum karakter dan deskripsi temanya", "Character outfits & appearance lore"), fashion.length, ""],
-      ["/makanan", "13", S("Makanan", "Food"), S("Menu makanan, efek penyembuhan/buff, dan bahan masak", "Dishes, restoration/buff effects & ingredients"), food.length, ""],
+      ["/properti", "07", S("Properti", "Property"), S("Apartemen dan rumah yang bisa dibeli", "Buyable apartments & houses"), prop.length, thumbs(prop, "image")],
+      ["/cerita", "08", S("Cerita", "Story"), S("Ringkasan bab utama dan spinoff", "Main story & spinoff recaps"), story.length, thumbs(story, "roleIcon")],
+      ["/anomali", "09", S("Anomali", "Anomalies"), S("Arsip Anomaly, monster, dan boss", "Anomaly files, monsters & bosses"), anomalies.anomalies.length + anomalies.monsters.length, thumbs(anomalies.monsters, "image")],
+      ["/istilah", "10", S("Istilah", "Glossary"), S("Istilah resmi dunia NTE", "Official NTE terminology"), glossary.length, ""],
+      ["/pencapaian", "11", S("Pencapaian", "Achievements"), S("Medali, syarat, hadiah, dan penanda progres", "Medals, requirements, rewards & progress tracker"), achievements.items.length, thumbs(achievements.items.filter((x) => x.q === 3), "icon")],
+      ["/fashion", "12", "Fashion", S("Kostum Esper dan ilustrasinya", "Esper outfits & illustrations"), fashion.length, thumbs(fashion, "head")],
+      ["/makanan", "13", S("Makanan", "Food"), S("Makanan, efek buff, dan bahan masak", "Dishes, buffs & ingredients"), food.length, thumbs(food)],
     ];
+    const bgs = (home && home.bg) || [];
     main.innerHTML = `
-      <section class="home-hero">
-        <div>
-          <span class="mono">BERKAS NO. NTE-ID / VERSI ${new Date().getFullYear()}</span>
-          <h1>${S("Semua tentang <em>Hethereau</em>, dalam Bahasa Indonesia.", "All of <em>Hethereau</em>, official database.")}</h1>
-          <p>${S("Database lengkap Neverness to Everness: Esper, Arc, Modul, Item, Kendaraan, Cerita, Anomali, Pencapaian, hingga Makanan langsung dari teks game.", "Complete Neverness to Everness database: Espers, Arcs, Modules, Items, Vehicles, Lore, Anomalies, Achievements, and Food directly from game text.")}</p>
-          <div class="home-actions">
-            <a class="btn" href="/esper" data-link>${S("Lihat semua Esper →", "View all Espers →")}</a>
-            <button class="btn ghost" type="button" id="heroSearch">${S("Cari sesuatu", "Search database")} <span class="kbd">Ctrl K</span></button>
+      <section class="kv">
+        <div class="kv-bg">${bgs.map((b, i) => `<img src="${img(b)}" alt="" class="${i === 0 ? "on" : ""}" ${i ? 'loading="lazy"' : ""}>`).join("")}</div>
+        <div class="kv-fx" aria-hidden="true"></div>
+        <div class="kv-chars" aria-hidden="true">${picks.map((e, i) => `<img src="${img(e.portrait || e.icon)}" alt="" class="c${i}">`).join("")}</div>
+        <div class="kv-inner">
+          <span class="kv-tag">${S("DATABASE FAN-MADE", "FAN-MADE DATABASE")} · NEVERNESS TO EVERNESS</span>
+          <h1 class="glitch" data-text="ARSIP HETHEREAU"><span>ARSIP</span><span>HETHEREAU</span></h1>
+          <p>${S("Esper, Arc, Modul, Item, Cerita, Anomali, Pencapaian, sampai Makanan. Semua data langsung dari file game, lengkap dalam Bahasa Indonesia.", "Espers, Arcs, Modules, Items, Story, Anomalies, Achievements and Food, straight from the game files.")}</p>
+          <div class="kv-btns">
+            <a class="kbtn cyan" href="/esper" data-link><b>${S("Jelajahi Database", "Explore Database")}</b><small>ESPER · ARC · ITEM</small></a>
+            <a class="kbtn violet" href="${LINK.community}" target="_blank" rel="noopener"><b>${S("Join Komunitas", "Join Community")}</b><small>NTE INDONESIA</small></a>
+            <a class="kbtn pink" href="${LINK.donate}" target="_blank" rel="noopener"><b>Donate</b><small>TRAKTEER</small></a>
           </div>
           <div class="home-stats">
-            <div><b>${espers.length}</b><span>${S("Esper", "Espers")}</span></div>
-            <div><b>${arcs.length}</b><span>${S("Arc", "Arcs")}</span></div>
-            <div><b>${story.length}</b><span>${S("Bab Cerita", "Story Chapters")}</span></div>
+            <div><b>${espers.length}</b><span>Esper</span></div>
+            <div><b>${arcs.length}</b><span>Arc</span></div>
             <div><b>${anomalies.anomalies.length}</b><span>${S("Anomali", "Anomalies")}</span></div>
             <div><b>${achievements.items.length}</b><span>${S("Pencapaian", "Achievements")}</span></div>
           </div>
         </div>
-        <div class="collage">
-          ${picks.map((e) => `<a class="polaroid ${elClass(e.element)}" href="/esper/${e.slug}" data-link><img src="${img(e.portrait || e.icon)}" alt="${esc(e.name)}"><span>${esc(e.name.toUpperCase())}</span></a>`).join("")}
+        <div class="kv-marquee" aria-hidden="true"><span>NEVERNESS TO EVERNESS · ARSIP HETHEREAU · NEVERNESS TO EVERNESS · ARSIP HETHEREAU · </span><span>NEVERNESS TO EVERNESS · ARSIP HETHEREAU · NEVERNESS TO EVERNESS · ARSIP HETHEREAU · </span></div>
+      </section>
+
+      <section class="showcase" id="showcase">
+        <div class="sc-art"><img id="scImg" alt=""></div>
+        <div class="sc-info">
+          <span class="kv-tag">${S("BERKAS ESPER", "ESPER FILES")}</span>
+          <h2 id="scName"></h2>
+          <div class="tags" id="scTags"></div>
+          <p class="lede txt" id="scDesc"></p>
+          <a class="btn" id="scLink" data-link>${S("Buka berkas →", "Open file →")}</a>
+          <div class="sc-list" id="scList">${espers.map((e, i) => `<button type="button" data-i="${i}" class="${elClass(e.element)}" aria-label="${esc(e.name)}"><img src="${img(e.icon)}" alt="" loading="lazy"></button>`).join("")}</div>
         </div>
       </section>
-      <div class="section-title"><h2>Indeks arsip</h2><span class="mono">${cats.length} ${S("KATEGORI", "CATEGORIES")}</span></div>
+
+      <div class="section-title"><h2>${S("Indeks arsip", "Archive index")}</h2><span class="mono">${cats.length} ${S("KATEGORI", "CATEGORIES")}</span></div>
       <div class="cat-grid">
         ${cats.map(([href, n, t, d, c, th]) => `<a class="cat-card" href="${href}" data-link><i>${n}</i><div class="cat-thumbs">${th}</div><h3>${t}</h3><p>${d}</p><span class="num">${c}</span></a>`).join("")}
       </div>
-      <div class="section-title"><h2>Esper</h2><a href="/esper" data-link>Semua Esper →</a></div>
-      <div class="esper-grid">${espers.slice(0, 6).map(esperCard).join("")}</div>`;
-    $("#heroSearch").onclick = openSearch;
+
+      <section class="cta-band">
+        <div>
+          <h2>${S("Dukung Arsip Hethereau", "Support Arsip Hethereau")}</h2>
+          <p>${S("Arsip ini dibuat dan diterjemahkan secara sukarela. Dukunganmu membantu arsip terus diperbarui setiap ada versi baru. Ngobrol dan berbagi tips bareng pemain lain di komunitas NTE Indonesia.", "This archive is built and translated voluntarily. Your support keeps it updated with every new version. Chat and share tips with other players in the NTE Indonesia community.")}</p>
+        </div>
+        <div class="kv-btns">
+          <a class="kbtn pink" href="${LINK.donate}" target="_blank" rel="noopener"><b>Donate</b><small>TRAKTEER</small></a>
+          <a class="kbtn violet" href="${LINK.community}" target="_blank" rel="noopener"><b>${S("Join Komunitas", "Join Community")}</b><small>FACEBOOK GROUP</small></a>
+        </div>
+      </section>`;
+
+    // latar berganti seperti layar loading game
+    clearInterval(kvTimer);
+    const slides = $$(".kv-bg img", main);
+    if (slides.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      let k = 0;
+      kvTimer = setInterval(() => {
+        if (!document.body.contains(slides[0])) return clearInterval(kvTimer);
+        slides[k].classList.remove("on"); k = (k + 1) % slides.length; slides[k].classList.add("on");
+      }, 6000);
+    }
+    // etalase Esper
+    const pick = (i) => {
+      const e = espers[i];
+      $("#scImg").src = img(e.portrait || e.icon); $("#scImg").alt = e.name;
+      $("#scName").textContent = e.name;
+      $("#scTags").innerHTML = `<span class="tag"><span class="dot"></span>${esc(e.element)}</span><span class="tag">Arc ${esc(e.arcType)}</span><span class="tag">Rank ${esc(e.rank)}</span>`;
+      $("#scDesc").innerHTML = rich(String(e.desc || "").split("\n")[0]);
+      $("#scLink").setAttribute("href", `/esper/${e.slug}`);
+      $("#showcase").className = `showcase ${elClass(e.element)}`;
+      $$("#scList button").forEach((b) => b.setAttribute("aria-pressed", +b.dataset.i === i));
+    };
+    $("#scList").addEventListener("click", (ev) => { const b = ev.target.closest("button"); if (b) pick(+b.dataset.i); });
+    pick(Math.max(0, espers.findIndex((e) => e.slug === (picks[0] || {}).slug)));
   }
 
   // ---------------- ESPER ----------------
@@ -399,14 +449,14 @@
       const out = d.modules.filter((m) => match(s.q, m.name, m.set) && (!s.set || m.set === s.set));
       $("#grid").innerHTML = out.map((m) => `<button class="tile q${m.rarity}" type="button" data-id="${esc(m.id)}">
         <div class="tile-img"><img src="${img(m.icon)}" alt="" loading="lazy"></div>
-        <div class="tile-body"><b>${esc(m.name)}</b><small>${m.set ? esc(m.set) : esc(m.kind || "Modul")}${m.core ? " · Inti" : ""}</small></div></button>`).join("") || `<div class="empty">Tidak ada modul yang cocok.</div>`;
+        <div class="tile-body"><b>${esc(m.name)}</b><span class="qtag">${QCOLOR[m.rarity] || ""}</span><small>${m.set ? esc(m.set) : esc(m.kind || "Modul")}${m.core ? " · Inti" : ""}</small></div></button>`).join("") || `<div class="empty">Tidak ada modul yang cocok.</div>`;
       setCount(out.length);
     });
     $("#grid").addEventListener("click", (ev) => {
       const b = ev.target.closest(".tile"); if (!b) return;
       const m = d.modules.find((x) => x.id === b.dataset.id);
       const set = d.sets.find((x) => x.name === m.set);
-      sheet(m, `<span class="mono">MODUL · ${esc(LABEL.rarity[m.rarity] || "")}${m.slots ? ` · ${esc(m.slots)} PETAK` : ""}</span>`,
+      sheet(m, `<span class="mono">MODUL · ${esc(QCOLOR[m.rarity] || "")} · ${esc(LABEL.rarity[m.rarity] || "")}${m.slots ? ` · ${esc(m.slots)} PETAK` : ""}</span>`,
         `${m.desc ? `<p class="txt">${rich(m.desc)}</p>` : ""}${set ? `<div class="group-label">Set ${esc(set.name)}</div>${set.bonuses.map((x) => `<div class="bonus"><i>${x.pieces} KEPING</i><p class="txt">${rich(x.text)}</p></div>`).join("")}` : ""}`);
     });
   }
@@ -660,6 +710,10 @@
     d.items.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
     const cats = d.categories.filter((c) => counts[c.id]);
     let cat = new URLSearchParams(location.search).get("kat") || "";
+    const KEY = "nte-achievements";
+    let done = new Set();
+    try { done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch (e) {}
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...done])); } catch (e) {} };
     main.innerHTML = head(S("PENCAPAIAN", "ACHIEVEMENTS"), S("Pencapaian", "Achievements"),
       S("Semua achievement di game beserta syarat dan hadiahnya. Medali perunggu, perak, dan emas menunjukkan tingkat kesulitannya.", "Every in-game achievement with its requirement and reward. Bronze, silver and gold medals show how hard each one is."), d.items.length) + `
       <div class="ach-layout">
@@ -668,7 +722,17 @@
           ${cats.map((c) => `<button type="button" data-c="${c.id}" aria-pressed="${cat === c.id}" aria-label="${esc(cn(c))}"><img class="off" src="${img(c.icon)}" alt=""><img class="on" src="${img(c.iconOn || c.icon)}" alt=""><span>${esc(cn(c))}</span></button>`).join("")}
         </div>
         <div>
-          <div class="toolbar">${filterBox(S("Cari pencapaian…", "Search achievements…"))}${chips(MEDAL.map((label, i) => ({ v: String(i + 1), label })), "m")}</div>
+          <div class="ach-progress">
+            <div class="ach-bar"><i id="achFill"></i></div>
+            <b id="achPct"></b>
+            <div class="ach-tools">
+              <button class="chip" type="button" id="achExport">${S("Ekspor JSON", "Export JSON")}</button>
+              <label class="chip" for="achImport">${S("Impor JSON", "Import JSON")}</label><input id="achImport" type="file" accept="application/json,.json" hidden>
+              <button class="chip" type="button" id="achReset">${S("Reset", "Reset")}</button>
+            </div>
+            <p class="mono">${S("Tanda selesai tersimpan otomatis di browser ini. Ekspor ke file JSON untuk cadangan atau pindah perangkat.", "Progress saves automatically in this browser. Export to a JSON file to back it up or move devices.")}</p>
+          </div>
+          <div class="toolbar">${filterBox(S("Cari pencapaian…", "Search achievements…"))}${chips(MEDAL.map((label, i) => ({ v: String(i + 1), label })), "m")}<span class="chip-sep"></span>${chips([{ v: "belum", label: S("Belum", "To do") }, { v: "selesai", label: S("Selesai", "Done") }], "s")}</div>
           <div class="ach-head"><h2 id="achTitle"></h2><div class="tally" id="tally"></div></div>
           <div class="ach-list" id="grid"></div>
           <div class="more"><button class="btn ghost" type="button" id="more" hidden>${S("Tampilkan lebih banyak", "Show more")}</button></div>
@@ -680,12 +744,17 @@
       $("#achTitle").textContent = c ? cn(c) : S("Semua kategori", "All categories");
       const base = d.items.filter((x) => !cat || x.cat === cat);
       $("#tally").innerHTML = [1, 2, 3].map((q) => `<span class="medal-${q}" title="${MEDAL[q - 1]}"><i></i>${base.filter((x) => x.q === q).length}</span>`).join("");
-      const out = base.filter((x) => match(state.q, tx(x.title), x.title.en, tx(x.desc)) && (!state.m || String(x.q) === state.m));
+      const fin = base.filter((x) => done.has(x.id)).length;
+      $("#achFill").style.width = `${base.length ? (fin / base.length) * 100 : 0}%`;
+      $("#achPct").textContent = `${fin} / ${base.length} ${S("selesai", "done")} (${base.length ? Math.round((fin / base.length) * 100) : 0}%)`;
+      const out = base.filter((x) => match(state.q, tx(x.title), x.title.en, tx(x.desc)) && (!state.m || String(x.q) === state.m)
+        && (!state.s || (state.s === "selesai") === done.has(x.id)));
       $("#grid").innerHTML = out.slice(0, limit).map((x) => `
-        <div class="ach-row">
+        <div class="ach-row${done.has(x.id) ? " done" : ""}" data-id="${esc(x.id)}">
           <span class="medal">${x.icon ? `<img src="${img(x.icon)}" alt="${MEDAL[x.q - 1]}" loading="lazy">` : ""}</span>
           <span><b>${esc(tx(x.title))}</b><p>${rich(tx(x.desc))}</p></span>
           ${x.rewards.length ? `<span class="reward">${x.rewards.slice(0, 2).map((r) => `${r.icon ? `<img src="${img(r.icon)}" alt="">` : ""}<span>×${esc(r.amount)}<small>${esc(r.name)}</small></span>`).join("")}</span>` : "<span></span>"}
+          <button class="ach-check" type="button" aria-pressed="${done.has(x.id)}" aria-label="${S("Tandai selesai", "Mark as done")}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
         </div>`).join("") || `<div class="empty">${S("Tidak ada pencapaian yang cocok.", "No matching achievements.")}</div>`;
       $("#more").hidden = out.length <= limit;
       setCount(out.length);
@@ -700,6 +769,35 @@
       draw();
     });
     $("#more").onclick = () => { limit += 80; draw(); };
+    $("#grid").addEventListener("click", (ev) => {
+      const b = ev.target.closest(".ach-check"); if (!b) return;
+      const id = b.closest(".ach-row").dataset.id;
+      done.has(id) ? done.delete(id) : done.add(id);
+      save(); draw();
+    });
+    $("#achExport").onclick = () => {
+      const blob = new Blob([JSON.stringify({ app: "arsip-hethereau", type: "achievements", saved: new Date().toISOString(), done: [...done] }, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "pencapaian-nte.json"; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    };
+    $("#achImport").onchange = async (ev) => {
+      const f = ev.target.files[0]; if (!f) return;
+      try {
+        const j = JSON.parse(await f.text());
+        const ids = Array.isArray(j) ? j : j.done;
+        if (!Array.isArray(ids)) throw new Error("format");
+        const known = new Set(d.items.map((x) => x.id));
+        done = new Set(ids.filter((i) => known.has(i)));
+        save(); draw();
+        alert(S(`Berhasil memuat ${done.size} pencapaian.`, `Loaded ${done.size} achievements.`));
+      } catch (e) { alert(S("File JSON tidak valid.", "Invalid JSON file.")); }
+      ev.target.value = "";
+    };
+    $("#achReset").onclick = () => {
+      if (!done.size || !confirm(S("Hapus semua tanda selesai di browser ini?", "Clear all progress in this browser?"))) return;
+      done.clear(); save(); draw();
+    };
   }
 
   async function viewFashion() {
@@ -707,12 +805,16 @@
     const chars = [...new Set(list.map((f) => f.char))].filter((c) => isNaN(+c)).sort();
     textPage({
       crumb: "FASHION", title: S("Fashion & Penampilan", "Fashion & Appearance"),
-      desc: S("Kostum dan penampilan Esper beserta deskripsinya.", "Esper outfits and appearances with their descriptions."),
+      desc: S("Kostum dan penampilan Esper lengkap dengan ilustrasi dan deskripsinya.", "Esper outfits with their illustrations and descriptions."),
       placeholder: S("Cari kostum atau karakter…", "Search outfits or characters…"),
       list, search: (x) => [tx(x.name), x.name.en, x.char, tx(x.desc)],
       chipDefs: chars.map((c) => ({ v: c, label: c })), chipOf: (x) => x.char,
-      card: (x) => ({ k: x.char, t: tx(x.name), p: strip(tx(x.desc)) }),
-      open: (x) => ({ name: tx(x.name), kicker: `FASHION · ${x.char}`, body: x.desc ? paras(tx(x.desc)) : "" }),
+      gridClass: "fashion-grid", limit: 48,
+      item: (x, n) => `<button class="fcard q${x.rarity || 1}" type="button" data-n="${n}">
+        <span class="fart">${(x.image || x.fallback) ? `<img src="${img(x.image || x.fallback)}" alt="" loading="lazy">` : ""}${x.head ? `<span class="fhead"><img src="${img(x.head)}" alt=""></span>` : ""}</span>
+        <span class="fmeta"><small>${esc(x.char)}</small><b>${esc(tx(x.name))}</b></span></button>`,
+      open: (x) => ({ name: tx(x.name), image: x.image || x.fallback, rarity: x.rarity, mode: "art", kicker: `FASHION · ${x.char}`,
+        body: `${x.image ? "" : `<p class="mono" style="margin-top:10px">${S("Ilustrasi kostum ini belum ada di file game, ditampilkan potret karakternya.", "This outfit's art isn't in the game files yet; showing the character portrait.")}</p>`}${x.desc ? paras(tx(x.desc)) : ""}` }),
     });
   }
 

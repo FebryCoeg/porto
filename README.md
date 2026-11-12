@@ -24,11 +24,12 @@ Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan yang me
 | **Cerita** | Ringkasan resmi setiap bab cerita utama dan spinoff, lengkap dengan gambar sampul bab dari menu Plot Review. |
 | **Anomali & Monster** | Arsip Anomaly dengan foto arsip, kelas, kode, kutipan, kisah, karakteristik, dan Nexus, ditambah monster dan boss beserta ikonnya. |
 | **Istilah** | Arti istilah dunia NTE dari buku panduan dalam game. |
-| **Pencapaian** | 450+ achievement per kategori, lengkap dengan medali perunggu/perak/emas, syarat, dan hadiahnya. |
-| **Fashion & Makanan** | Kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta ikon dan efeknya. |
+| **Pencapaian** | 450+ achievement per kategori, lengkap dengan medali perunggu/perak/emas, syarat, dan hadiahnya. Bisa ditandai selesai (tersimpan di browser) dan diekspor/impor sebagai file JSON. |
+| **Fashion & Makanan** | Galeri ilustrasi kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta ikon dan efeknya. |
 
 - **Berbahasa Indonesia**: efek, deskripsi, dan cerita diterjemahkan ke bahasa Indonesia. Nama karakter, item, skill, dan istilah game tetap memakai nama aslinya.
 - **Dua bahasa**: tombol ID/EN untuk beralih ke teks bahasa Inggris aslinya.
+- **Beranda bergaya key visual**: latar ilustrasi kota Hethereau dari layar loading game yang berganti otomatis, etalase Esper, serta tombol Donate (Trakteer) dan Join Komunitas NTE Indonesia.
 - **Pencarian cepat** ke seluruh isi database (tekan `Ctrl + K` atau `/`).
 - **Filter** per rarity, elemen, tipe, dan kategori yang tersimpan di URL, jadi hasil filter bisa langsung dibagikan.
 - **Tampilan responsif** untuk laptop maupun HP.

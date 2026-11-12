@@ -555,6 +555,22 @@ def build_property():
     save("property", out)
 
 # ------------------------------------------------------------------ main
+def fill_missing_icons():
+    """Item kostum/avatar yang gambarnya belum ada di file game: pakai potret karakternya."""
+    f = OUT_DATA / "items.json"
+    data = json.loads(f.read_text(encoding="utf-8"))
+    espers = {e["id"]: e for e in json.loads((OUT_DATA / "espers.json").read_text(encoding="utf-8"))}
+    n = 0
+    for it in data["items"]:
+        m = re.search(r"Fashion_(?:character_)?(\d{4})", it["id"])
+        if not it.get("icon") and m and m.group(1) in espers:
+            it["icon"] = espers[m.group(1)]["icon"]
+            n += 1
+    if n:
+        f.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        print(f"  ikon pengganti (potret karakter): {n}")
+
+
 def main():
     print("membangun data…")
     build_espers()
@@ -572,6 +588,7 @@ def main():
             for b in bad:
                 s = s.replace(f'"{b}"', '""')
             f.write_text(s, encoding="utf-8")
+    fill_missing_icons()
     pend = [{"en": k, "ctx": v} for k, v in PENDING.items()]
     (TOOLS / "untranslated.json").write_text(json.dumps(pend, ensure_ascii=False, indent=1), encoding="utf-8")
     total = len(PENDING) + sum(1 for _ in I18N)

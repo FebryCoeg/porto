@@ -471,14 +471,14 @@
       const out = d.modules.filter((m) => match(s.q, m.name, m.set) && (!s.set || m.set === s.set));
       $("#grid").innerHTML = out.map((m) => `<button class="tile q${m.rarity}" type="button" data-id="${esc(m.id)}">
         <div class="tile-img"><img src="${img(m.icon)}" alt="" loading="lazy"></div>
-        <div class="tile-body"><b>${esc(m.name)}</b><span class="qtag">${QCOLOR[m.rarity] || ""}</span><small>${m.set ? esc(m.set) : esc(m.kind || "Modul")}${m.core ? " · Inti" : ""}</small></div></button>`).join("") || `<div class="empty">Tidak ada modul yang cocok.</div>`;
+        <div class="tile-body"><b>${esc(m.name)}</b><small>${m.set ? esc(m.set) : esc(m.kind || "Modul")}${m.core ? " · Inti" : ""}</small></div></button>`).join("") || `<div class="empty">Tidak ada modul yang cocok.</div>`;
       setCount(out.length);
     });
     $("#grid").addEventListener("click", (ev) => {
       const b = ev.target.closest(".tile"); if (!b) return;
       const m = d.modules.find((x) => x.id === b.dataset.id);
       const set = d.sets.find((x) => x.name === m.set);
-      sheet(m, `<span class="mono">MODUL · ${esc(QCOLOR[m.rarity] || "")} · ${esc(LABEL.rarity[m.rarity] || "")}${m.slots ? ` · ${esc(m.slots)} PETAK` : ""}</span>`,
+      sheet(m, `<span class="mono">MODUL · ${esc(LABEL.rarity[m.rarity] || "")}${m.slots ? ` · ${esc(m.slots)} PETAK` : ""}</span>`,
         `${m.desc ? `<p class="txt">${rich(m.desc)}</p>` : ""}${set ? `<div class="group-label">Set ${esc(set.name)}</div>${set.bonuses.map((x) => `<div class="bonus"><i>${x.pieces} KEPING</i><p class="txt">${rich(x.text)}</p></div>`).join("")}` : ""}`);
     });
   }

@@ -21,8 +21,14 @@ Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan bergaya
 | **Item** | 1.500+ item yang dikelompokkan ke 11 kategori: material, karakter, hadiah, masakan, profil, koleksi, kostum, paket, item penting, item misi, dan lainnya. |
 | **Furnitur** | 300+ furnitur dengan nilai Kenyamanan dan Koleksi. |
 | **Kendaraan & Properti** | Semua kendaraan dan rumah yang bisa dimiliki di Hethereau. |
+| **Cerita** | Ringkasan resmi setiap bab cerita utama dan spinoff karakter. |
+| **Anomali & Monster** | Arsip Anomaly lengkap dengan kode, kutipan, kisah, karakteristik, dan Nexus, ditambah catatan monster dan boss. |
+| **Istilah** | Arti istilah dunia NTE dari buku panduan dalam game. |
+| **Pencapaian** | 500+ achievement beserta syaratnya, per kategori. |
+| **Fashion & Makanan** | Kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta efeknya. |
 
 - **Berbahasa Indonesia**: efek, deskripsi, dan cerita diterjemahkan ke bahasa Indonesia. Nama karakter, item, skill, dan istilah game tetap memakai nama aslinya.
+- **Dua bahasa**: tombol ID/EN untuk beralih ke teks bahasa Inggris aslinya.
 - **Pencarian cepat** ke seluruh isi database (tekan `Ctrl + K` atau `/`).
 - **Filter** per rarity, elemen, tipe, dan kategori yang tersimpan di URL, jadi hasil filter bisa langsung dibagikan.
 - **Tema gelap & terang** dan tampilan responsif untuk HP.

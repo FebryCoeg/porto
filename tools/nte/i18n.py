@@ -13,6 +13,7 @@ from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
 PEND = TOOLS / "untranslated.json"
+PEND_EXTRA = TOOLS / "untranslated_extra.json"
 I18N = TOOLS / "i18n_id.json"
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -21,13 +22,17 @@ hid = lambda s: hashlib.md5(s.encode("utf-8")).hexdigest()[:10]
 
 
 def load():
-    pend = json.loads(PEND.read_text(encoding="utf-8")) if PEND.exists() else []
+    pend = []
+    for f in (PEND, PEND_EXTRA):  # data utama (build.py) + data tambahan (build_extra.py)
+        if f.exists():
+            pend += json.loads(f.read_text(encoding="utf-8"))
     done = json.loads(I18N.read_text(encoding="utf-8")) if I18N.exists() else {}
     return [p for p in pend if p["en"] not in done], done
 
 
 ORDER = ["skill", "awakening", "console", "profil", "kutipan", "story", "efek-arc", "deskripsi-arc", "efek-set", "deskripsi-set",
-         "deskripsi-modul", "deskripsi-kendaraan", "slogan-properti", "deskripsi-properti", "kegunaan-item", "deskripsi-item"]
+         "deskripsi-modul", "deskripsi-kendaraan", "slogan-properti", "deskripsi-properti", "kegunaan-item", "deskripsi-item", "ringkasan-cerita", "istilah", "kutipan-anomali", "cerita-anomali",
+         "monster", "efek-makanan", "deskripsi-makanan", "deskripsi-fashion", "pencapaian"]
 
 
 def rank(p):

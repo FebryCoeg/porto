@@ -71,6 +71,12 @@
     [/^\/furnitur\/?$/, viewFurniture],
     [/^\/kendaraan\/?$/, viewVehicles],
     [/^\/properti\/?$/, viewProperty],
+    [/^\/cerita\/?$/, viewStory],
+    [/^\/anomali\/?$/, viewAnomalies],
+    [/^\/istilah\/?$/, viewGlossary],
+    [/^\/pencapaian\/?$/, viewAchievements],
+    [/^\/fashion\/?$/, viewFashion],
+    [/^\/makanan\/?$/, viewFood],
   ];
   function go(url, replace) {
     if (replace) history.replaceState(null, "", url); else history.pushState(null, "", url);
@@ -164,33 +170,43 @@
   // ---------------- BERANDA ----------------
   async function viewHome() {
     setTitle("");
-    const [espers, arcs, mods, items, furn, veh, prop] = await Promise.all(["espers", "arcs", "modules", "items", "furniture", "vehicles", "property"].map(load));
+    const [espers, arcs, mods, items, furn, veh, prop, story, anomalies, glossary, achievements, fashion, food] = await Promise.all([
+      "espers", "arcs", "modules", "items", "furniture", "vehicles", "property", "story", "anomalies", "glossary", "achievements", "fashion", "food"
+    ].map(load));
     const picks = ["iroi", "elyms", "crimson", "chiz", "lacrimosa", "sakiri"].map((s) => espers.find((e) => e.slug === s)).filter(Boolean).slice(0, 3);
     while (picks.length < 3 && espers[picks.length]) picks.push(espers[picks.length]);
     const thumbs = (arr, key = "icon") => arr.filter((x) => x[key]).slice(0, 3).map((x) => `<img src="${img(x[key])}" alt="" loading="lazy">`).join("");
     const cats = [
-      ["/esper", "01", "Esper", "Karakter, skill, awakening, dan arsip cerita", espers.length, thumbs(espers)],
-      ["/arc", "02", "Arc", "Efek per tingkat bintang ★1–★5", arcs.length, thumbs(arcs)],
-      ["/modul", "03", "Modul", "Set modul dan bonus 2/4 keping", mods.modules.length, thumbs(mods.sets)],
-      ["/item", "04", "Item", "Material, hadiah, koleksi, dan lainnya", items.items.length, thumbs(items.items.filter((i) => i.rarity >= 4))],
-      ["/furnitur", "05", "Furnitur", "Isi rumahmu di Hethereau", furn.length, thumbs(furn.filter((i) => i.rarity >= 4))],
-      ["/kendaraan", "06", "Kendaraan", "Mobil dan motor beserta mereknya", veh.length, thumbs(veh)],
-      ["/properti", "07", "Properti", "Apartemen dan rumah yang bisa dibeli", prop.length, ""],
+      ["/esper", "01", S("Esper", "Espers"), S("Karakter, skill, awakening, dan arsip cerita", "Characters, skills, awakenings & lore"), espers.length, thumbs(espers)],
+      ["/arc", "02", S("Arc", "Arcs"), S("Efek per tingkat bintang ★1–★5", "Effects across ★1–★5 stars"), arcs.length, thumbs(arcs)],
+      ["/modul", "03", S("Modul", "Modules"), S("Set modul dan bonus 2/4 keping", "Module sets & 2/4-piece set bonuses"), mods.modules.length, thumbs(mods.sets)],
+      ["/item", "04", S("Item", "Items"), S("Material, hadiah, koleksi, dan lainnya", "Materials, gifts, collectibles & more"), items.items.length, thumbs(items.items.filter((i) => i.rarity >= 4))],
+      ["/furnitur", "05", S("Furnitur", "Furniture"), S("Isi rumahmu di Hethereau", "Decorate your home in Hethereau"), furn.length, thumbs(furn.filter((i) => i.rarity >= 4))],
+      ["/kendaraan", "06", S("Kendaraan", "Vehicles"), S("Mobil dan motor beserta mereknya", "Cars & bikes by brand"), veh.length, thumbs(veh)],
+      ["/properti", "07", S("Properti", "Property"), S("Apartemen dan rumah yang bisa dibeli", "Buyable apartments & houses"), prop.length, ""],
+      ["/cerita", "08", S("Cerita", "Story"), S("Ringkasan bab Prolog, Main Story 1.0–1.5, dan Spinoff", "Prologue, Main Story 1.0–1.5 & Spinoff recaps"), story.length, ""],
+      ["/anomali", "09", S("Anomali", "Anomalies"), S("Katalog Anomaly, kode, kutipan, dan data monster/boss", "Anomaly database, codes, lore & bosses"), anomalies.anomalies.length + anomalies.monsters.length, ""],
+      ["/istilah", "10", S("Istilah", "Glossary"), S("Panduan istilah resmi dunia Neverness to Everness", "Official terminology manual of NTE"), glossary.length, ""],
+      ["/pencapaian", "11", S("Pencapaian", "Achievements"), S("Daftar achievement per kategori dan syaratnya", "Achievements by category & conditions"), achievements.items.length, ""],
+      ["/fashion", "12", "Fashion", S("Kostum karakter dan deskripsi temanya", "Character outfits & appearance lore"), fashion.length, ""],
+      ["/makanan", "13", S("Makanan", "Food"), S("Menu makanan, efek penyembuhan/buff, dan bahan masak", "Dishes, restoration/buff effects & ingredients"), food.length, ""],
     ];
     main.innerHTML = `
       <section class="home-hero">
         <div>
           <span class="mono">BERKAS NO. NTE-ID / VERSI ${new Date().getFullYear()}</span>
-          <h1>Semua tentang <em>Hethereau</em>, dalam Bahasa Indonesia.</h1>
-          <p>Database Neverness to Everness: Esper, Arc, Modul, Item, sampai properti. Lengkap dengan skill, efek, dan cerita yang sudah diterjemahkan.</p>
+          <h1>${S("Semua tentang <em>Hethereau</em>, dalam Bahasa Indonesia.", "All of <em>Hethereau</em>, official database.")}</h1>
+          <p>${S("Database lengkap Neverness to Everness: Esper, Arc, Modul, Item, Kendaraan, Cerita, Anomali, Pencapaian, hingga Makanan langsung dari teks game.", "Complete Neverness to Everness database: Espers, Arcs, Modules, Items, Vehicles, Lore, Anomalies, Achievements, and Food directly from game text.")}</p>
           <div class="home-actions">
-            <a class="btn" href="/esper" data-link>Lihat semua Esper →</a>
-            <button class="btn ghost" type="button" id="heroSearch">Cari sesuatu <span class="kbd">Ctrl K</span></button>
+            <a class="btn" href="/esper" data-link>${S("Lihat semua Esper →", "View all Espers →")}</a>
+            <button class="btn ghost" type="button" id="heroSearch">${S("Cari sesuatu", "Search database")} <span class="kbd">Ctrl K</span></button>
           </div>
           <div class="home-stats">
-            <div><b>${espers.length}</b><span>Esper</span></div>
-            <div><b>${arcs.length}</b><span>Arc</span></div>
-            <div><b>${items.items.length + furn.length}</b><span>Item &amp; Furnitur</span></div>
+            <div><b>${espers.length}</b><span>${S("Esper", "Espers")}</span></div>
+            <div><b>${arcs.length}</b><span>${S("Arc", "Arcs")}</span></div>
+            <div><b>${story.length}</b><span>${S("Bab Cerita", "Story Chapters")}</span></div>
+            <div><b>${anomalies.anomalies.length}</b><span>${S("Anomali", "Anomalies")}</span></div>
+            <div><b>${achievements.items.length}</b><span>${S("Pencapaian", "Achievements")}</span></div>
           </div>
         </div>
         <div class="collage">
@@ -532,11 +548,147 @@
     });
   }
 
+  // ---------------- BAHASA (ID / EN) untuk kategori data game ----------------
+  let LANG = (() => { try { return localStorage.getItem("nte-lang") === "en" ? "en" : "id"; } catch (e) { return "id"; } })();
+  const tx = (o) => (o ? o[LANG] || o.en || "" : "");
+  const S = (id, en) => (LANG === "en" ? en : id);
+  const strip = (s) => String(s || "").replace(/<[^>]+>/g, "");
+  const paras = (s) => rich(s).split(/\n+/).filter(Boolean).map((p) => `<p class="txt" style="margin-top:10px">${p}</p>`).join("");
+  const langBtn = $(".lang-toggle");
+  const syncLangBtn = () => { if (langBtn) { langBtn.textContent = LANG.toUpperCase(); langBtn.setAttribute("aria-label", S("Ganti bahasa (sekarang Indonesia)", "Switch language (now English)")); } document.documentElement.lang = LANG; };
+  if (langBtn) langBtn.onclick = () => {
+    LANG = LANG === "id" ? "en" : "id";
+    try { localStorage.setItem("nte-lang", LANG); } catch (e) {}
+    index = null; syncLangBtn(); render();
+  };
+
+  // halaman daftar teks generik (cerita, anomali, istilah, pencapaian, fashion, makanan)
+  function textPage(o) {
+    setTitle(o.title);
+    const rows = o.list.map((x, n) => ({ x, n }));
+    main.innerHTML = head(o.crumb, o.title, o.desc, rows.length) + `
+      <div class="toolbar">${filterBox(o.placeholder)}${o.chipDefs && o.chipDefs.length ? chips(o.chipDefs, "c", undefined, S("Semua", "All")) : ""}</div>
+      <div class="wide-grid" id="grid"></div>
+      <div class="more"><button class="btn ghost" type="button" id="more" hidden>${S("Tampilkan lebih banyak", "Show more")}</button></div>`;
+    let state = {}, limit = 90;
+    const draw = () => {
+      const out = rows.filter(({ x }) => match(state.q, ...o.search(x)) && (!state.c || o.chipOf(x) === state.c));
+      $("#grid").innerHTML = out.slice(0, limit).map(({ x, n }) => {
+        const c = o.card(x);
+        return `<button class="wcard" type="button" data-n="${n}"><div class="wcard-body"><small>${esc(c.k || "")}</small><b>${esc(c.t)}</b>${c.p ? `<p>${esc(c.p)}</p>` : ""}</div></button>`;
+      }).join("") || `<div class="empty">${S("Tidak ada entri yang cocok.", "No matching entries.")}</div>`;
+      $("#more").hidden = out.length <= limit;
+      setCount(out.length);
+    };
+    useFilters((s) => { state = s; limit = 90; draw(); });
+    $("#more").onclick = () => { limit += 90; draw(); };
+    $("#grid").addEventListener("click", (ev) => {
+      const b = ev.target.closest(".wcard"); if (!b) return;
+      const d = o.open(o.list[+b.dataset.n]);
+      sheet({ name: d.name }, `<span class="mono">${esc(d.kicker)}</span>`, d.body);
+    });
+  }
+  const fact = (k, v) => (v ? `<div class="fact"><span>${esc(k)}</span><b>${esc(v)}</b></div>` : "");
+  const CLS = (l, n) => `${l} · ${S("Sumber: arsip teks game Global", "Source: Global game text")}${n ? ` · ${n}` : ""}`;
+
+  async function viewStory() {
+    const list = await load("story");
+    const grp = { utama: S("Cerita Utama", "Main Story"), spinoff: "Spinoff" };
+    textPage({
+      crumb: S("CERITA", "STORY"), title: S("Cerita & Quest", "Story & Quests"),
+      desc: S("Ringkasan resmi setiap bab cerita utama dan spinoff karakter, langsung dari teks game.", "Official chapter recaps for the main story and character spinoffs, straight from the game text."),
+      placeholder: S("Cari bab atau karakter…", "Search chapters or characters…"),
+      list, search: (x) => [tx(x.title), tx(x.summary)],
+      chipDefs: Object.entries(grp).map(([v, label]) => ({ v, label })), chipOf: (x) => x.group,
+      card: (x) => ({ k: `${grp[x.group]}${x.chapter ? " · " + tx(x.chapter) : ""}`, t: tx(x.title), p: strip(tx(x.summary)) }),
+      open: (x) => ({ name: tx(x.title), kicker: `${grp[x.group].toUpperCase()}${x.chapter ? " · " + tx(x.chapter).toUpperCase() : ""}`, body: paras(tx(x.summary)) }),
+    });
+  }
+
+  async function viewAnomalies() {
+    const d = await load("anomalies");
+    const list = [
+      ...d.anomalies.map((a) => ({ t: "a", ...a })),
+      ...d.monsters.map((m) => ({ t: "m", ...m })),
+    ];
+    const kind = { a: S("Anomali", "Anomaly"), m: S("Monster & Boss", "Monsters & Bosses") };
+    textPage({
+      crumb: S("ANOMALI", "ANOMALIES"), title: S("Anomali & Monster", "Anomalies & Monsters"),
+      desc: S("Arsip anomali Hethereau beserta kode, kutipan, dan kisahnya, plus catatan monster dan boss.", "The Hethereau anomaly archive with codes, quotes and stories, plus monster and boss notes."),
+      placeholder: S("Cari anomali atau monster…", "Search anomalies or monsters…"),
+      list, search: (x) => [x.name, x.code, tx(x.quote), tx(x.story), tx(x.desc)],
+      chipDefs: Object.entries(kind).map(([v, label]) => ({ v, label })), chipOf: (x) => x.t,
+      card: (x) => x.t === "a"
+        ? { k: x.code, t: x.name, p: strip(tx(x.quote)) }
+        : { k: x.kind, t: `${x.kind} #${x.id.split("_")[1]}`, p: strip(tx(x.desc)) },
+      open: (x) => x.t === "a"
+        ? { name: x.name, kicker: `${S("ANOMALI", "ANOMALY")} · ${x.code}`, body: `<p class="lede txt" style="margin-top:12px">${rich(tx(x.quote))}</p>${x.story ? `<div class="use"><b>${S("Kisah", "Story")}</b></div>${paras(tx(x.story))}` : ""}` }
+        : { name: `${x.kind} #${x.id.split("_")[1]}`, kicker: x.kind.toUpperCase(), body: paras(tx(x.desc)) },
+    });
+  }
+
+  async function viewGlossary() {
+    const list = await load("glossary");
+    textPage({
+      crumb: S("ISTILAH", "GLOSSARY"), title: S("Istilah Dunia NTE", "NTE Glossary"),
+      desc: S("Arti istilah yang dipakai di dunia Neverness to Everness, dari buku panduan dalam game.", "Meanings of terms used in the world of Neverness to Everness, from the in-game manual."),
+      placeholder: S("Cari istilah…", "Search terms…"),
+      list, search: (x) => [tx(x.name), tx(x.desc)], chipDefs: [], chipOf: () => "",
+      card: (x) => ({ k: S("Istilah", "Term"), t: x.name.en, p: strip(tx(x.desc)) }),
+      open: (x) => ({ name: S(x.name.id, x.name.en), kicker: S("ISTILAH", "TERM"), body: paras(tx(x.desc)) }),
+    });
+  }
+
+  async function viewAchievements() {
+    const d = await load("achievements");
+    const cats = Object.fromEntries(d.categories.map((c) => [c.id, c.name]));
+    const CE = { Life: "Life", friendship: "Friendship", explore: "Exploration", Play: "Activities", battle: "Combat", develop: "Development", interest: "Hobbies", quest: "Quests", Playstation: "Playstation" };
+    const cn = (id) => S(cats[id], CE[id]);
+    textPage({
+      crumb: S("PENCAPAIAN", "ACHIEVEMENTS"), title: S("Pencapaian", "Achievements"),
+      desc: S("Daftar pencapaian dan syarat menyelesaikannya.", "Every achievement and how to earn it."),
+      placeholder: S("Cari pencapaian…", "Search achievements…"),
+      list: d.items, search: (x) => [tx(x.title), tx(x.desc), x.title.en],
+      chipDefs: d.categories.map((c) => ({ v: c.id, label: cn(c.id) })), chipOf: (x) => x.cat,
+      card: (x) => ({ k: cn(x.cat), t: tx(x.title), p: tx(x.desc) }),
+      open: (x) => ({ name: tx(x.title), kicker: `${S("PENCAPAIAN", "ACHIEVEMENT")} · ${cn(x.cat).toUpperCase()}`, body: `<p class="txt" style="margin-top:12px">${rich(tx(x.desc))}</p>` }),
+    });
+  }
+
+  async function viewFashion() {
+    const list = await load("fashion");
+    const chars = [...new Set(list.map((f) => f.char))].filter((c) => isNaN(+c)).sort();
+    textPage({
+      crumb: "FASHION", title: S("Fashion & Penampilan", "Fashion & Appearance"),
+      desc: S("Kostum dan penampilan Esper beserta deskripsinya.", "Esper outfits and appearances with their descriptions."),
+      placeholder: S("Cari kostum atau karakter…", "Search outfits or characters…"),
+      list, search: (x) => [tx(x.name), x.name.en, x.char, tx(x.desc)],
+      chipDefs: chars.map((c) => ({ v: c, label: c })), chipOf: (x) => x.char,
+      card: (x) => ({ k: x.char, t: tx(x.name), p: strip(tx(x.desc)) }),
+      open: (x) => ({ name: tx(x.name), kicker: `FASHION · ${x.char}`, body: x.desc ? paras(tx(x.desc)) : "" }),
+    });
+  }
+
+  async function viewFood() {
+    const list = await load("food");
+    const kind = { food: S("Makanan", "Food"), material: S("Bahan Masak", "Ingredients") };
+    textPage({
+      crumb: S("MAKANAN", "FOOD"), title: S("Makanan & Bahan", "Food & Ingredients"),
+      desc: S("Makanan, efeknya, dan bahan masak yang ada di game.", "Dishes, their effects, and cooking ingredients in the game."),
+      placeholder: S("Cari makanan atau bahan…", "Search food or ingredients…"),
+      list, search: (x) => [tx(x.name), x.name.en, tx(x.desc), tx(x.effect)],
+      chipDefs: Object.entries(kind).map(([v, label]) => ({ v, label })), chipOf: (x) => x.kind,
+      card: (x) => ({ k: kind[x.kind], t: tx(x.name), p: strip(tx(x.effect) || tx(x.desc)) }),
+      open: (x) => ({ name: tx(x.name), kicker: kind[x.kind].toUpperCase(), body: `${x.effect ? `<div class="use txt"><b>${S("Efek", "Effect")}:</b> ${rich(tx(x.effect))}</div>` : ""}${x.desc ? paras(tx(x.desc)) : ""}` }),
+    });
+  }
+  syncLangBtn();
+
   // ---------------- PENCARIAN GLOBAL ----------------
   let index = null;
   async function buildIndex() {
     if (index) return index;
-    const [es, ar, md, it, fu, ve] = await Promise.all(["espers", "arcs", "modules", "items", "furniture", "vehicles"].map(load));
+    const [es, ar, md, it, fu, ve, st, an, gl, ac, fa, fo] = await Promise.all(["espers", "arcs", "modules", "items", "furniture", "vehicles", "story", "anomalies", "glossary", "achievements", "fashion", "food"].map(load));
     index = [
       ...es.map((x) => ({ g: "Esper", n: x.name, s: `${x.element} · Rank ${x.rank}`, i: x.icon, href: `/esper/${x.slug}` })),
       ...ar.map((x) => ({ g: "Arc", n: x.name, s: x.type, i: x.icon, href: `/arc/${x.slug}` })),
@@ -544,6 +696,12 @@
       ...it.items.map((x) => ({ g: "Item", n: x.name, s: (it.categories.find((c) => c.id === x.cat) || {}).name, i: x.icon, href: `/item?q=${encodeURIComponent(x.name)}` })),
       ...fu.map((x) => ({ g: "Furnitur", n: x.name, s: "Furnitur", i: x.icon, href: `/furnitur?q=${encodeURIComponent(x.name)}` })),
       ...ve.map((x) => ({ g: "Kendaraan", n: x.name, s: x.brand, i: x.icon, href: `/kendaraan?q=${encodeURIComponent(x.name)}` })),
+      ...st.map((x) => ({ g: S("Cerita", "Story"), n: tx(x.title), s: x.chapter ? tx(x.chapter) : "Spinoff", href: `/cerita?q=${encodeURIComponent(tx(x.title))}` })),
+      ...an.anomalies.map((x) => ({ g: S("Anomali", "Anomaly"), n: x.name, s: x.code, href: `/anomali?q=${encodeURIComponent(x.name)}` })),
+      ...gl.map((x) => ({ g: S("Istilah", "Glossary"), n: tx(x.name), s: "", href: `/istilah?q=${encodeURIComponent(x.name.en)}` })),
+      ...ac.items.map((x) => ({ g: S("Pencapaian", "Achievement"), n: tx(x.title), s: tx(x.desc), href: `/pencapaian?q=${encodeURIComponent(x.title.en)}` })),
+      ...fa.map((x) => ({ g: "Fashion", n: tx(x.name), s: x.char, href: `/fashion?q=${encodeURIComponent(x.name.en)}` })),
+      ...fo.map((x) => ({ g: S("Makanan", "Food"), n: tx(x.name), s: "", href: `/makanan?q=${encodeURIComponent(x.name.en)}` })),
     ];
     return index;
   }

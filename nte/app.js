@@ -909,5 +909,23 @@
     if (e.key === "Enter") { e.preventDefault(); items[sel].click(); }
   });
 
+  // ---------------- penghitung kunjungan (footer) ----------------
+  // dihitung sekali per sesi browser; angka diambil dari layanan penghitung gratis Abacus
+  (() => {
+    const box = $("#visits");
+    if (!box) return;
+    let seen = false;
+    try { seen = sessionStorage.getItem("nte-visit") === "1"; } catch (e) {}
+    fetch(`https://abacus.jasoncameron.dev/${seen ? "get" : "hit"}/arsip-hethereau-nte/kunjungan`)
+      .then((r) => r.json())
+      .then((j) => {
+        if (typeof j.value !== "number") return;
+        box.textContent = `${j.value.toLocaleString("id-ID")} ${S("kunjungan", "visits")}`;
+        box.hidden = false;
+        try { sessionStorage.setItem("nte-visit", "1"); } catch (e) {}
+      })
+      .catch(() => {});
+  })();
+
   render();
 })();

@@ -732,3 +732,7 @@ main { flex: 1; width: 100%; max-width: 1320px; margin: 0 auto; padding: clamp(1
 .cta-band .kv-btns { margin-top: 0; }
 @media (max-width: 860px) { .cta-band { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .kv-marquee span, .kv-chars img, .glitch::before, .glitch::after { animation: none !important; } }
+
+/* penghitung kunjungan di footer */
+.visits { margin-top: 6px; font: 600 0.66rem var(--mono); letter-spacing: 0.06em; color: var(--muted); }
+.visits::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #3fc285; box-shadow: 0 0 6px #3fc285; vertical-align: 1px; }

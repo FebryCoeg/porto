@@ -199,7 +199,6 @@
       <section class="kv">
         <div class="kv-bg">${bgs.map((b, i) => `<img src="${img(b)}" alt="" class="${i === 0 ? "on" : ""}" ${i ? 'loading="lazy"' : ""}>`).join("")}</div>
         <div class="kv-fx" aria-hidden="true"></div>
-        <div class="kv-chars" aria-hidden="true">${picks.map((e, i) => `<img src="${img(e.portrait || e.icon)}" alt="" class="c${i}">`).join("")}</div>
         <div class="kv-inner">
           <span class="kv-tag">${S("DATABASE FAN-MADE", "FAN-MADE DATABASE")} · NEVERNESS TO EVERNESS</span>
           <h1 class="glitch" data-text="ARSIP HETHEREAU"><span>ARSIP</span><span>HETHEREAU</span></h1>
@@ -216,7 +215,6 @@
             <div><b>${achievements.items.length}</b><span>${S("Pencapaian", "Achievements")}</span></div>
           </div>
         </div>
-        <div class="kv-marquee" aria-hidden="true"><span>NEVERNESS TO EVERNESS · ARSIP HETHEREAU · NEVERNESS TO EVERNESS · ARSIP HETHEREAU · </span><span>NEVERNESS TO EVERNESS · ARSIP HETHEREAU · NEVERNESS TO EVERNESS · ARSIP HETHEREAU · </span></div>
       </section>
 
       <section class="roster" id="showcase">

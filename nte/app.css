@@ -645,7 +645,7 @@ main { flex: 1; width: 100%; max-width: 1320px; margin: 0 auto; padding: clamp(1
 .kv-marquee span { flex: none; padding-right: 40px; font: 800 clamp(3rem, 9vw, 7rem)/1 var(--display); letter-spacing: -0.03em; color: transparent; -webkit-text-stroke: 2px rgba(200, 210, 255, 0.22); animation: marquee 40s linear infinite; }
 @keyframes marquee { to { transform: translateX(-100%); } }
 @media (max-width: 900px) {
-  .kv { min-height: 0; padding-bottom: 300px; }
+  .kv { min-height: 0; padding-bottom: 80px; }
   .kv-chars { width: 100vw; height: 330px; right: -10vw; }
   .kv-chars .c2 { display: none; }
   .kbtn { min-width: 0; flex: 1 1 160px; height: 64px; }

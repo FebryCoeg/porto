@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-09T22:19:25+00:00",
+  "diperbarui": "2026-11-12T00:40:46+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,44 +11,65 @@
   },
   "video": [
     {
+      "id": "lN8B3XOHt7I",
+      "judul": "ALL 1.5 VEHICLES - NEVERNESS TO EVERNESS",
+      "ditonton": "1K",
+      "durasi": "10:05",
+      "tanggal": "2026-11-11T11:21:47+00:00"
+    },
+    {
+      "id": "BI_uCXMfNwE",
+      "judul": "YOU NEED TO KNOW THIS! - NEVERNESS TO EVERNESS",
+      "ditonton": "4.1K",
+      "durasi": "5:59",
+      "tanggal": "2026-11-11T01:13:03+00:00"
+    },
+    {
+      "id": "-maAfoMxGH8",
+      "judul": "FEATURES THAT WILL HELP YOU IN 1.5 - NEVERNESS TO EVERNESS",
+      "ditonton": "3.4K",
+      "durasi": "8:11",
+      "tanggal": "2026-11-10T11:42:04+00:00"
+    },
+    {
       "id": "sz_t6Rq9dU8",
       "judul": "NEW HOBBY LOGISTICS HUB GUIDE - NEVERNESS TO EVERNESS",
-      "ditonton": "2.3K",
+      "ditonton": "3.7K",
       "durasi": "8:52",
       "tanggal": "2026-11-09T06:55:44+00:00"
     },
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "3.5K",
+      "ditonton": "5.3K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
     {
       "id": "2U1AxQKaep0",
       "judul": "ELYMS SKIN REVIEW - NEVERNESS TO EVERNESS",
-      "ditonton": "1.6K",
+      "ditonton": "1.7K",
       "durasi": "4:57",
       "tanggal": "2026-11-07T20:55:44+00:00"
     },
     {
       "id": "zqr2u5rGiqU",
       "judul": "FIX GUA BAKAL GACHA TANK INI - NEVERNESS TO EVERNESS",
-      "ditonton": "3.3K",
+      "ditonton": "3.4K",
       "durasi": "7:49",
       "tanggal": "2026-11-06T20:55:44+00:00"
     },
     {
       "id": "GBTlVsmsGPE",
       "judul": "ELYMS BETA TEST REVIEW - NEVERNESS TO EVERNESS",
-      "ditonton": "4.3K",
+      "ditonton": "4.4K",
       "durasi": "9:14",
       "tanggal": "2026-11-06T20:55:44+00:00"
     },
     {
       "id": "19AWi6HUGAQ",
       "judul": "I'M A BIT WORRIED ABOUT THIS GAME - SILVER PALACE",
-      "ditonton": "8.4K",
+      "ditonton": "8.6K",
       "durasi": "4:39",
       "tanggal": "2026-11-04T20:55:44+00:00"
     },
@@ -69,30 +90,9 @@
     {
       "id": "1pRTT784mQc",
       "judul": "SPECIAL PROGRAM 1.5 SUMMARY - NEVERNESS TO EVERNESS",
-      "ditonton": "6K",
+      "ditonton": "6.1K",
       "durasi": "12:37",
       "tanggal": "2026-10-28T20:55:44+00:00"
-    },
-    {
-      "id": "43Xr8hpk0C8",
-      "judul": "AKANE RIN AWAKENING 6 - NEVERNESS TO EVERNESS",
-      "ditonton": "1.9K",
-      "durasi": "8:52",
-      "tanggal": "2026-10-26T20:55:44+00:00"
-    },
-    {
-      "id": "d3L-ceZ2We8",
-      "judul": "PUKA MEMBERSHIP LEVEL 45 - NEVERNESS TO EVERNESS",
-      "ditonton": "4K",
-      "durasi": "7:30",
-      "tanggal": "2026-10-26T20:55:44+00:00"
-    },
-    {
-      "id": "I_lXK4NfZ0A",
-      "judul": "NEW AKANE RIN COSTUME FOR 2680 - NEVERNESS TO EVERNESS",
-      "ditonton": "2.6K",
-      "durasi": "5:27",
-      "tanggal": "2026-10-26T20:55:44+00:00"
     }
   ]
 }

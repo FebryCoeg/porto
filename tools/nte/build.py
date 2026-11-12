@@ -4,6 +4,10 @@ Sumber : https://github.com/Waifus-Grace/NTE_Assets (data & gambar hasil ekstrak
 Output : nte/data/*.json  (data per kategori, teks sudah diterjemahkan bila ada)
          nte/img/**.webp  (gambar yang dipakai, dikecilkan)
          tools/nte/untranslated.json (teks yang belum ada terjemahannya)
+         tools/nte/sources.json (file NTE_Assets yang dipakai, untuk check_update.py)
+
+Semua file diambil dari satu commit NTE_Assets yang dikunci di cache (_commit.json).
+Hapus folder cache untuk mengambil versi terbaru.
 
 Terjemahan Indonesia disimpan di tools/nte/i18n_id.json  {teks Inggris: teks Indonesia}.
 Nama (karakter, item, skill, arc, dll.) sengaja tidak diterjemahkan.
@@ -25,14 +29,37 @@ TOOLS = ROOT / "tools" / "nte"
 CACHE = Path(os.environ.get("NTE_CACHE", TOOLS / ".cache"))
 OUT_DATA = ROOT / "nte" / "data"
 OUT_IMG = ROOT / "nte" / "img"
-RAW = "https://raw.githubusercontent.com/Waifus-Grace/NTE_Assets/main/"
+REPO = "Waifus-Grace/NTE_Assets"
 NO_IMAGES = "--no-images" in sys.argv
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
+def api(path):
+    req = urllib.request.Request(f"https://api.github.com/repos/{REPO}/{path}", headers={"User-Agent": "nte-db-build"})
+    return json.loads(urllib.request.urlopen(req, timeout=60).read())
+
+def source_commit():
+    """Commit NTE_Assets yang dipakai cache ini. Dikunci saat cache pertama dibuat,
+    supaya semua file berasal dari versi yang sama dan bisa dibandingkan dengan versi terbaru."""
+    p = CACHE / "_commit.json"
+    if not p.exists():
+        CACHE.mkdir(parents=True, exist_ok=True)
+        c = api("commits/main")
+        info = {"sha": c["sha"], "version": c["commit"]["message"].splitlines()[0].strip(),
+                "date": c["commit"]["committer"]["date"]}
+        p.write_text(json.dumps(info), encoding="utf-8")
+    return json.loads(p.read_text(encoding="utf-8"))
+
+SRC = source_commit()
+RAW = f"https://raw.githubusercontent.com/{REPO}/{SRC['sha']}/"
+
 # ------------------------------------------------------------------ unduhan
+USED = set()  # file data NTE_Assets yang dipakai, dicatat ke tools/nte/sources.json
+
 def fetch(rel, binary=False):
+    if not binary:
+        USED.add(rel)
     p = CACHE / rel
     if not p.exists():
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -135,23 +162,27 @@ def asset(path, kind, size):
     IMAGES[rel] = (out, size)
     return out
 
-def build_images():
-    from PIL import Image
-    todo = [(rel, out, size) for rel, (out, size) in IMAGES.items() if not (ROOT / "nte" / out).exists()]
-    print(f"gambar: {len(IMAGES)} total, {len(todo)} perlu dibuat")
-    missing = []
-
+def image_resolver():
+    """Cari path asli gambar di repo: nama file kadang beda huruf besar/kecil atau beda folder."""
     tree = json.loads(fetch_tree())
     by_path = {p.lower(): p for p in tree}
     by_name = {}
     for p in tree:
         if p.startswith(("UI/", "UI_Icon/")):
             by_name.setdefault(Path(p).name.lower(), p)
+    return lambda rel: by_path.get(rel.lower()) or by_name.get(Path(rel).name.lower())
+
+def build_images():
+    from PIL import Image
+    todo = [(rel, out, size) for rel, (out, size) in IMAGES.items() if not (ROOT / "nte" / out).exists()]
+    print(f"gambar: {len(IMAGES)} total, {len(todo)} perlu dibuat")
+    missing = []
+
+    resolve = image_resolver()
 
     def work(item):
         rel, out, size = item
-        # nama file di repo kadang beda huruf besar/kecil atau beda folder
-        real = by_path.get(rel.lower()) or by_name.get(Path(rel).name.lower())
+        real = resolve(rel)
         try:
             data = fetch(real or rel, binary=True)
         except Exception:
@@ -335,8 +366,7 @@ def fetch_tree():
     p = CACHE / "_tree.json"
     if not p.exists():
         CACHE.mkdir(parents=True, exist_ok=True)
-        req = urllib.request.Request("https://api.github.com/repos/Waifus-Grace/NTE_Assets/git/trees/main?recursive=1", headers={"User-Agent": "nte-db-build"})
-        d = json.loads(urllib.request.urlopen(req, timeout=60).read())
+        d = api(f"git/trees/{SRC['sha']}?recursive=1")
         p.write_text(json.dumps([x["path"] for x in d["tree"] if x["type"] == "blob"]), encoding="utf-8")
     return p.read_text(encoding="utf-8")
 
@@ -546,8 +576,18 @@ def main():
     (TOOLS / "untranslated.json").write_text(json.dumps(pend, ensure_ascii=False, indent=1), encoding="utf-8")
     total = len(PENDING) + sum(1 for _ in I18N)
     chars = sum(len(k) for k in PENDING)
-    meta = {"source": "Waifus-Grace/NTE_Assets", "translated": len(I18N), "pending": len(PENDING)}
+    meta = {"source": REPO, "sourceCommit": SRC["sha"], "sourceVersion": SRC["version"],
+            "sourceDate": SRC["date"], "translated": len(I18N), "pending": len(PENDING)}
     save("meta", meta)
+    # daftar file sumber yang dipakai, supaya check_update.py hanya melaporkan perubahan yang relevan
+    resolve = image_resolver()
+    images = {}
+    for rel, (out, _) in IMAGES.items():
+        real = resolve(rel)
+        if real:
+            images[real] = out
+    sources = {"commit": SRC["sha"], "data": sorted(USED), "images": dict(sorted(images.items()))}
+    (TOOLS / "sources.json").write_text(json.dumps(sources, ensure_ascii=False, indent=0), encoding="utf-8")
     print(f"terjemahan: {len(I18N)} selesai, {len(PENDING)} belum ({chars:,} karakter)")
 
 if __name__ == "__main__":

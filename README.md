@@ -27,6 +27,7 @@ Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan bergaya
 - **Filter** per rarity, elemen, tipe, dan kategori yang tersimpan di URL, jadi hasil filter bisa langsung dibagikan.
 - **Tema gelap & terang** dan tampilan responsif untuk HP.
 - **Data bersumber dari** [Waifus-Grace/NTE_Assets](https://github.com/Waifus-Grace/NTE_Assets), diolah dengan skrip Python menjadi JSON dan gambar WebP.
+- **Pemberitahuan update otomatis**: setiap Senin, GitHub Action membandingkan data yang dipakai website dengan versi terbaru NTE_Assets. Kalau ada yang berubah, terbuka Issue berisi versi baru dan daftar file yang berubah.
 
 ---
 

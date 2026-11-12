@@ -3,3 +3,6 @@
 
 # cache data mentah NTE (dibuat ulang oleh tools/nte/build.py)
 tools/nte/.cache/
+
+# cache Python
+__pycache__/

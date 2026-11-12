@@ -1,14 +1,36 @@
 # febrycoeg.my.id
 
-Website portofolio pribadi **Febri Riansyah (Febry Coeg)**: content creator, gamer, pembuat guide game, dan pemilik toko top up **Febry Store**.
+Website milik **Febri Riansyah (Febry Coeg)**: content creator, gamer, pembuat guide game, dan pemilik toko top up **Febry Store**.
 
-Website ini merangkum siapa Febry, di mana saja kontennya bisa diikuti, pencapaian yang sudah diraih, game yang dimainkan, video YouTube terbarunya, toko top up miliknya, cara mendukung karyanya, dan cara menghubunginya, semuanya dalam satu halaman.
+Isinya ada dua:
 
-🌐 **https://febrycoeg.my.id**
+- 🗂️ **Arsip Hethereau** di **https://febrycoeg.my.id**, database fan-made game *Neverness to Everness* (NTE) berbahasa Indonesia.
+- 👤 **Portofolio** di **https://febrycoeg.my.id/portfolio/**, profil Febry lengkap dengan sosial media, pencapaian, game, video YouTube, dan kontak. Bisa dibuka juga lewat menu di Arsip Hethereau.
 
 ---
 
-## Isi website
+## Arsip Hethereau (Database NTE)
+
+Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan bergaya map arsip/dosir.
+
+| Kategori | Isi |
+|---|---|
+| **Esper** | 26 karakter lengkap dengan rank, elemen, tipe, skill (Basic, Reflexive, Redirect, Ultimate, Support, Passive), Awakening, Console, profil, kutipan, dan arsip cerita. |
+| **Arc** | 53 senjata/Fork dengan efek yang nilainya berubah sesuai bintang (1 sampai 5) yang dipilih. |
+| **Modul** | Modul beserta set bonusnya (efek 2 dan 4 bagian). |
+| **Item** | 1.500+ item yang dikelompokkan ke 11 kategori: material, karakter, hadiah, masakan, profil, koleksi, kostum, paket, item penting, item misi, dan lainnya. |
+| **Furnitur** | 300+ furnitur dengan nilai Kenyamanan dan Koleksi. |
+| **Kendaraan & Properti** | Semua kendaraan dan rumah yang bisa dimiliki di Hethereau. |
+
+- **Berbahasa Indonesia**: efek, deskripsi, dan cerita diterjemahkan ke bahasa Indonesia. Nama karakter, item, skill, dan istilah game tetap memakai nama aslinya.
+- **Pencarian cepat** ke seluruh isi database (tekan `Ctrl + K` atau `/`).
+- **Filter** per rarity, elemen, tipe, dan kategori yang tersimpan di URL, jadi hasil filter bisa langsung dibagikan.
+- **Tema gelap & terang** dan tampilan responsif untuk HP.
+- **Data bersumber dari** [Waifus-Grace/NTE_Assets](https://github.com/Waifus-Grace/NTE_Assets), diolah dengan skrip Python menjadi JSON dan gambar WebP.
+
+---
+
+## Portofolio
 
 | Bagian | Fungsi |
 |---|---|
@@ -33,14 +55,15 @@ Website ini merangkum siapa Febry, di mana saja kontennya bisa diikuti, pencapai
 - **Ikon buatan sendiri**: semua ikon digambar khusus dengan gaya yang seragam.
 - **Responsif**: tampil rapi di laptop maupun HP.
 - **Ramah aksesibilitas**: animasi otomatis dikurangi bagi pengunjung yang mengaktifkan "kurangi gerakan".
-- **Mudah diperbarui**: seluruh isi (teks, gambar, link) disimpan di `content/data.json` dan bisa diedit lewat panel [Pages CMS](https://pagescms.org) tanpa menyentuh kode.
+- **Mudah diperbarui**: seluruh isi (teks, gambar, link) disimpan di `portfolio/content/data.json` dan bisa diedit lewat panel [Pages CMS](https://pagescms.org) tanpa menyentuh kode.
 
 ## Teknologi
 
-HTML, CSS, dan JavaScript murni tanpa framework · WebGL untuk ilustrasi landing page · Canvas untuk animasi kawanan kursor · Python + GitHub Actions untuk pembaruan video otomatis · Di-hosting gratis dengan GitHub Pages.
+HTML, CSS, dan JavaScript murni tanpa framework · Python untuk mengolah data NTE · WebGL untuk ilustrasi landing page · Canvas untuk animasi kawanan kursor · Python + GitHub Actions untuk pembaruan video otomatis · Di-hosting gratis dengan GitHub Pages.
 
 ## Kredit
 
+- Data dan gambar Arsip Hethereau: Neverness to Everness © Hotta Studio / Perfect World, diambil dari Waifus-Grace/NTE_Assets. Arsip ini adalah proyek penggemar dan tidak berafiliasi dengan pengembang game.
 - Ilustrasi landing page: Kamisato Ayaka, Genshin Impact © HoYoverse
 - Gambar pencapaian: Sword Art Online © Reki Kawahara/KADOKAWA/SAO Project · Tower of Fantasy © Hotta Studio, a Perfect World Company · Neverness to Everness © Hotta Studio / Perfect World · Silver Palace © Elementa / Silver Studio · Aniimo © Pawprints Studio · Ananta © NetEase Games / Naked Rain
 - Nama dan logo platform (Sociabuzz, Trakteer, Saweria, dan media sosial) adalah milik pemiliknya masing-masing.

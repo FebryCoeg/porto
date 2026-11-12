@@ -463,7 +463,8 @@ def build_items():
     skip = ("FURNITURE", "VEHICLE_SKIN", "TANKBATTLE_BULLET", "TANKBATTLE_CONSUMABLE", "DEFENDATHENA_CONSUMABLE", "NONE", "AUTO_USE", "MOVABLEPLAYER", "WORLD_LAYOUT")
     for iid, r in items.items():
         name = plain(loc_text(r.get("ItemName")))
-        if not name or name.lower().startswith(("test", "测试")):
+        # nama yang masih berhuruf Han = entri internal yang belum dilokalisasi, bukan item sungguhan
+        if not name or name.lower().startswith(("test", "测试")) or re.search(r"[㐀-鿿]", name):
             continue
         t = (r.get("ItemType") or "").replace("EItemType::ITEM_TYPE_", "")
         icon = asset(r.get("ItemIcon"), "item", 160)

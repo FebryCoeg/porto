@@ -872,3 +872,13 @@ main { flex: 1; width: 100%; max-width: 1320px; margin: 0 auto; padding: clamp(1
   .tl-item { width: 58px; } .tl-item img { width: 52px; height: 52px; } .tl-item span { max-width: 58px; }
   .tl-zone { gap: 6px; padding: 6px; min-height: 76px; }
 }
+
+/* dialog konfirmasi & notifikasi */
+.dlg { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 16px; }
+.dlg-scrim { position: absolute; inset: 0; background: rgba(5, 5, 6, 0.65); backdrop-filter: blur(3px); animation: fade 0.15s ease; }
+.dlg-box { position: relative; width: min(420px, 100%); padding: 22px 24px; border-radius: 26px; background: var(--bg-2); box-shadow: 0 0 0 3px var(--edge), 0 0 0 5px var(--pink), 0 30px 80px -20px #000; animation: pop 0.2s ease; }
+.dlg-box p { font-weight: 700; font-size: 1rem; color: var(--text); }
+.dlg-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.dlg-btns .btn { height: 42px; padding: 0 20px; }
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 310; transform: translateX(-50%); max-width: calc(100vw - 32px); padding: 10px 20px; border-radius: 999px; background: var(--cream); color: var(--ink); font: 800 0.8rem var(--display); box-shadow: 0 0 0 3px var(--edge), 0 0 0 5px var(--pink); animation: pop 0.2s ease; transition: opacity 0.4s; }
+.toast.out { opacity: 0; }

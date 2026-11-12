@@ -124,6 +124,28 @@
     main.innerHTML = `<div class="empty"><h2>Arsip tidak ditemukan</h2><p style="margin-top:8px">Halaman yang kamu cari tidak ada. <a href="/" data-link>Kembali ke beranda</a>.</p></div>`;
   }
 
+  // ---------------- dialog & notifikasi buatan sendiri ----------------
+  function ask(msg, yes, no) {
+    return new Promise((resolve) => {
+      const box = document.createElement("div");
+      box.className = "dlg";
+      box.innerHTML = `<div class="dlg-scrim"></div><div class="dlg-box" role="alertdialog" aria-modal="true"><p>${esc(msg)}</p><div class="dlg-btns"><button type="button" class="btn ghost" data-r="0">${esc(no || S("Batal", "Cancel"))}</button><button type="button" class="btn" data-r="1">${esc(yes || S("Ya", "Yes"))}</button></div></div>`;
+      const done = (v) => { box.remove(); document.removeEventListener("keydown", key, true); resolve(v); };
+      const key = (e) => { if (e.key === "Escape") { e.stopPropagation(); done(false); } };
+      box.addEventListener("click", (e) => { const b = e.target.closest("[data-r]"); if (b) done(b.dataset.r === "1"); else if (e.target.classList.contains("dlg-scrim")) done(false); });
+      document.addEventListener("keydown", key, true);
+      document.body.appendChild(box);
+      box.querySelector('[data-r="1"]').focus();
+    });
+  }
+  function toast(msg) {
+    const t = document.createElement("div");
+    t.className = "toast"; t.textContent = msg; t.setAttribute("role", "status");
+    document.body.appendChild(t);
+    setTimeout(() => t.classList.add("out"), 2600);
+    setTimeout(() => t.remove(), 3100);
+  }
+
   // ---------------- komponen kecil ----------------
   const stars = (n) => `<span class="stars">${"★".repeat(Math.max(1, n))}</span>`;
   const head = (crumb, title, desc, count) => `
@@ -813,13 +835,14 @@
         const known = new Set(d.items.map((x) => x.id));
         done = new Set(ids.filter((i) => known.has(i)));
         save(); draw();
-        alert(S(`Berhasil memuat ${done.size} pencapaian.`, `Loaded ${done.size} achievements.`));
-      } catch (e) { alert(S("File JSON tidak valid.", "Invalid JSON file.")); }
+        toast(S(`Berhasil memuat ${done.size} pencapaian.`, `Loaded ${done.size} achievements.`));
+      } catch (e) { toast(S("File JSON tidak valid.", "Invalid JSON file.")); }
       ev.target.value = "";
     };
-    $("#achReset").onclick = () => {
-      if (!done.size || !confirm(S("Hapus semua tanda selesai di browser ini?", "Clear all progress in this browser?"))) return;
-      done.clear(); save(); draw();
+    $("#achReset").onclick = async () => {
+      if (!done.size) return toast(S("Belum ada yang ditandai.", "Nothing is marked yet."));
+      if (!(await ask(S("Hapus semua tanda selesai di browser ini?", "Clear all progress in this browser?"), S("Hapus", "Clear")))) return;
+      done.clear(); save(); draw(); toast(S("Progres dihapus.", "Progress cleared."));
     };
   }
 
@@ -977,7 +1000,7 @@
       drag = null;
     }, sig);
 
-    main.addEventListener("click", (e) => {
+    main.addEventListener("click", async (e) => {
       if (justDragged) return;
       const t = e.target;
       const modeBtn = t.closest("#tlMode .chip");
@@ -991,7 +1014,7 @@
       }
       if (del) {
         const tr = c.tiers.find((x) => x.id === del.dataset.del);
-        if (tr.items.length && !confirm(S("Hapus tier ini? Isinya kembali ke daftar belum ditempatkan.", "Delete this tier? Its contents go back to unranked."))) return;
+        if (tr.items.length && !(await ask(S("Hapus tier ini? Isinya kembali ke daftar belum ditempatkan.", "Delete this tier? Its contents go back to unranked."), S("Hapus", "Delete")))) return;
         c.tiers = c.tiers.filter((x) => x !== tr); save(); draw(); return;
       }
       const it = t.closest(".tl-item");
@@ -1009,7 +1032,10 @@
     }, sig);
 
     $("#tlAdd").onclick = () => { cur().tiers.push({ id: "t" + Date.now().toString(36) + uid++, label: "?", color: "#a978ff", items: [] }); save(); draw(); };
-    $("#tlReset").onclick = () => { if (confirm(S("Reset tier list ini ke awal?", "Reset this tier list?"))) { st[st.mode] = fresh(st.mode); sel = null; save(); draw(); } };
+    $("#tlReset").onclick = async () => {
+      if (!(await ask(S("Reset tier list ini ke awal? Semua penempatan dan nama tier akan dihapus.", "Reset this tier list? All placements and tier names will be cleared."), "Reset"))) return;
+      st[st.mode] = fresh(st.mode); sel = null; save(); draw(); toast(S("Tier list di-reset.", "Tier list reset."));
+    };
     $("#tlExp").onclick = () => {
       const blob = new Blob([JSON.stringify({ app: "hethereau", type: "tierlist", ...st }, null, 2)], { type: "application/json" });
       const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "tierlist-nte.json"; a.click();
@@ -1026,7 +1052,7 @@
         };
         st = { mode: j.mode === "arc" ? "arc" : "esper", esper: clean("esper"), arc: clean("arc") };
         save(); draw();
-      } catch (e) { alert(S("File JSON tidak valid.", "Invalid JSON file.")); }
+      } catch (e) { toast(S("File JSON tidak valid.", "Invalid JSON file.")); }
       ev.target.value = "";
     };
     $("#tlPng").onclick = async () => {

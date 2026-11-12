@@ -30,7 +30,7 @@
   }));
 
   // ---------------- tema & menu ----------------
-  $(".theme-toggle").onclick = () => {
+  if ($(".theme-toggle")) $(".theme-toggle").onclick = () => {
     const root = document.documentElement;
     const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
     root.dataset.theme = dark ? "light" : "dark";
@@ -213,7 +213,7 @@
           ${picks.map((e) => `<a class="polaroid ${elClass(e.element)}" href="/esper/${e.slug}" data-link><img src="${img(e.portrait || e.icon)}" alt="${esc(e.name)}"><span>${esc(e.name.toUpperCase())}</span></a>`).join("")}
         </div>
       </section>
-      <div class="section-title"><h2>Indeks arsip</h2><span class="mono">7 KATEGORI</span></div>
+      <div class="section-title"><h2>Indeks arsip</h2><span class="mono">${cats.length} ${S("KATEGORI", "CATEGORIES")}</span></div>
       <div class="cat-grid">
         ${cats.map(([href, n, t, d, c, th]) => `<a class="cat-card" href="${href}" data-link><i>${n}</i><div class="cat-thumbs">${th}</div><h3>${t}</h3><p>${d}</p><span class="num">${c}</span></a>`).join("")}
       </div>
@@ -413,8 +413,9 @@
 
   // ---------------- panel detail ----------------
   function sheet(x, kicker, body, cover) {
+    const mode = cover === true ? " cover" : cover ? " " + cover : "";
     $("#sheetBody").innerHTML = `
-      <div class="sheet-hero q${x.rarity || 1}${cover ? " cover" : ""}">${(x.icon || x.image) ? `<img src="${img(x.image || x.icon)}" alt="">` : ""}</div>
+      <div class="sheet-hero q${x.rarity || 1}${mode}">${(x.icon || x.image) ? `<img src="${img(x.image || x.icon)}" alt="">` : ""}</div>
       <div class="sheet-body q${x.rarity || 1}">
         ${kicker}
         <h2>${esc(x.name)}</h2>
@@ -568,24 +569,26 @@
     const rows = o.list.map((x, n) => ({ x, n }));
     main.innerHTML = head(o.crumb, o.title, o.desc, rows.length) + `
       <div class="toolbar">${filterBox(o.placeholder)}${o.chipDefs && o.chipDefs.length ? chips(o.chipDefs, "c", undefined, S("Semua", "All")) : ""}</div>
-      <div class="wide-grid" id="grid"></div>
+      <div class="${o.gridClass || "wide-grid"}" id="grid"></div>
       <div class="more"><button class="btn ghost" type="button" id="more" hidden>${S("Tampilkan lebih banyak", "Show more")}</button></div>`;
-    let state = {}, limit = 90;
+    const step = o.limit || 90;
+    let state = {}, limit = step;
     const draw = () => {
       const out = rows.filter(({ x }) => match(state.q, ...o.search(x)) && (!state.c || o.chipOf(x) === state.c));
       $("#grid").innerHTML = out.slice(0, limit).map(({ x, n }) => {
+        if (o.item) return o.item(x, n);
         const c = o.card(x);
         return `<button class="wcard" type="button" data-n="${n}"><div class="wcard-body"><small>${esc(c.k || "")}</small><b>${esc(c.t)}</b>${c.p ? `<p>${esc(c.p)}</p>` : ""}</div></button>`;
       }).join("") || `<div class="empty">${S("Tidak ada entri yang cocok.", "No matching entries.")}</div>`;
       $("#more").hidden = out.length <= limit;
       setCount(out.length);
     };
-    useFilters((s) => { state = s; limit = 90; draw(); });
-    $("#more").onclick = () => { limit += 90; draw(); };
+    useFilters((s) => { state = s; limit = step; draw(); });
+    $("#more").onclick = () => { limit += step; draw(); };
     $("#grid").addEventListener("click", (ev) => {
-      const b = ev.target.closest(".wcard"); if (!b) return;
+      const b = ev.target.closest("[data-n]"); if (!b) return;
       const d = o.open(o.list[+b.dataset.n]);
-      sheet({ name: d.name }, `<span class="mono">${esc(d.kicker)}</span>`, d.body);
+      sheet({ name: d.name, image: d.image, rarity: d.rarity }, `<span class="mono">${esc(d.kicker)}</span>`, d.body, d.mode);
     });
   }
   const fact = (k, v) => (v ? `<div class="fact"><span>${esc(k)}</span><b>${esc(v)}</b></div>` : "");
@@ -600,8 +603,13 @@
       placeholder: S("Cari bab atau karakter…", "Search chapters or characters…"),
       list, search: (x) => [tx(x.title), tx(x.summary)],
       chipDefs: Object.entries(grp).map(([v, label]) => ({ v, label })), chipOf: (x) => x.group,
-      card: (x) => ({ k: `${grp[x.group]}${x.chapter ? " · " + tx(x.chapter) : ""}`, t: tx(x.title), p: strip(tx(x.summary)) }),
-      open: (x) => ({ name: tx(x.title), kicker: `${grp[x.group].toUpperCase()}${x.chapter ? " · " + tx(x.chapter).toUpperCase() : ""}`, body: paras(tx(x.summary)) }),
+      gridClass: "story-grid",
+      item: (x, n) => `<button class="chapter" type="button" data-n="${n}">
+        ${x.image ? `<img src="${img(x.image)}" alt="" loading="lazy">` : ""}
+        <span class="no">${x.group === "utama" ? esc(x.chapter ? tx(x.chapter) : grp.utama) : "Spinoff"}</span>
+        ${x.roleIcon ? `<span class="role"><img src="${img(x.roleIcon)}" alt="${esc(x.role || "")}"></span>` : ""}
+        <span class="cap"><small>${grp[x.group]}</small><b>${esc(tx(x.title))}</b></span></button>`,
+      open: (x) => ({ name: tx(x.title), image: x.image, mode: true, kicker: `${grp[x.group].toUpperCase()}${x.chapter ? " · " + tx(x.chapter).toUpperCase() : ""}${x.role ? " · " + x.role.toUpperCase() : ""}`, body: paras(tx(x.summary)) }),
     });
   }
 
@@ -612,18 +620,21 @@
       ...d.monsters.map((m) => ({ t: "m", ...m })),
     ];
     const kind = { a: S("Anomali", "Anomaly"), m: S("Monster & Boss", "Monsters & Bosses") };
+    const monName = (x) => x.name || `${x.kind} #${x.id.split("_")[1]}`;
     textPage({
       crumb: S("ANOMALI", "ANOMALIES"), title: S("Anomali & Monster", "Anomalies & Monsters"),
       desc: S("Arsip anomali Hethereau beserta kode, kutipan, dan kisahnya, plus catatan monster dan boss.", "The Hethereau anomaly archive with codes, quotes and stories, plus monster and boss notes."),
       placeholder: S("Cari anomali atau monster…", "Search anomalies or monsters…"),
-      list, search: (x) => [x.name, x.code, tx(x.quote), tx(x.story), tx(x.desc)],
+      list, search: (x) => [x.name, x.code, x.place, tx(x.quote), tx(x.story), tx(x.desc)],
       chipDefs: Object.entries(kind).map(([v, label]) => ({ v, label })), chipOf: (x) => x.t,
-      card: (x) => x.t === "a"
-        ? { k: x.code, t: x.name, p: strip(tx(x.quote)) }
-        : { k: x.kind, t: `${x.kind} #${x.id.split("_")[1]}`, p: strip(tx(x.desc)) },
+      gridClass: "archive-grid", limit: 60,
+      item: (x, n) => x.t === "a"
+        ? `<button class="archive" type="button" data-n="${n}"><span class="ph">${x.image ? `<img src="${img(x.image)}" alt="" loading="lazy">` : ""}${x.level ? `<span class="lvl">${esc(x.level)}</span>` : ""}</span><span class="cap"><span class="code">${esc(x.code)}</span><b>${esc(x.name)}</b></span></button>`
+        : `<button class="archive mon" type="button" data-n="${n}"><span class="ph">${x.image ? `<img src="${img(x.image)}" alt="" loading="lazy">` : ""}</span><span class="cap"><span class="code">${esc(x.kind.toUpperCase())}${x.place ? " · " + esc(x.place) : ""}</span><b>${esc(monName(x))}</b></span></button>`,
       open: (x) => x.t === "a"
-        ? { name: x.name, kicker: `${S("ANOMALI", "ANOMALY")} · ${x.code}`, body: `<p class="lede txt" style="margin-top:12px">${rich(tx(x.quote))}</p>${x.story ? `<div class="use"><b>${S("Kisah", "Story")}</b></div>${paras(tx(x.story))}` : ""}` }
-        : { name: `${x.kind} #${x.id.split("_")[1]}`, kicker: x.kind.toUpperCase(), body: paras(tx(x.desc)) },
+        ? { name: x.name, image: x.image, mode: "photo", kicker: `${S("ANOMALI", "ANOMALY")} · ${x.code}`,
+            body: `<div class="sheet-tags">${[x.level && `Class ${x.level}`, x.cate, x.access].filter(Boolean).map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div><p class="lede txt" style="margin-top:14px">${rich(tx(x.quote))}</p>${x.story ? `<div class="group-label">${S("Arsip", "File")}</div>${paras(tx(x.story))}` : ""}` }
+        : { name: monName(x), image: x.image, kicker: `${x.kind.toUpperCase()}${x.place ? " · " + x.place.toUpperCase() : ""}`, body: paras(tx(x.desc)) },
     });
   }
 
@@ -641,18 +652,54 @@
 
   async function viewAchievements() {
     const d = await load("achievements");
-    const cats = Object.fromEntries(d.categories.map((c) => [c.id, c.name]));
-    const CE = { Life: "Life", friendship: "Friendship", explore: "Exploration", Play: "Activities", battle: "Combat", develop: "Development", interest: "Hobbies", quest: "Quests", Playstation: "Playstation" };
-    const cn = (id) => S(cats[id], CE[id]);
-    textPage({
-      crumb: S("PENCAPAIAN", "ACHIEVEMENTS"), title: S("Pencapaian", "Achievements"),
-      desc: S("Daftar pencapaian dan syarat menyelesaikannya.", "Every achievement and how to earn it."),
-      placeholder: S("Cari pencapaian…", "Search achievements…"),
-      list: d.items, search: (x) => [tx(x.title), tx(x.desc), x.title.en],
-      chipDefs: d.categories.map((c) => ({ v: c.id, label: cn(c.id) })), chipOf: (x) => x.cat,
-      card: (x) => ({ k: cn(x.cat), t: tx(x.title), p: tx(x.desc) }),
-      open: (x) => ({ name: tx(x.title), kicker: `${S("PENCAPAIAN", "ACHIEVEMENT")} · ${cn(x.cat).toUpperCase()}`, body: `<p class="txt" style="margin-top:12px">${rich(tx(x.desc))}</p>` }),
+    setTitle(S("Pencapaian", "Achievements"));
+    const CE = { Social: "Social", Play: "Activities", Explore: "Exploration", Interest: "Hobbies", Develop: "Development", Fight: "Combat", Quest: "Quests", City: "City" };
+    const cn = (c) => S(c.name, CE[c.id] || c.id);
+    const MEDAL = [S("Perunggu", "Bronze"), S("Perak", "Silver"), S("Emas", "Gold")];
+    const counts = {};
+    d.items.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
+    const cats = d.categories.filter((c) => counts[c.id]);
+    let cat = new URLSearchParams(location.search).get("kat") || "";
+    main.innerHTML = head(S("PENCAPAIAN", "ACHIEVEMENTS"), S("Pencapaian", "Achievements"),
+      S("Semua achievement di game beserta syarat dan hadiahnya. Medali perunggu, perak, dan emas menunjukkan tingkat kesulitannya.", "Every in-game achievement with its requirement and reward. Bronze, silver and gold medals show how hard each one is."), d.items.length) + `
+      <div class="ach-layout">
+        <div class="ach-rail" id="rail">
+          <button type="button" data-c="" aria-pressed="${!cat}" aria-label="${S("Semua", "All")}"><i class="all">${S("SEMUA", "ALL")}</i><span>${S("Semua", "All")}</span></button>
+          ${cats.map((c) => `<button type="button" data-c="${c.id}" aria-pressed="${cat === c.id}" aria-label="${esc(cn(c))}"><img class="off" src="${img(c.icon)}" alt=""><img class="on" src="${img(c.iconOn || c.icon)}" alt=""><span>${esc(cn(c))}</span></button>`).join("")}
+        </div>
+        <div>
+          <div class="toolbar">${filterBox(S("Cari pencapaian…", "Search achievements…"))}${chips(MEDAL.map((label, i) => ({ v: String(i + 1), label })), "m")}</div>
+          <div class="ach-head"><h2 id="achTitle"></h2><div class="tally" id="tally"></div></div>
+          <div class="ach-list" id="grid"></div>
+          <div class="more"><button class="btn ghost" type="button" id="more" hidden>${S("Tampilkan lebih banyak", "Show more")}</button></div>
+        </div>
+      </div>`;
+    let state = {}, limit = 80;
+    const draw = () => {
+      const c = cats.find((x) => x.id === cat);
+      $("#achTitle").textContent = c ? cn(c) : S("Semua kategori", "All categories");
+      const base = d.items.filter((x) => !cat || x.cat === cat);
+      $("#tally").innerHTML = [1, 2, 3].map((q) => `<span class="medal-${q}" title="${MEDAL[q - 1]}"><i></i>${base.filter((x) => x.q === q).length}</span>`).join("");
+      const out = base.filter((x) => match(state.q, tx(x.title), x.title.en, tx(x.desc)) && (!state.m || String(x.q) === state.m));
+      $("#grid").innerHTML = out.slice(0, limit).map((x) => `
+        <div class="ach-row">
+          <span class="medal">${x.icon ? `<img src="${img(x.icon)}" alt="${MEDAL[x.q - 1]}" loading="lazy">` : ""}</span>
+          <span><b>${esc(tx(x.title))}</b><p>${rich(tx(x.desc))}</p></span>
+          ${x.rewards.length ? `<span class="reward">${x.rewards.slice(0, 2).map((r) => `${r.icon ? `<img src="${img(r.icon)}" alt="">` : ""}<span>×${esc(r.amount)}<small>${esc(r.name)}</small></span>`).join("")}</span>` : "<span></span>"}
+        </div>`).join("") || `<div class="empty">${S("Tidak ada pencapaian yang cocok.", "No matching achievements.")}</div>`;
+      $("#more").hidden = out.length <= limit;
+      setCount(out.length);
+    };
+    useFilters((s) => { state = s; limit = 80; draw(); });
+    $("#rail").addEventListener("click", (ev) => {
+      const b = ev.target.closest("button"); if (!b) return;
+      cat = b.dataset.c; limit = 80;
+      $$("#rail button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+      const p = new URLSearchParams(location.search); cat ? p.set("kat", cat) : p.delete("kat");
+      history.replaceState(null, "", location.pathname + (p.toString() ? "?" + p : ""));
+      draw();
     });
+    $("#more").onclick = () => { limit += 80; draw(); };
   }
 
   async function viewFashion() {
@@ -678,8 +725,9 @@
       placeholder: S("Cari makanan atau bahan…", "Search food or ingredients…"),
       list, search: (x) => [tx(x.name), x.name.en, tx(x.desc), tx(x.effect)],
       chipDefs: Object.entries(kind).map(([v, label]) => ({ v, label })), chipOf: (x) => x.kind,
-      card: (x) => ({ k: kind[x.kind], t: tx(x.name), p: strip(tx(x.effect) || tx(x.desc)) }),
-      open: (x) => ({ name: tx(x.name), kicker: kind[x.kind].toUpperCase(), body: `${x.effect ? `<div class="use txt"><b>${S("Efek", "Effect")}:</b> ${rich(tx(x.effect))}</div>` : ""}${x.desc ? paras(tx(x.desc)) : ""}` }),
+      gridClass: "icon-grid",
+      item: (x, n) => `<button class="icard q${x.rarity || 1}" type="button" data-n="${n}"><span class="ic">${x.icon ? `<img src="${img(x.icon)}" alt="" loading="lazy">` : ""}</span><span><small>${kind[x.kind]}</small><b>${esc(tx(x.name))}</b><p>${esc(strip(tx(x.effect) || tx(x.desc)))}</p></span></button>`,
+      open: (x) => ({ name: tx(x.name), image: x.icon, rarity: x.rarity, kicker: kind[x.kind].toUpperCase(), body: `${x.effect ? `<div class="use txt"><b>${S("Efek", "Effect")}:</b> ${rich(tx(x.effect))}</div>` : ""}${x.desc ? paras(tx(x.desc)) : ""}` }),
     });
   }
   syncLangBtn();
@@ -736,12 +784,6 @@
     if (e.key === "ArrowUp") { e.preventDefault(); sel = (sel - 1 + items.length) % items.length; markSel(); items[sel].scrollIntoView({ block: "nearest" }); }
     if (e.key === "Enter") { e.preventDefault(); items[sel].click(); }
   });
-
-  // ---------------- footer: progres terjemahan ----------------
-  load("meta").then((m) => {
-    const total = (m.translated || 0) + (m.pending || 0);
-    if (total) $("#footProgress").textContent = `TERJEMAHAN: ${Math.round(((m.translated || 0) / total) * 100)}% SELESAI`;
-  }).catch(() => {});
 
   render();
 })();

@@ -8,6 +8,7 @@ tools/nte/i18n_id.json (sama dengan build.py); teks yang belum diterjemahkan dic
 ke tools/nte/untranslated_extra.json dan tampil dalam bahasa Inggris. Nama tidak diterjemahkan.
 Hanya teks Global (Inggris) yang dipakai: entri yang masih Mandarin / placeholder dibuang.
 """
+import html
 import json
 import re
 
@@ -37,7 +38,18 @@ def pair(s, ctx):
 
 def name(s):
     """Nama (item, quest, istilah, pencapaian, dll.) sengaja tidak diterjemahkan."""
+    s = html.unescape(s or "")
     return {"en": s, "id": s}
+
+
+def loc(v):
+    """Teks dari sel DataTable ({LocalizedString: ...})."""
+    return html.unescape(B.clean(B.loc_text(v))) if v else ""
+
+
+def pic(path, kind, size):
+    """Gambar dari path aset game -> img/<kind>/x.webp (diunduh lewat build_images)."""
+    return B.asset(path, kind, size) if path else ""
 
 
 def finalize(obj):
@@ -76,16 +88,32 @@ def build_story():
     if exe_t and exe_d:
         out.append({"id": "Main_1_9", "group": "utama", "chapter": txt(ns, "Main_1"), "title": name(exe_t), "summary": pair(exe_d, "ringkasan-cerita")})
     out.sort(key=lambda x: (x["group"] != "utama", [int(p) if p.isdigit() else 0 for p in re.findall(r"\d+", x["id"])] or [0], x["id"]))
+    # gambar bab dari menu "Plot Review" di game
+    main_dt = B.table("DataTable/ReviewQuest/DT_MainReviewQuestData.json")
+    sub_dt = B.table("DataTable/ReviewQuest/DT_SubRoleReviewQuestDataTable.json")
+    roles = B.table("DataTable/ReviewQuest/DT_RoleReviewQuestDataTable.json")
+    by_title = {B.loc_text(v["TitleDes"]).strip().lower(): v for v in sub_dt.values()}
     for x in out:
+        sub = by_title.get(x["title"]["en"].strip().lower())
+        row = main_dt.get(x["id"]) or sub
+        if sub and not main_dt.get(x["id"]):  # bab yang di game ada di menu Spinoff
+            x["group"], x["chapter"] = "spinoff", ""
         x["chapter"] = name(x["chapter"]) if x["chapter"] else None
-    # nama bab lain (Main_0, Main_1) dipakai sebagai kelompok
+        x["image"] = pic(row.get("SectionImage"), "story", 1280) if row else ""
+        role = roles.get(str(row.get("RoleIndex"))) if row and row.get("RoleIndex") else None
+        if role:
+            x["role"] = B.loc_text(role["RoleDes"])
+            x["roleIcon"] = pic(role.get("RoleSmallHeadImage"), "esper", 256)
+    out.sort(key=lambda x: x["group"] != "utama")  # stabil: urutan bab tetap, utama dulu
     return out
 
 
 # ------------------------------------------------------------------ anomali
+CATE = {"Organism": "Bio", "Object": "Object", "Phenomenon": "Phenomenon", "Location": "Location", "Meme": "Meme"}
 def build_anomalies():
     ns = "ST_Manual"
     t = LOC.get(ns, {})
+    vm = B.table("DataTable/Vision/DT_VisionManual.json")
     out = []
     for k in t:
         m = re.fullmatch(r"ManualVision_(\d+)_name", k)
@@ -99,15 +127,33 @@ def build_anomalies():
         parts = re.split(r"\n\s*\n?\s*Anomaly Story:?\s*", desc, maxsplit=1)
         if len(parts) == 2:
             desc, story = parts[0].strip(), parts[1].strip()
+        row = vm.get(i, {})
         out.append({"id": i, "code": attr, "name": name, "class": i[0],
+                    "level": B.loc_text(row.get("Level")) if row else "",
+                    "access": B.loc_text(row.get("VisionPermission")) if row else "",
+                    "cate": CATE.get(str(row.get("VisionCate", "")).split("::")[-1], "") if row else "",
+                    "image": pic(row.get("ImageIcon"), "anomaly", 420) if row else "",
                     "quote": pair(desc, "kutipan-anomali"), "story": pair(story, "cerita-anomali") if story else None})
     out.sort(key=lambda x: (x["class"], x["id"]))
     mm = LOC.get("ST_MonsterManual", {})
+    mc = B.table("DataTable/DT_MonsterManualConfig.json")
+    mc_norm = {}
+    for key, row in mc.items():
+        km = re.match(r"(boss|mon)_0*(\d+)", key, re.I)
+        if km:
+            mc_norm.setdefault((km.group(1).lower(), int(km.group(2))), row)
     mons = []
     for k, v in mm.items():
         m = re.fullmatch(r"(boss|mon)_(\d+)_BP_Found", k)
         if m and ok(v):
+            # kunci tabel kadang beda format (Boss_07_BP, mon_013_BP, mon_019_SadBear_BP)
+            row = mc_norm.get((m.group(1), int(m.group(2))), {})
+            if not row:  # tidak tercatat di buku monster: pakai ikon dengan nama file yang sama
+                row = {"EnemyImage": f"/Game/UI/UI/MonsterManual/MonsterHeadIcon/200x200/{m.group(1)}_{m.group(2)}"}
             mons.append({"id": f"{m.group(1)}_{m.group(2)}", "kind": "Boss" if m.group(1) == "boss" else "Monster",
+                         "name": B.loc_text(row.get("MonsterName")) if row else "",
+                         "place": B.loc_text(row.get("EnemyPlace")) if row else "",
+                         "image": pic(row.get("EnemyImage"), "monster", 200) if row else "",
                          "desc": pair(B.clean(v), "monster")})
     mons.sort(key=lambda x: (x["kind"], x["id"]))
     return {"anomalies": out, "monsters": mons}
@@ -127,22 +173,43 @@ def build_glossary():
 
 
 # ------------------------------------------------------------------ achievement
-ACH_CAT = {"Life": "Kehidupan", "friendship": "Persahabatan", "explore": "Eksplorasi", "Play": "Aktivitas", "battle": "Pertempuran",
-           "develop": "Pengembangan", "interest": "Hobi", "quest": "Misi", "Playstation": "Playstation"}
+# urutan & ikon kategori mengikuti menu Achievement di game
+ACH_CAT = [("Social", "Sosial", 1), ("Play", "Aktivitas", 2), ("Explore", "Eksplorasi", 3), ("Interest", "Hobi", 4),
+           ("Develop", "Pengembangan", 5), ("Fight", "Pertempuran", 6), ("Quest", "Misi", 7), ("City", "Kota", 8)]
+ACH_Q = {"Normal": 1, "High": 2, "EXECELLENT": 3}
+
+
+def item_icon(row):
+    small = row.get("ItemIconSmall") or {}
+    return pic(small if small.get("AssetPathName") else row.get("ItemIcon"), "item", 128)
 
 
 def build_achievements():
-    ns = "ST_Achievement"
+    dt = B.table("DataTable/DT_AchievementConfigInfo.json")
+    items = B.table("DataTable/Inventory/DT_ItemConfig.json")
+    capital = B.table("DataTable/Inventory/DT_CapitalItemConfig.json")
     out = []
-    for k in LOC.get(ns, {}):
-        m = re.fullmatch(r"(\w+?)_(\d+)_Title", k)
-        if not m or m.group(1) not in ACH_CAT:
+    for i, (k, v) in enumerate(dt.items()):
+        title, cont = loc(v.get("TitleId")), loc(v.get("ContentID"))
+        if not title or not cont or not ok(title):
             continue
-        title, cont = txt(ns, k), txt(ns, f"{m.group(1)}_{m.group(2)}_Content")
-        if title and cont:
-            out.append({"id": f"{m.group(1)}_{m.group(2)}", "cat": m.group(1), "title": name(title), "desc": pair(cont, "pencapaian")})
-    out.sort(key=lambda x: (x["cat"], int(x["id"].split("_")[1])))
-    return {"categories": [{"id": c, "name": n} for c, n in ACH_CAT.items()], "items": out}
+        rewards = []
+        for a in v.get("AwardInfo") or []:
+            row = capital.get(a["ItemID"]) or items.get(a["ItemID"])
+            if row:
+                rewards.append({"name": B.loc_text(row.get("ItemName")), "amount": a.get("Amount", 1), "icon": item_icon(row)})
+        out.append({"id": k, "cat": v["AchievementMainType"].split("MainType")[-1], "n": i,
+                    "q": ACH_Q.get(str(v.get("Quality", "")).split("::")[-1], 1),
+                    "icon": pic(v.get("icon"), "achievement", 128),
+                    "title": name(title), "desc": pair(cont, "pencapaian"), "rewards": rewards})
+    order = {c: n for n, (c, _, _) in enumerate(ACH_CAT)}
+    out.sort(key=lambda x: (order.get(x["cat"], 99), x["n"]))
+    for x in out:
+        del x["n"]
+    cats = [{"id": c, "name": n,
+             "icon": pic(f"/Game/UI/UI/Achievement/UI_YH_Achievement_Normal_Btn{b}", "achievement", 96),
+             "iconOn": pic(f"/Game/UI/UI/Achievement/UI_YH_Achievement_Select_Btn{b}", "achievement", 96)} for c, n, b in ACH_CAT]
+    return {"categories": cats, "items": out}
 
 
 # ------------------------------------------------------------------ fashion
@@ -188,6 +255,22 @@ def build_food():
             n, d = txt(ns, k), txt(ns, f"CookMaterial_{m.group(1)}_Desc")
             if n:
                 out.append({"id": "m" + m.group(1), "kind": "material", "name": name(n), "desc": pair(d, "deskripsi-makanan") if d else None, "effect": None})
+    # ikon & rarity dari tabel item makanan; bahan masak dari daftar item umum
+    fdt = B.table("DataTable/Food/DT_FoodItemData.json")
+    by_name = {html.unescape(B.loc_text(v["ItemName"])).lower(): v for v in fdt.values()}
+    try:
+        items = {html.unescape(x["name"]).lower(): x for x in json.loads((B.OUT_DATA / "items.json").read_text(encoding="utf-8"))["items"]}
+    except Exception:
+        items = {}
+    for x in out:
+        key = x["name"]["en"].lower()
+        row = by_name.get(key)
+        if row:
+            x["icon"], x["rarity"] = pic(row.get("ItemIcon"), "item", 256), B.quality(row)
+        elif key in items:
+            x["icon"], x["rarity"] = items[key].get("icon", ""), items[key].get("rarity", 1)
+        else:
+            x["icon"], x["rarity"] = "", 1
     out.sort(key=lambda x: (x["kind"], x["id"]))
     return out
 
@@ -205,6 +288,26 @@ def main():
         B.save(key, finalize(obj))
         n = len(obj) if isinstance(obj, list) else sum(len(v) for v in obj.values() if isinstance(v, list))
         print(f"{key}: {n} entri")
+    missing = B.build_images()
+    if missing:
+        bad = {B.IMAGES[m][0] for m in missing}
+        for key in data:
+            f = B.OUT_DATA / f"{key}.json"
+            t = f.read_text(encoding="utf-8")
+            for b in bad:
+                t = t.replace('"' + b + '"', '""')
+            f.write_text(t, encoding="utf-8")
+    # daftar file sumber: gabungkan dengan milik build.py supaya check_update.py ikut memantau
+    src_file = B.TOOLS / "sources.json"
+    src = json.loads(src_file.read_text(encoding="utf-8"))
+    resolve = B.image_resolver()
+    src["data"] = sorted(set(src["data"]) | B.USED)
+    for rel, (o, _) in B.IMAGES.items():
+        real = resolve(rel)
+        if real:
+            src["images"][real] = o
+    src["images"] = dict(sorted(src["images"].items()))
+    src_file.write_text(json.dumps(src, ensure_ascii=False, indent=0), encoding="utf-8")
     pend = [{"en": k, "ctx": v} for k, v in PENDING.items()]
     PEND_FILE.write_text(json.dumps(pend, ensure_ascii=False, indent=1), encoding="utf-8")
     # progres terjemahan di footer = data utama + data tambahan

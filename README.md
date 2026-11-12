@@ -11,7 +11,7 @@ Isinya ada dua:
 
 ## Arsip Hethereau (Database NTE)
 
-Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan bergaya map arsip/dosir.
+Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan yang mengikuti UI di dalam game: latar arang halftone, tombol pil krem bergaris tebal, dan aksen magenta.
 
 | Kategori | Isi |
 |---|---|
@@ -21,18 +21,18 @@ Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan bergaya
 | **Item** | 1.500+ item yang dikelompokkan ke 11 kategori: material, karakter, hadiah, masakan, profil, koleksi, kostum, paket, item penting, item misi, dan lainnya. |
 | **Furnitur** | 300+ furnitur dengan nilai Kenyamanan dan Koleksi. |
 | **Kendaraan & Properti** | Semua kendaraan dan rumah yang bisa dimiliki di Hethereau. |
-| **Cerita** | Ringkasan resmi setiap bab cerita utama dan spinoff karakter. |
-| **Anomali & Monster** | Arsip Anomaly lengkap dengan kode, kutipan, kisah, karakteristik, dan Nexus, ditambah catatan monster dan boss. |
+| **Cerita** | Ringkasan resmi setiap bab cerita utama dan spinoff, lengkap dengan gambar sampul bab dari menu Plot Review. |
+| **Anomali & Monster** | Arsip Anomaly dengan foto arsip, kelas, kode, kutipan, kisah, karakteristik, dan Nexus, ditambah monster dan boss beserta ikonnya. |
 | **Istilah** | Arti istilah dunia NTE dari buku panduan dalam game. |
-| **Pencapaian** | 500+ achievement beserta syaratnya, per kategori. |
-| **Fashion & Makanan** | Kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta efeknya. |
+| **Pencapaian** | 450+ achievement per kategori, lengkap dengan medali perunggu/perak/emas, syarat, dan hadiahnya. |
+| **Fashion & Makanan** | Kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta ikon dan efeknya. |
 
 - **Berbahasa Indonesia**: efek, deskripsi, dan cerita diterjemahkan ke bahasa Indonesia. Nama karakter, item, skill, dan istilah game tetap memakai nama aslinya.
 - **Dua bahasa**: tombol ID/EN untuk beralih ke teks bahasa Inggris aslinya.
 - **Pencarian cepat** ke seluruh isi database (tekan `Ctrl + K` atau `/`).
 - **Filter** per rarity, elemen, tipe, dan kategori yang tersimpan di URL, jadi hasil filter bisa langsung dibagikan.
-- **Tema gelap & terang** dan tampilan responsif untuk HP.
-- **Data bersumber dari** [Waifus-Grace/NTE_Assets](https://github.com/Waifus-Grace/NTE_Assets), diolah dengan skrip Python menjadi JSON dan gambar WebP.
+- **Tampilan responsif** untuk laptop maupun HP.
+- **Data dan gambar langsung dari file game**: teks, tabel data, ikon, dan aset UI, diolah dengan skrip Python menjadi JSON dan gambar WebP.
 - **Pemberitahuan update otomatis**: setiap Senin, GitHub Action membandingkan data yang dipakai website dengan versi terbaru NTE_Assets. Kalau ada yang berubah, terbuka Issue berisi versi baru dan daftar file yang berubah.
 
 ---

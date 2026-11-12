@@ -62,18 +62,39 @@ TAG_HOT = re.compile(r'<hot[^>]*>(.*?)</>', re.S)
 TAG_IT = re.compile(r"<Italic>(.*?)</>", re.S)
 TAG_ANY = re.compile(r"<[A-Za-z][^<>]*>(.*?)</>", re.S)
 
+TAG_INNER = re.compile(r"<([A-Za-z]\w*)(?:\s[^<>]*)?>((?:[^<]|</?[bi]>)*?)</>")
+TAG_PLAIN = {"Title", "title", "Bold", "Normal", "Default", "Small", "Big"}
+TAG_ITALIC = {"Italic", "italic", "I"}
+
 def clean(s):
-    """Teks game -> HTML sederhana (<b>, <i>, baris baru)."""
+    """Teks game -> HTML sederhana (<b>, <i>, baris baru).
+
+    Tag game bisa bersarang (<NumGreen>5</> instance of <Zhou>Incantation DMG</>), jadi
+    tag terdalam diproses dulu sampai habis. Tag sorotan & warna elemen -> <b>.
+    """
     if not s:
         return ""
     s = s.replace("\r\n", "\n").replace("\r", "\n").strip()
     s = s.replace("&", "&amp;")
-    for _ in range(3):
-        s = TAG_IT.sub(r"<i>\1</i>", s)
-        s = TAG_HOT.sub(r"<b>\1</b>", s)
-        s = TAG_HL.sub(r"<b>\2</b>", s)
-        s = TAG_ANY.sub(r"\1", s)
+
+    def rep(m):
+        tag, inner = m.group(1), m.group(2)
+        if tag in TAG_ITALIC:
+            return f"<i>{inner}</i>"
+        if tag in TAG_PLAIN or not inner.strip():
+            return inner
+        return f"<b>{inner}</b>"
+
+    for _ in range(8):
+        n = TAG_INNER.sub(rep, s)
+        if n == s:
+            break
+        s = n
+    # sisa tag yang tidak berpasangan dibuang
+    s = re.sub(r"</>", "", s)
+    s = re.sub(r"<(?!/?[bi]>)/?[A-Za-z][^<>]*>", "", s)
     s = re.sub(r"<(?!/?[bi]>)", "&lt;", s)
+    s = re.sub(r"<b>\s*</b>", "", s)
     s = s.replace("「", "\"").replace("」", "\"")
     return s.strip()
 
@@ -86,7 +107,7 @@ PENDING = {}  # teks Inggris yang belum diterjemahkan -> konteks
 
 def T(s, ctx=""):
     """Terjemahkan teks (efek, deskripsi, story). Kembalikan teks Indonesia bila ada."""
-    s = clean(s) if s and "<" in s and "</>" in s else (s or "").replace("\r\n", "\n").strip()
+    s = clean(s) if s and "<" in s else (s or "").replace("\r\n", "\n").strip()
     if not s:
         return ""
     if re.fullmatch(r"[\d\s.,%+\-*/:{}()sx]+", s):

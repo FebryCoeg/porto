@@ -61,6 +61,8 @@
     if (e.key === "/" && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
   });
 
+  const langBtn = $(".lang-toggle");
+
   // ---------------- router ----------------
   const routes = [
     [/^\/$/, viewHome],
@@ -79,6 +81,7 @@
     [/^\/pencapaian\/?$/, viewAchievements],
     [/^\/fashion\/?$/, viewFashion],
     [/^\/makanan\/?$/, viewFood],
+    [/^\/tierlist\/?$/, viewTierlist],
   ];
   function go(url, replace) {
     if (replace) history.replaceState(null, "", url); else history.pushState(null, "", url);
@@ -102,6 +105,7 @@
       a.classList.toggle("active", h === "/" ? path === "/" : path.startsWith(h));
     });
     closeLayer($("#sheet"));
+    if (langBtn) langBtn.hidden = !/^\/($|cerita|anomali|istilah|pencapaian|fashion|makanan|tierlist)/.test(path);
     const r = routes.find(([rx]) => rx.test(path));
     main.innerHTML = `<div class="loading">MEMBUKA ARSIP…</div>`;
     scrollTo(0, 0);
@@ -173,26 +177,26 @@
   let kvTimer = null;
   async function viewHome() {
     setTitle("");
-    const [espers, arcs, mods, items, furn, veh, prop, story, anomalies, glossary, achievements, fashion, food, home] = await Promise.all([
-      "espers", "arcs", "modules", "items", "furniture", "vehicles", "property", "story", "anomalies", "glossary", "achievements", "fashion", "food", "home"
-    ].map(load));
+    const home = await load("home");
+    const espers = home.roster, N = home.counts;
     const picks = ["elyms", "exe", "chaos", "linko", "iroi", "crimson"].map((s) => espers.find((e) => e.slug === s)).filter(Boolean).slice(0, 3);
     while (picks.length < 3 && espers[picks.length]) picks.push(espers[picks.length]);
-    const thumbs = (arr, key = "icon") => arr.filter((x) => x[key]).slice(0, 3).map((x) => `<img src="${img(x[key])}" alt="" loading="lazy">`).join("");
+    const thumbs = (k) => (home.thumbs[k] || []).map((x) => `<img src="${img(x)}" alt="" loading="lazy">`).join("");
     const cats = [
-      ["/esper", "01", S("Esper", "Espers"), S("Karakter, skill, awakening, dan arsip cerita", "Characters, skills, awakenings & lore"), espers.length, thumbs(espers)],
-      ["/arc", "02", S("Arc", "Arcs"), S("Efek per tingkat bintang ★1–★5", "Effects across ★1–★5 stars"), arcs.length, thumbs(arcs)],
-      ["/modul", "03", S("Modul", "Modules"), S("Set modul dan bonus 2/4 keping", "Module sets & 2/4-piece set bonuses"), mods.modules.length, thumbs(mods.sets)],
-      ["/item", "04", S("Item", "Items"), S("Material, hadiah, koleksi, dan lainnya", "Materials, gifts, collectibles & more"), items.items.length, thumbs(items.items.filter((i) => i.rarity >= 4))],
-      ["/furnitur", "05", S("Furnitur", "Furniture"), S("Isi rumahmu di Hethereau", "Decorate your home in Hethereau"), furn.length, thumbs(furn.filter((i) => i.rarity >= 4))],
-      ["/kendaraan", "06", S("Kendaraan", "Vehicles"), S("Mobil dan motor beserta mereknya", "Cars & bikes by brand"), veh.length, thumbs(veh)],
-      ["/properti", "07", S("Properti", "Property"), S("Apartemen dan rumah yang bisa dibeli", "Buyable apartments & houses"), prop.length, thumbs(prop, "image")],
-      ["/cerita", "08", S("Cerita", "Story"), S("Ringkasan bab utama dan spinoff", "Main story & spinoff recaps"), story.length, thumbs(story, "roleIcon")],
-      ["/anomali", "09", S("Anomali", "Anomalies"), S("Arsip Anomaly, monster, dan boss", "Anomaly files, monsters & bosses"), anomalies.anomalies.length + anomalies.monsters.length, thumbs(anomalies.monsters, "image")],
-      ["/istilah", "10", S("Istilah", "Glossary"), S("Istilah resmi dunia NTE", "Official NTE terminology"), glossary.length, ""],
-      ["/pencapaian", "11", S("Pencapaian", "Achievements"), S("Medali, syarat, hadiah, dan penanda progres", "Medals, requirements, rewards & progress tracker"), achievements.items.length, thumbs(achievements.items.filter((x) => x.q === 3), "icon")],
-      ["/fashion", "12", "Fashion", S("Kostum Esper dan ilustrasinya", "Esper outfits & illustrations"), fashion.length, thumbs(fashion, "head")],
-      ["/makanan", "13", S("Makanan", "Food"), S("Makanan, efek buff, dan bahan masak", "Dishes, buffs & ingredients"), food.length, thumbs(food)],
+      ["/esper", "01", S("Esper", "Espers"), S("Karakter, skill, awakening, dan arsip cerita", "Characters, skills, awakenings & lore"), N.esper, thumbs("esper")],
+      ["/arc", "02", S("Arc", "Arcs"), S("Efek per tingkat bintang ★1–★5", "Effects across ★1–★5 stars"), N.arc, thumbs("arc")],
+      ["/modul", "03", S("Modul", "Modules"), S("Set modul dan bonus 2/4 keping", "Module sets & 2/4-piece set bonuses"), N.modul, thumbs("modul")],
+      ["/item", "04", S("Item", "Items"), S("Material, hadiah, koleksi, dan lainnya", "Materials, gifts, collectibles & more"), N.item, thumbs("item")],
+      ["/furnitur", "05", S("Furnitur", "Furniture"), S("Isi rumahmu di Hethereau", "Decorate your home in Hethereau"), N.furnitur, thumbs("furnitur")],
+      ["/kendaraan", "06", S("Kendaraan", "Vehicles"), S("Mobil dan motor beserta mereknya", "Cars & bikes by brand"), N.kendaraan, thumbs("kendaraan")],
+      ["/properti", "07", S("Properti", "Property"), S("Apartemen dan rumah yang bisa dibeli", "Buyable apartments & houses"), N.properti, thumbs("properti")],
+      ["/cerita", "08", S("Cerita", "Story"), S("Ringkasan bab utama dan spinoff", "Main story & spinoff recaps"), N.cerita, thumbs("cerita")],
+      ["/anomali", "09", S("Anomali", "Anomalies"), S("Arsip Anomaly, monster, dan boss", "Anomaly files, monsters & bosses"), N.anomali, thumbs("anomali")],
+      ["/istilah", "10", S("Istilah", "Glossary"), S("Istilah resmi dunia NTE", "Official NTE terminology"), N.istilah, ""],
+      ["/pencapaian", "11", S("Pencapaian", "Achievements"), S("Medali, syarat, hadiah, dan penanda progres", "Medals, requirements, rewards & progress tracker"), N.pencapaian, thumbs("pencapaian")],
+      ["/fashion", "12", "Fashion", S("Kostum Esper dan ilustrasinya", "Esper outfits & illustrations"), N.fashion, thumbs("fashion")],
+      ["/makanan", "13", S("Makanan", "Food"), S("Makanan, efek buff, dan bahan masak", "Dishes, buffs & ingredients"), N.makanan, thumbs("makanan")],
+      ["/tierlist", "14", "Tier List", S("Buat tier list-mu sendiri, simpan, dan bagikan sebagai gambar", "Make your own tier list, save it and share it as an image"), "", thumbs("esper")],
     ];
     const bgs = (home && home.bg) || [];
     main.innerHTML = `
@@ -209,10 +213,10 @@
             <a class="kbtn pink" href="${LINK.donate}" target="_blank" rel="noopener"><b>Donate</b><small>TRAKTEER</small></a>
           </div>
           <div class="home-stats">
-            <div><b>${espers.length}</b><span>Esper</span></div>
-            <div><b>${arcs.length}</b><span>Arc</span></div>
-            <div><b>${anomalies.anomalies.length}</b><span>${S("Anomali", "Anomalies")}</span></div>
-            <div><b>${achievements.items.length}</b><span>${S("Pencapaian", "Achievements")}</span></div>
+            <div><b>${N.esper}</b><span>Esper</span></div>
+            <div><b>${N.arc}</b><span>Arc</span></div>
+            <div><b>${home.stats.anomali}</b><span>${S("Anomali", "Anomalies")}</span></div>
+            <div><b>${N.pencapaian}</b><span>${S("Pencapaian", "Achievements")}</span></div>
           </div>
         </div>
       </section>
@@ -266,7 +270,7 @@
     let cur = 0;
     const pick = (i) => {
       cur = (i + espers.length) % espers.length;
-      const e = espers[cur], p = e.profile || {};
+      const e = espers[cur];
       const art = $("#scImg");
       art.classList.remove("in"); void art.offsetWidth;
       art.src = img(e.portrait || e.icon); art.alt = e.name; art.classList.add("in");
@@ -275,8 +279,8 @@
       $("#scRank").className = `ro-rank rank-${e.rank}`;
       $("#scType").src = e.arcTypeIcon ? img(e.arcTypeIcon) : ""; $("#scType").hidden = !e.arcTypeIcon;
       $("#roGlyph").textContent = e.name.toUpperCase();
-      $("#scQuote").innerHTML = rich(p.intro || e.title || "");
-      $("#scDesc").innerHTML = rich(e.desc || p.impression || "").split("\n").filter(Boolean).map((t) => `<p>${t}</p>`).join("");
+      $("#scQuote").innerHTML = rich(e.intro || e.title || "");
+      $("#scDesc").innerHTML = rich(e.desc || "").split("\n").filter(Boolean).map((t) => `<p>${t}</p>`).join("");
       $("#scDesc").scrollTop = 0;
       $("#scTags").innerHTML = `<span class="tag"><span class="dot"></span>${esc(e.element)}</span><span class="tag">${e.arcTypeIcon ? `<img src="${img(e.arcTypeIcon)}" alt="">` : ""}Arc ${esc(e.arcType)}</span>`;
       $("#scLink").setAttribute("href", `/esper/${e.slug}`);
@@ -298,7 +302,6 @@
   function esperCard(e) {
     return `<a class="esper-card ${elClass(e.element)}" href="/esper/${e.slug}" data-link>
       <div class="esper-art">
-        <span class="idcode">ESP-${esc(e.id)}</span>
         <span class="stamp rank-${e.rank}">${e.rank}</span>
         <img src="${img(e.portrait || e.icon)}" alt="" loading="lazy">
       </div>
@@ -344,7 +347,6 @@
       <div class="crumb mono"><a href="/" data-link>ARSIP</a><span>/</span><a href="/esper" data-link>ESPER</a><span>/</span><span>${esc(e.name.toUpperCase())}</span></div>
       <article class="dossier ${elClass(e.element)}">
         <div class="dossier-art">
-          <span class="idcode">BERKAS ESP-${esc(e.id)}</span>
           <span class="stamp rank-${e.rank}">${e.rank}</span>
           <img src="${img(e.portrait || e.icon)}" alt="${esc(e.name)}">
         </div>
@@ -627,7 +629,6 @@
   const S = (id, en) => (LANG === "en" ? en : id);
   const strip = (s) => String(s || "").replace(/<[^>]+>/g, "");
   const paras = (s) => rich(s).split(/\n+/).filter(Boolean).map((p) => `<p class="txt" style="margin-top:10px">${p}</p>`).join("");
-  const langBtn = $(".lang-toggle");
   const syncLangBtn = () => { if (langBtn) { langBtn.textContent = LANG.toUpperCase(); langBtn.setAttribute("aria-label", S("Ganti bahasa (sekarang Indonesia)", "Switch language (now English)")); } document.documentElement.lang = LANG; };
   if (langBtn) langBtn.onclick = () => {
     LANG = LANG === "id" ? "en" : "id";
@@ -855,6 +856,215 @@
     });
   }
   syncLangBtn();
+
+  // ---------------- TIER LIST (buatan pengunjung, tersimpan di browser) ----------------
+  let tlAbort = null;
+  async function viewTierlist() {
+    setTitle("Tier List");
+    const [home, arcs] = await Promise.all([load("home"), load("arcs")]);
+    const SETS = {
+      esper: home.roster.map((e) => ({ id: e.slug, name: e.name, icon: e.icon, cls: elClass(e.element), tag: e.element })),
+      arc: arcs.map((a) => ({ id: a.slug, name: a.name, icon: a.icon, cls: "q" + a.rarity, tag: a.type })),
+    };
+    const KEY = "nte-tierlist";
+    let uid = 0;
+    const mkTiers = () => [["S", "#ff5a7a"], ["A", "#ff9a3d"], ["B", "#f1c044"], ["C", "#5fcf8a"], ["D", "#4aa3ff"]].map(([label, color]) => ({ id: "t" + Date.now().toString(36) + uid++, label, color, items: [] }));
+    const fresh = (m) => ({ title: m === "esper" ? S("Tier List Esper-ku", "My Esper Tier List") : S("Tier List Arc-ku", "My Arc Tier List"), tiers: mkTiers() });
+    let st = { mode: "esper", esper: fresh("esper"), arc: fresh("arc") };
+    try {
+      const raw = JSON.parse(localStorage.getItem(KEY) || "null");
+      if (raw && raw.esper && raw.arc && Array.isArray(raw.esper.tiers) && Array.isArray(raw.arc.tiers)) st = { ...st, ...raw };
+    } catch (e) {}
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+    const cur = () => st[st.mode];
+    const items = () => SETS[st.mode];
+    const byId = () => Object.fromEntries(items().map((i) => [i.id, i]));
+    let q = "", sel = null, justDragged = false;
+
+    main.innerHTML = head("TIER LIST", "Tier List", S("Susun karakter atau Arc favoritmu ke dalam tier. Seret ke tier (di HP: ketuk karakter, lalu ketuk tier). Tersimpan otomatis di browser ini dan bisa diunduh sebagai gambar.", "Rank your favourite characters or Arcs into tiers. Drag them in (on phones: tap a character, then tap a tier). It saves automatically in this browser and can be downloaded as an image."), null) + `
+      <div class="tl-bar">
+        <div class="chips" id="tlMode"></div>
+        <input class="filter-input" id="tlTitle" type="text" maxlength="60" aria-label="${S("Judul tier list", "Tier list title")}">
+        <div class="tl-tools">
+          <button class="chip" type="button" id="tlPng">${S("Unduh gambar", "Download image")}</button>
+          <button class="chip" type="button" id="tlExp">${S("Ekspor JSON", "Export JSON")}</button>
+          <label class="chip" for="tlImp">${S("Impor JSON", "Import JSON")}</label><input id="tlImp" type="file" accept="application/json,.json" hidden>
+          <button class="chip" type="button" id="tlAdd">${S("+ Tier", "+ Tier")}</button>
+          <button class="chip" type="button" id="tlReset">${S("Reset", "Reset")}</button>
+        </div>
+      </div>
+      <div class="tl-hint" id="tlHint"></div>
+      <div class="tl-board" id="tlBoard"></div>
+      <div class="section-title"><h2>${S("Belum ditempatkan", "Unranked")}</h2><span class="mono" id="tlLeft"></span></div>
+      <div class="toolbar tl-search"><input class="filter-input" id="tlQ" type="search" placeholder="${S("Cari nama…", "Search name…")}" autocomplete="off"></div>
+      <div class="tl-pool tl-zone" id="tlPool" data-tier="pool"></div>`;
+
+    const tile = (i) => `<div class="tl-item ${i.cls}${sel === i.id ? " sel" : ""}" data-id="${esc(i.id)}" title="${esc(i.name)}"><img src="${img(i.icon)}" alt="" draggable="false" loading="lazy"><span>${esc(i.name)}</span></div>`;
+    function draw() {
+      const c = cur(), map = byId();
+      $("#tlMode").innerHTML = [["esper", "Esper"], ["arc", "Arc"]].map(([k, l]) => `<button class="chip" type="button" data-m="${k}" aria-pressed="${st.mode === k}">${l}</button>`).join("");
+      const t = $("#tlTitle"); if (document.activeElement !== t) t.value = c.title;
+      const placed = new Set(c.tiers.flatMap((x) => x.items));
+      $("#tlBoard").innerHTML = c.tiers.map((t, n) => `
+        <div class="tl-row" data-row="${t.id}">
+          <div class="tl-label" style="background:${esc(t.color)}"><input class="tl-name" value="${esc(t.label)}" maxlength="14" aria-label="${S("Nama tier", "Tier name")}" data-t="${t.id}"></div>
+          <div class="tl-zone" data-tier="${t.id}">${t.items.filter((id) => map[id]).map((id) => tile(map[id])).join("")}</div>
+          <div class="tl-ctl">
+            <input type="color" value="${esc(t.color)}" data-c="${t.id}" aria-label="${S("Warna tier", "Tier colour")}">
+            <button type="button" data-up="${t.id}" aria-label="${S("Naikkan", "Move up")}" ${n === 0 ? "disabled" : ""}>▲</button>
+            <button type="button" data-down="${t.id}" aria-label="${S("Turunkan", "Move down")}" ${n === c.tiers.length - 1 ? "disabled" : ""}>▼</button>
+            <button type="button" data-del="${t.id}" aria-label="${S("Hapus tier", "Delete tier")}">✕</button>
+          </div>
+        </div>`).join("");
+      const left = items().filter((i) => !placed.has(i.id) && (!q || i.name.toLowerCase().includes(q) || i.tag.toLowerCase().includes(q)));
+      $("#tlPool").innerHTML = left.map(tile).join("") || `<p class="hint">${S("Semua sudah ditempatkan.", "Everything is ranked.")}</p>`;
+      $("#tlLeft").textContent = `${items().length - placed.size} / ${items().length}`;
+      const m = sel && map[sel];
+      $("#tlHint").hidden = !m;
+      if (m) $("#tlHint").innerHTML = `<b>${esc(m.name)}</b> ${S("dipilih. Ketuk sebuah tier (atau area di bawah) untuk menaruhnya.", "selected. Tap a tier (or the area below) to place it.")}`;
+    }
+    function move(id, zone, beforeId) {
+      const c = cur();
+      c.tiers.forEach((t) => (t.items = t.items.filter((x) => x !== id)));
+      if (zone !== "pool") {
+        const t = c.tiers.find((x) => x.id === zone); if (!t) return;
+        const at = beforeId ? t.items.indexOf(beforeId) : -1;
+        at >= 0 ? t.items.splice(at, 0, id) : t.items.push(id);
+      }
+      sel = null; save(); draw();
+    }
+
+    if (tlAbort) tlAbort.abort();
+    tlAbort = new AbortController();
+    const sig = { signal: tlAbort.signal };
+    let drag = null, ghost = null, over = null;
+    const zoneAt = (x, y) => { const el = document.elementFromPoint(x, y); return el ? el.closest(".tl-zone") : null; };
+    main.addEventListener("pointerdown", (e) => {
+      const it = e.target.closest(".tl-item");
+      if (!it || e.button !== 0 || e.pointerType === "touch") return;
+      drag = { id: it.dataset.id, x: e.clientX, y: e.clientY };
+    }, sig);
+    window.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      if (!ghost) {
+        if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return;
+        const src = $(`.tl-item[data-id="${CSS.escape(drag.id)}"]`, main);
+        ghost = src.cloneNode(true); ghost.className += " ghost"; document.body.appendChild(ghost);
+        src.classList.add("lift");
+      }
+      ghost.style.left = e.clientX + "px"; ghost.style.top = e.clientY + "px";
+      const z = zoneAt(e.clientX, e.clientY);
+      if (over && over !== z) over.classList.remove("over");
+      over = z; if (z) z.classList.add("over");
+    }, sig);
+    window.addEventListener("pointerup", (e) => {
+      if (!drag) return;
+      if (ghost) {
+        const z = zoneAt(e.clientX, e.clientY);
+        ghost.remove(); ghost = null; justDragged = true; setTimeout(() => (justDragged = false), 0);
+        if (over) over.classList.remove("over"); over = null;
+        if (z) {
+          let before = null;
+          const el = document.elementFromPoint(e.clientX, e.clientY), tgt = el && el.closest(".tl-item");
+          if (tgt && tgt.dataset.id !== drag.id) {
+            const r = tgt.getBoundingClientRect();
+            const kids = [...z.querySelectorAll(".tl-item")], k = kids.indexOf(tgt);
+            before = e.clientX < r.left + r.width / 2 ? tgt.dataset.id : (kids[k + 1] || {}).dataset ? kids[k + 1].dataset.id : null;
+          }
+          move(drag.id, z.dataset.tier, before);
+        } else draw();
+      }
+      drag = null;
+    }, sig);
+
+    main.addEventListener("click", (e) => {
+      if (justDragged) return;
+      const t = e.target;
+      const modeBtn = t.closest("#tlMode .chip");
+      if (modeBtn) { st.mode = modeBtn.dataset.m; sel = null; save(); draw(); return; }
+      const up = t.closest("[data-up]"), dn = t.closest("[data-down]"), del = t.closest("[data-del]");
+      const c = cur();
+      if (up || dn) {
+        const id = (up || dn).dataset.up || (up || dn).dataset.down, i = c.tiers.findIndex((x) => x.id === id), j = i + (up ? -1 : 1);
+        if (c.tiers[j]) { [c.tiers[i], c.tiers[j]] = [c.tiers[j], c.tiers[i]]; save(); draw(); }
+        return;
+      }
+      if (del) {
+        const tr = c.tiers.find((x) => x.id === del.dataset.del);
+        if (tr.items.length && !confirm(S("Hapus tier ini? Isinya kembali ke daftar belum ditempatkan.", "Delete this tier? Its contents go back to unranked."))) return;
+        c.tiers = c.tiers.filter((x) => x !== tr); save(); draw(); return;
+      }
+      const it = t.closest(".tl-item");
+      if (it) { sel = sel === it.dataset.id ? null : it.dataset.id; draw(); return; }
+      const zone = t.closest(".tl-zone");
+      if (zone && sel) move(sel, zone.dataset.tier);
+    }, sig);
+
+    main.addEventListener("input", (e) => {
+      const c = cur(), t = e.target;
+      if (t.id === "tlTitle") { c.title = t.value; save(); }
+      else if (t.id === "tlQ") { q = t.value.trim().toLowerCase(); draw(); }
+      else if (t.dataset.t) { const x = c.tiers.find((y) => y.id === t.dataset.t); if (x) { x.label = t.value; save(); } }
+      else if (t.dataset.c) { const x = c.tiers.find((y) => y.id === t.dataset.c); if (x) { x.color = t.value; $(`.tl-row[data-row="${x.id}"] .tl-label`, main).style.background = t.value; save(); } }
+    }, sig);
+
+    $("#tlAdd").onclick = () => { cur().tiers.push({ id: "t" + Date.now().toString(36) + uid++, label: "?", color: "#a978ff", items: [] }); save(); draw(); };
+    $("#tlReset").onclick = () => { if (confirm(S("Reset tier list ini ke awal?", "Reset this tier list?"))) { st[st.mode] = fresh(st.mode); sel = null; save(); draw(); } };
+    $("#tlExp").onclick = () => {
+      const blob = new Blob([JSON.stringify({ app: "hethereau", type: "tierlist", ...st }, null, 2)], { type: "application/json" });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "tierlist-nte.json"; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    };
+    $("#tlImp").onchange = async (ev) => {
+      const f = ev.target.files[0]; if (!f) return;
+      try {
+        const j = JSON.parse(await f.text());
+        if (!j.esper || !j.arc || !Array.isArray(j.esper.tiers) || !Array.isArray(j.arc.tiers)) throw new Error("format");
+        const clean = (m) => {
+          const ok = new Set(SETS[m].map((i) => i.id));
+          return { title: String(j[m].title || ""), tiers: j[m].tiers.map((t) => ({ id: "t" + Date.now().toString(36) + uid++, label: String(t.label || "").slice(0, 14), color: /^#[0-9a-f]{6}$/i.test(t.color) ? t.color : "#a978ff", items: (t.items || []).filter((x) => ok.has(x)) })) };
+        };
+        st = { mode: j.mode === "arc" ? "arc" : "esper", esper: clean("esper"), arc: clean("arc") };
+        save(); draw();
+      } catch (e) { alert(S("File JSON tidak valid.", "Invalid JSON file.")); }
+      ev.target.value = "";
+    };
+    $("#tlPng").onclick = async () => {
+      const c = cur(), map = byId();
+      const W = 1100, LW = 130, CELL = 84, PAD = 14, perRow = Math.floor((W - LW - PAD * 2) / CELL), HEAD = 92, FOOT = 46;
+      const rows = c.tiers.map((t) => { const ids = t.items.filter((id) => map[id]); return { t, ids, h: Math.max(1, Math.ceil(ids.length / perRow)) * CELL + 16 }; });
+      const H = HEAD + rows.reduce((a, r) => a + r.h + 6, 0) + FOOT;
+      const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      const g = cv.getContext("2d");
+      const imgs = {};
+      await Promise.all([...new Set(rows.flatMap((r) => r.ids.map((id) => map[id].icon)))].map((src) => new Promise((res) => { const im = new Image(); im.onload = () => { imgs[src] = im; res(); }; im.onerror = res; im.src = img(src); })));
+      g.fillStyle = "#121214"; g.fillRect(0, 0, W, H);
+      g.fillStyle = "#ece6dd"; g.font = "800 38px 'Unbounded', Arial, sans-serif"; g.textBaseline = "middle"; g.textAlign = "left";
+      g.fillText(c.title.slice(0, 40) || "Tier List", PAD + 6, HEAD / 2);
+      let y = HEAD;
+      rows.forEach(({ t, ids, h }) => {
+        g.fillStyle = "#050506"; g.fillRect(0, y, W, h);
+        g.fillStyle = t.color; g.fillRect(0, y, LW, h);
+        g.fillStyle = "#17171a"; g.textAlign = "center"; g.font = "800 30px 'Unbounded', Arial, sans-serif";
+        const words = (t.label || "").split(/\s+/).filter(Boolean), lines = words.length > 1 && t.label.length > 6 ? words : [t.label];
+        lines.slice(0, 3).forEach((ln, i, arr) => g.fillText(ln.slice(0, 8), LW / 2, y + h / 2 + (i - (arr.length - 1) / 2) * 34));
+        ids.forEach((id, i) => {
+          const it = map[id], cx = LW + PAD + (i % perRow) * CELL + CELL / 2, cy = y + 8 + Math.floor(i / perRow) * CELL + 36;
+          g.save(); g.beginPath(); g.arc(cx, cy, 31, 0, Math.PI * 2); g.clip();
+          g.fillStyle = "#2c2c31"; g.fillRect(cx - 31, cy - 31, 62, 62);
+          if (imgs[it.icon]) g.drawImage(imgs[it.icon], cx - 31, cy - 31, 62, 62);
+          g.restore();
+          g.lineWidth = 3; g.strokeStyle = "#050506"; g.beginPath(); g.arc(cx, cy, 31, 0, Math.PI * 2); g.stroke();
+          g.fillStyle = "#c9c4bb"; g.font = "600 11px 'Plus Jakarta Sans', Arial, sans-serif"; g.fillText(it.name.length > 13 ? it.name.slice(0, 12) + "…" : it.name, cx, cy + 44);
+        });
+        y += h + 6;
+      });
+      g.fillStyle = "#8f8b84"; g.font = "600 14px 'JetBrains Mono', monospace"; g.textAlign = "right";
+      g.fillText("Hethereau · febrycoeg.my.id/tierlist", W - PAD - 6, H - FOOT / 2);
+      cv.toBlob((b) => { const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "tierlist-nte.png"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1500); }, "image/png");
+    };
+    draw();
+  }
 
   // ---------------- PENCARIAN GLOBAL ----------------
   let index = null;

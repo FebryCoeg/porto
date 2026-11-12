@@ -26,6 +26,7 @@ Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan yang me
 | **Istilah** | Arti istilah dunia NTE dari buku panduan dalam game. |
 | **Pencapaian** | 450+ achievement per kategori, lengkap dengan medali perunggu/perak/emas, syarat, dan hadiahnya. Bisa ditandai selesai (tersimpan di browser) dan diekspor/impor sebagai file JSON. |
 | **Fashion & Makanan** | Galeri ilustrasi kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta ikon dan efeknya. |
+| **Tier List** | Buat tier list Esper atau Arc sendiri: seret ke tier (di HP ketuk lalu ketuk tier), ganti nama dan warna tier, tersimpan di browser, bisa diunduh sebagai gambar atau diekspor/impor JSON. |
 
 - **Berbahasa Indonesia**: efek, deskripsi, dan cerita diterjemahkan ke bahasa Indonesia. Nama karakter, item, skill, dan istilah game tetap memakai nama aslinya.
 - **Dua bahasa**: tombol ID/EN untuk beralih ke teks bahasa Inggris aslinya.

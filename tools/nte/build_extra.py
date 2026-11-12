@@ -229,7 +229,9 @@ def build_fashion():
         n, d = txt(ns, k), txt(ns, f"Fashion_{m.group(1)}_{m.group(2)}_Desc")
         # entri placeholder seperti "Fashion 2 Name" bukan kostum sungguhan
         if n and not re.fullmatch(r"Fashion \d+ Name", n) and "Test Fashion" not in n:
-            out.append({"id": f"{m.group(1)}_{m.group(2)}", "char": names.get(m.group(1), m.group(1)),
+            cid = m.group(1)
+            char = names.get(cid) or B.L("ST_Player", f"Role_Name_{cid[-3:]}") or cid
+            out.append({"id": f"{m.group(1)}_{m.group(2)}", "char": char,
                         "name": name(n), "desc": pair(d, "deskripsi-fashion") if d and "Test Fashion" not in d else None})
     # ilustrasi kostum dari tabel penampilan game
     app = B.table("DataTable/Character/Appearance/DT_AppearanceData.json")
@@ -288,6 +290,31 @@ def build_food():
     return out
 
 
+def build_home(data):
+    """Ringkasan kecil untuk beranda supaya tidak perlu memuat semua data (±2,5 MB)."""
+    def rd(n):
+        return json.loads((B.OUT_DATA / f"{n}.json").read_text(encoding="utf-8"))
+    es, ar, md, it, fu, ve, pr = (rd(n) for n in ("espers", "arcs", "modules", "items", "furniture", "vehicles", "property"))
+    th = lambda arr, key="icon": [x[key] for x in arr if x.get(key)][:3]
+    an = data["anomalies"]
+    cats = {
+        "esper": (len(es), th(es)), "arc": (len(ar), th(ar)), "modul": (len(md["modules"]), th(md["sets"])),
+        "item": (len(it["items"]), th([i for i in it["items"] if i["rarity"] >= 4])),
+        "furnitur": (len(fu), th([i for i in fu if i["rarity"] >= 4])), "kendaraan": (len(ve), th(ve)),
+        "properti": (len(pr), th(pr, "image")), "cerita": (len(data["story"]), th(data["story"], "roleIcon")),
+        "anomali": (len(an["anomalies"]) + len(an["monsters"]), th(an["monsters"], "image")),
+        "istilah": (len(data["glossary"]), []),
+        "pencapaian": (len(data["achievements"]["items"]), th([x for x in data["achievements"]["items"] if x["q"] == 3])),
+        "fashion": (len(data["fashion"]), th(data["fashion"], "head")),
+        "makanan": (len(data["food"]), th(data["food"])),
+    }
+    roster = [{"slug": e["slug"], "name": e["name"], "rank": e["rank"], "element": e["element"], "arcType": e["arcType"],
+               "arcTypeIcon": e.get("arcTypeIcon", ""), "icon": e["icon"], "portrait": e.get("portrait", ""), "title": e.get("title", ""),
+               "desc": e.get("desc", ""), "intro": (e.get("profile") or {}).get("intro", "")} for e in es]
+    return {"counts": {k: v[0] for k, v in cats.items()}, "thumbs": {k: v[1] for k, v in cats.items()}, "roster": roster,
+            "stats": {"anomali": len(an["anomalies"])}}
+
+
 def main():
     data = {
         "story": build_story(),
@@ -303,6 +330,8 @@ def main():
         B.save(key, finalize(obj))
         n = len(obj) if isinstance(obj, list) else sum(len(v) for v in obj.values() if isinstance(v, list))
         print(f"{key}: {n} entri")
+    data["home"].update(build_home(data))
+    B.save("home", data["home"])
     missing = B.build_images()
     if missing:
         bad = set(missing)

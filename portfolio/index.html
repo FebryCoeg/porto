@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Febri Riansyah (Febry Coeg) | Portfolio</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=25" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=25" />
+  <meta name="description" content="Febri Riansyah (Febry Coeg) makes gacha game guides, builds and first looks on YouTube. Find his socials, milestones, the games he plays, his latest videos and Febry Store." />
+  <link rel="canonical" href="https://febrycoeg.my.id/portfolio/" />
+  <meta name="theme-color" content="#0e1229" />
+
+  <!-- Tampilan link saat dibagikan (WhatsApp, Discord, Facebook, X, Telegram, dll.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Febry Coeg" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="id_ID" />
+  <meta property="og:url" content="https://febrycoeg.my.id/portfolio/" />
+  <meta property="og:title" content="Febri Riansyah (Febry Coeg) | Portfolio" />
+  <meta property="og:description" content="Gacha game guides, builds and first looks on YouTube. Socials, milestones, latest videos, my top-up store and a tip jar." />
+  <meta property="og:image" content="https://febrycoeg.my.id/portfolio/assets/og-image.jpg?v=3" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Febri Riansyah (Febry Coeg): content creator, gamer, and game guide maker" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Febri Riansyah (Febry Coeg) | Portfolio" />
+  <meta name="twitter:description" content="Gacha game guides, builds and first looks on YouTube. Socials, milestones, latest videos, my top-up store and a tip jar." />
+  <meta name="twitter:image" content="https://febrycoeg.my.id/portfolio/assets/og-image.jpg?v=3" />
+  <meta name="twitter:image:alt" content="Febri Riansyah (Febry Coeg): content creator, gamer, and game guide maker" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=25" />
+  <script>
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    // layar sambutan: tampil sekali per kunjungan (per tab)
+    try { document.documentElement.classList.add(sessionStorage.getItem("introSeen") ? "no-intro" : "intro-active"); }
+    catch (e) { document.documentElement.classList.add("intro-active"); }
+  </script>
+</head>
+<body>
+  <!-- LAYAR SAMBUTAN (lihat intro.js) -->
+  <div class="intro" id="intro" role="dialog" aria-label="Welcome">
+    <div class="intro-petals" id="introPetals" aria-hidden="true"></div>
+    <div class="intro-inner">
+      <img class="intro-logo" id="introLogo" alt="" hidden />
+      <svg class="intro-flower" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sakuraFlower" /></svg>
+      <div class="intro-title" id="introTitle">Welcome</div>
+      <p class="intro-sub" id="introSub">to my page</p>
+      <div class="intro-bar" aria-hidden="true"><span></span></div>
+    </div>
+    <button class="intro-skip" type="button">Skip →</button>
+  </div>
+  <script src="intro.js?v=25"></script>
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+
+  <!-- Nav yang muncul setelah melewati landing page -->
+  <header class="nav" id="stickyNav">
+    <a href="#top" class="brand" id="brand">Porto</a>
+    <nav class="nav-links">
+      <a href="#tentang">About</a>
+      <a href="#sosmed">Socials</a>
+      <a href="#pencapaian">Milestones</a>
+      <a href="#game">Games</a>
+      <a href="#youtube">YouTube</a>
+      <a href="#toko">Store</a>
+      <a href="/">NTE Database</a>
+      <a href="#donasi" class="nav-cta">Tip jar</a>
+    </nav>
+    <button class="theme-btn theme-toggle" aria-label="Toggle theme">◐</button>
+  </header>
+
+  <!-- LANDING PAGE -->
+  <section class="hero hero--image" id="top">
+    <div class="hero-scene" id="heroScene"></div>
+    <div class="hero-shade"></div>
+        <div class="hero-glow" id="heroGlow"></div>
+
+    <div class="hero-bar">
+      <div class="hb-left">
+        <div class="hb-avatar" id="hbAvatar"></div>
+        <nav class="pill-nav">
+          <a href="#top" class="active">Home</a>
+          <a href="#tentang">About</a>
+          <a href="#pencapaian">Milestones</a>
+          <a href="#toko">Store</a>
+        </nav>
+      </div>
+      <a class="hb-logo" href="#top"><span class="hb-dot"></span><span id="hbName"></span></a>
+      <div class="hb-right">
+        <a class="pill" href="/">NTE DB</a>
+        <a class="pill" href="#sosmed">Socials</a>
+        <a class="pill" href="#donasi">Tip jar</a>
+        <button class="pill pill-icon theme-toggle" aria-label="Toggle theme">◐</button>
+      </div>
+    </div>
+
+    <div class="hero-left">
+      <p class="hero-label"><span class="hero-label-dot">★</span><span id="heroLabel"></span></p>
+      <h1 class="hero-title" id="heroTitle"></h1>
+      <p class="hero-desc" id="heroDesc"></p>
+      <div class="hero-cta">
+        <a class="cta-main" id="ctaMain" href="#sosmed"></a>
+        <a class="cta-play" id="ctaSecond" href="#donasi"><span class="cta-play-btn">▶</span><span id="ctaSecondText"></span></a>
+      </div>
+    </div>
+
+    <div class="hero-stage" id="heroStage"></div>
+
+    <div class="hero-stat">
+      <div class="stat-stack" id="statStack"></div>
+      <strong id="statJudul"></strong>
+      <small id="statSub"></small>
+    </div>
+
+    <div class="hero-cards" id="heroCards"></div>
+
+    <a class="scroll-badge" href="#tentang" aria-label="Scroll down">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="circlePath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
+        <text><textPath href="#circlePath">SCROLL DOWN • SCROLL DOWN • SCROLL DOWN • </textPath></text>
+      </svg>
+      <span>↓</span>
+    </a>
+
+    <p class="hero-credit" id="heroCredit"></p>
+  </section>
+
+  <main>
+
+    <!-- TENTANG -->
+    <section id="tentang" class="section reveal">
+      <h2 class="section-title">About me</h2>
+      <div class="about-grid">
+        <p class="card about-text" id="tentangText"></p>
+        <div class="card biodata" id="biodata"></div>
+      </div>
+    </section>
+
+    <!-- SOSMED -->
+    <section id="sosmed" class="section reveal">
+      <h2 class="section-title">Where to find me</h2>
+      <div class="social-grid" id="socialGrid"></div>
+    </section>
+
+    <!-- PENCAPAIAN -->
+    <section id="pencapaian" class="section reveal">
+      <h2 class="section-title">Milestones</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="section reveal">
+      <h2 class="section-title"><b id="gameJudul">Games I play</b></h2>
+      <p class="game-hint" id="gameHint">Hover a card (or tap it on your phone) to see my UID and stats.</p>
+      <div class="game-acc" id="gameAcc"></div>
+    </section>
+
+    <!-- YOUTUBE -->
+    <section id="youtube" class="section reveal">
+      <h2 class="section-title"><b id="ytJudul">Latest on YouTube</b></h2>
+      <div class="card yt-dash" id="ytDash"></div>
+    </section>
+
+    <!-- TOKO -->
+    <section id="toko" class="section reveal">
+      <h2 class="section-title">My top-up store</h2>
+      <div class="card toko-card" id="tokoCard"></div>
+    </section>
+
+    <section id="donasi" class="section reveal">
+      <h2 class="section-title">Support me</h2>
+      <div class="card donate-card">
+        <svg class="donate-sakura" viewBox="-50 -50 100 100" aria-hidden="true">
+          <g id="sakuraFlower">
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(72)" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(144)" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(216)" />
+            <path d="M0 -4 C -16 -18 -12 -42 -3 -47 L0 -42 L3 -47 C 12 -42 16 -18 0 -4Z" transform="rotate(288)" />
+          </g>
+        </svg>
+        <div class="donate-head">
+          <div class="donate-icon">
+            <svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#sakuraFlower" /></svg>
+          </div>
+          <div>
+            <h3 id="donasiJudul">Tip jar</h3>
+            <p id="donasiPesan"></p>
+          </div>
+        </div>
+        <div class="donate-buttons" id="donateButtons"></div>
+        <div class="qris" id="qrisWrap" hidden>
+          <img id="qrisImg" alt="QRIS for donations" />
+          <p><strong>Scan QRIS</strong><br />Works with any e-wallet or mobile banking app.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section id="kontak" class="section reveal contact">
+      <h2 class="section-title">Say hi</h2>
+      <p>Collab ideas, business stuff, or just want to chat about a game? Send me a message.</p>
+      <form class="card contact-form" id="contactForm" novalidate>
+        <div class="cf-row">
+          <label>Name
+            <input id="cfNama" type="text" maxlength="60" placeholder="Your name" autocomplete="name" />
+          </label>
+          <label>Subject
+            <input id="cfSubjek" type="text" maxlength="100" placeholder="What's this about?" />
+          </label>
+        </div>
+        <label>Message
+          <textarea id="cfPesan" rows="5" maxlength="2000" placeholder="Write your message here..." required></textarea>
+        </label>
+        <div class="cf-actions">
+          <button type="submit" class="btn btn-primary" data-via="gmail">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5l8.5 6 8.5-6M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5z"/></svg>
+            Send via Gmail
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img class="footer-logo" id="footerLogo" alt="" hidden />
+    <p>© <span id="year"></span> <span id="footerName"></span>. Made with 💛</p>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js?v=25"></script>
+  <script src="hero-image.js?v=25"></script>
+  <script src="hero.js?v=25"></script>
+  <script src="swarm.js?v=25"></script>
+  <script src="app.js?v=25"></script>
+</body>
+</html>

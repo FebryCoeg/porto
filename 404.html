@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Arsip Hethereau | Database Neverness to Everness Bahasa Indonesia</title>
+  <meta name="description" content="Database Neverness to Everness berbahasa Indonesia: Esper, Arc, Modul, Item, Furnitur, Kendaraan, dan Properti lengkap dengan skill, efek, dan cerita." />
+  <meta name="theme-color" content="#eeece6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0d0f13" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="/nte/icon.svg" />
+  <link rel="manifest" href="/nte/manifest.webmanifest" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Arsip Hethereau" />
+  <meta property="og:locale" content="id_ID" />
+  <meta property="og:title" content="Arsip Hethereau | Database NTE Bahasa Indonesia" />
+  <meta property="og:description" content="Esper, Arc, Modul, Item, Furnitur, Kendaraan, dan Properti Neverness to Everness, lengkap dalam Bahasa Indonesia." />
+  <meta property="og:url" content="https://febrycoeg.my.id/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/nte/app.css?v=1" />
+  <script>
+    try { const t = localStorage.getItem("nte-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Lewati ke konten</a>
+
+  <header class="top">
+    <a class="logo" href="/" data-link>
+      <span class="logo-stamp" aria-hidden="true">NTE</span>
+      <span class="logo-text"><b>Arsip Hethereau</b><small>Database NTE · Bahasa Indonesia</small></span>
+    </a>
+    <nav class="top-nav" aria-label="Kategori">
+      <a href="/esper" data-link>Esper</a>
+      <a href="/arc" data-link>Arc</a>
+      <a href="/modul" data-link>Modul</a>
+      <a href="/item" data-link>Item</a>
+      <a href="/furnitur" data-link>Furnitur</a>
+      <a href="/kendaraan" data-link>Kendaraan</a>
+      <a href="/properti" data-link>Properti</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn search-open" type="button" aria-label="Cari (Ctrl+K)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <span class="kbd">Ctrl K</span>
+      </button>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Ganti tema">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="icon-btn menu-open" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="drawer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU PILIHAN -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer-scrim" data-close></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-head">
+        <span class="mono">MENU · INDEKS ARSIP</span>
+        <button class="icon-btn" type="button" data-close aria-label="Tutup menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <nav class="drawer-nav" aria-label="Menu utama">
+        <a href="/" data-link><i>00</i>Beranda</a>
+        <a href="/esper" data-link><i>01</i>Esper</a>
+        <a href="/arc" data-link><i>02</i>Arc</a>
+        <a href="/modul" data-link><i>03</i>Modul</a>
+        <a href="/item" data-link><i>04</i>Item</a>
+        <a href="/furnitur" data-link><i>05</i>Furnitur</a>
+        <a href="/kendaraan" data-link><i>06</i>Kendaraan</a>
+        <a href="/properti" data-link><i>07</i>Properti</a>
+      </nav>
+      <div class="drawer-extra">
+        <span class="mono">LAINNYA</span>
+        <a class="drawer-card" href="/portfolio/">
+          <img src="/portfolio/assets/logo-tema.png" alt="" />
+          <span><b>Portofolio Febry Coeg</b><small>Profil, sosial media, game, dan video YouTube</small></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+        <a class="drawer-link" href="https://www.youtube.com/@FebryCoeg" target="_blank" rel="noopener">Guide NTE di YouTube ↗</a>
+        <a class="drawer-link" href="https://febry.store/" target="_blank" rel="noopener">Top up di Febry Store ↗</a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- PENCARIAN -->
+  <div class="search" id="search" hidden>
+    <div class="drawer-scrim" data-close></div>
+    <div class="search-box" role="dialog" aria-modal="true" aria-label="Pencarian">
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <input id="searchInput" type="search" placeholder="Cari Esper, Arc, Item, Kendaraan…" autocomplete="off" spellcheck="false" />
+        <button class="kbd" type="button" data-close>Esc</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <main id="main" tabindex="-1"></main>
+
+  <!-- PANEL DETAIL (item, furnitur, kendaraan) -->
+  <div class="sheet" id="sheet" hidden>
+    <div class="drawer-scrim" data-close></div>
+    <aside class="sheet-panel" role="dialog" aria-modal="true" aria-label="Detail">
+      <button class="icon-btn sheet-close" type="button" data-close aria-label="Tutup">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div id="sheetBody"></div>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <div>
+        <b>Arsip Hethereau</b>
+        <p>Fan-site tidak resmi, dibuat oleh <a href="/portfolio/">Febry Coeg</a>. Tidak berafiliasi dengan Hotta Studio atau Perfect World.</p>
+      </div>
+      <div class="foot-meta">
+        <p>Data &amp; gambar game © Hotta Studio / Perfect World. Sumber data: <a href="https://github.com/Waifus-Grace/NTE_Assets" target="_blank" rel="noopener">NTE_Assets</a>.</p>
+        <p id="footProgress" class="mono"></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/nte/app.js?v=1" defer></script>
+</body>
+</html>

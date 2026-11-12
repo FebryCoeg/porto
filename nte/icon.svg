@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#15171c" transform="rotate(-4 32 32)"/>
+  <rect x="9" y="9" width="46" height="46" rx="10" fill="none" stroke="#eeece6" stroke-width="2" transform="rotate(-4 32 32)"/>
+  <text x="32" y="38" text-anchor="middle" font-family="Consolas, monospace" font-weight="700" font-size="16" fill="#eeece6" transform="rotate(-4 32 32)">NTE</text>
+  <circle cx="49" cy="15" r="5" fill="#ff4d2e"/>
+</svg>

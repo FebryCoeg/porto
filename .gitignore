@@ -1,2 +1,5 @@
 # pengaturan pratinjau lokal (tidak perlu diunggah)
 .claude/
+
+# cache data mentah NTE (dibuat ulang oleh tools/nte/build.py)
+tools/nte/.cache/

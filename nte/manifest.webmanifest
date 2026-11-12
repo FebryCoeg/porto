@@ -1,0 +1,14 @@
+{
+  "name": "Arsip Hethereau — Database NTE",
+  "short_name": "Arsip NTE",
+  "description": "Database Neverness to Everness berbahasa Indonesia.",
+  "lang": "id",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0d0f13",
+  "theme_color": "#0d0f13",
+  "icons": [
+    { "src": "/nte/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,13 +1,13 @@
 # Panel edit website (Pages CMS) — buka https://app.pagescms.org, login GitHub, pilih repo ini.
 media:
-  input: assets
-  output: /assets
+  input: portfolio/assets
+  output: /portfolio/assets
 
 content:
   - name: website
     label: Isi Website
     type: file
-    path: content/data.json
+    path: portfolio/content/data.json
     format: json
     fields:
       # ---------- Profil ----------

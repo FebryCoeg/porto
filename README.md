@@ -2,40 +2,7 @@
 
 Website milik **Febri Riansyah (Febry Coeg)**: content creator, gamer, pembuat guide game, dan pemilik toko top up **Febry Store**.
 
-Isinya ada dua:
-
-- 🗂️ **Arsip Hethereau** di **https://febrycoeg.my.id**, database fan-made game *Neverness to Everness* (NTE) berbahasa Indonesia.
-- 👤 **Portofolio** di **https://febrycoeg.my.id/portfolio/**, profil Febry lengkap dengan sosial media, pencapaian, game, video YouTube, dan kontak. Bisa dibuka juga lewat menu di Arsip Hethereau.
-
----
-
-## Arsip Hethereau (Database NTE)
-
-Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan yang mengikuti UI di dalam game: latar arang halftone, tombol pil krem bergaris tebal, dan aksen magenta.
-
-| Kategori | Isi |
-|---|---|
-| **Esper** | 26 karakter lengkap dengan rank, elemen, tipe, skill (Basic, Reflexive, Redirect, Ultimate, Support, Passive), Awakening, Console, profil, kutipan, dan arsip cerita. |
-| **Arc** | 53 senjata/Fork dengan efek yang nilainya berubah sesuai bintang (1 sampai 5) yang dipilih. |
-| **Modul** | Modul beserta set bonusnya (efek 2 dan 4 bagian). |
-| **Item** | 1.500+ item yang dikelompokkan ke 11 kategori: material, karakter, hadiah, masakan, profil, koleksi, kostum, paket, item penting, item misi, dan lainnya. |
-| **Furnitur** | 300+ furnitur dengan nilai Kenyamanan dan Koleksi. |
-| **Kendaraan & Properti** | Semua kendaraan dan rumah yang bisa dimiliki di Hethereau. |
-| **Cerita** | Ringkasan resmi setiap bab cerita utama dan spinoff, lengkap dengan gambar sampul bab dari menu Plot Review. |
-| **Anomali & Monster** | Arsip Anomaly dengan foto arsip, kelas, kode, kutipan, kisah, karakteristik, dan Nexus, ditambah monster dan boss beserta ikonnya. |
-| **Istilah** | Arti istilah dunia NTE dari buku panduan dalam game. |
-| **Pencapaian** | 450+ achievement per kategori, lengkap dengan medali perunggu/perak/emas, syarat, dan hadiahnya. Bisa ditandai selesai (tersimpan di browser) dan diekspor/impor sebagai file JSON. |
-| **Fashion & Makanan** | Galeri ilustrasi kostum setiap Esper beserta deskripsinya, serta makanan dan bahan masak beserta ikon dan efeknya. |
-| **Tier List** | Buat tier list Esper atau Arc sendiri: seret ke tier (di HP ketuk lalu ketuk tier), ganti nama dan warna tier, tersimpan di browser, bisa diunduh sebagai gambar atau diekspor/impor JSON. |
-
-- **Berbahasa Indonesia**: efek, deskripsi, dan cerita diterjemahkan ke bahasa Indonesia. Nama karakter, item, skill, dan istilah game tetap memakai nama aslinya.
-- **Dua bahasa**: tombol ID/EN untuk beralih ke teks bahasa Inggris aslinya.
-- **Beranda bergaya key visual**: latar ilustrasi kota Hethereau dari layar loading game yang berganti otomatis, etalase Esper, serta tombol Donate (Trakteer) dan Join Komunitas NTE Indonesia.
-- **Pencarian cepat** ke seluruh isi database (tekan `Ctrl + K` atau `/`).
-- **Filter** per rarity, elemen, tipe, dan kategori yang tersimpan di URL, jadi hasil filter bisa langsung dibagikan.
-- **Tampilan responsif** untuk laptop maupun HP.
-- **Data dan gambar langsung dari file game**: teks, tabel data, ikon, dan aset UI, diolah dengan skrip Python menjadi JSON dan gambar WebP.
-- **Pemberitahuan update otomatis**: setiap Senin, GitHub Action membandingkan data yang dipakai website dengan versi terbaru NTE_Assets. Kalau ada yang berubah, terbuka Issue berisi versi baru dan daftar file yang berubah.
+Portofolio ini ada di **https://febrycoeg.my.id**. Database fan-made NTE (Arsip Hethereau) kini punya situs sendiri di **https://nteid.site**.
 
 ---
 
@@ -64,15 +31,14 @@ Database seluruh isi game NTE, disusun rapi per kategori dengan tampilan yang me
 - **Ikon buatan sendiri**: semua ikon digambar khusus dengan gaya yang seragam.
 - **Responsif**: tampil rapi di laptop maupun HP.
 - **Ramah aksesibilitas**: animasi otomatis dikurangi bagi pengunjung yang mengaktifkan "kurangi gerakan".
-- **Mudah diperbarui**: seluruh isi (teks, gambar, link) disimpan di `portfolio/content/data.json` dan bisa diedit lewat panel [Pages CMS](https://pagescms.org) tanpa menyentuh kode.
+- **Mudah diperbarui**: seluruh isi (teks, gambar, link) disimpan di `content/data.json` dan bisa diedit lewat panel [Pages CMS](https://pagescms.org) tanpa menyentuh kode.
 
 ## Teknologi
 
-HTML, CSS, dan JavaScript murni tanpa framework · Python untuk mengolah data NTE · WebGL untuk ilustrasi landing page · Canvas untuk animasi kawanan kursor · Python + GitHub Actions untuk pembaruan video otomatis · Di-hosting gratis dengan GitHub Pages.
+HTML, CSS, dan JavaScript murni tanpa framework · WebGL untuk ilustrasi landing page · Canvas untuk animasi kawanan kursor · Python + GitHub Actions untuk pembaruan video otomatis · Di-hosting gratis dengan GitHub Pages.
 
 ## Kredit
 
-- Data dan gambar Arsip Hethereau: Neverness to Everness © Hotta Studio / Perfect World, diambil dari Waifus-Grace/NTE_Assets. Arsip ini adalah proyek penggemar dan tidak berafiliasi dengan pengembang game.
 - Ilustrasi landing page: Kamisato Ayaka, Genshin Impact © HoYoverse
 - Gambar pencapaian: Sword Art Online © Reki Kawahara/KADOKAWA/SAO Project · Tower of Fantasy © Hotta Studio, a Perfect World Company · Neverness to Everness © Hotta Studio / Perfect World · Silver Palace © Elementa / Silver Studio · Aniimo © Pawprints Studio · Ananta © NetEase Games / Naked Rain
 - Nama dan logo platform (Sociabuzz, Trakteer, Saweria, dan media sosial) adalah milik pemiliknya masing-masing.

@@ -1,8 +1,8 @@
 # pengaturan pratinjau lokal (tidak perlu diunggah)
 .claude/
 
-# cache data mentah NTE (dibuat ulang oleh tools/nte/build.py)
-tools/nte/.cache/
-
 # cache Python
 __pycache__/
+
+# sisa alat NTE lokal (sudah pindah ke repo nteid)
+tools/

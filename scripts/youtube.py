@@ -1,4 +1,4 @@
-"""Ambil info channel + video terbaru dari halaman YouTube, simpan ke portfolio/content/youtube.json.
+"""Ambil info channel + video terbaru dari halaman YouTube, simpan ke content/youtube.json.
 
 Dipakai oleh GitHub Action (.github/workflows/youtube.yml) agar daftar video di website
 selalu terbaru tanpa perlu API key. Kalau gagal, file lama tidak diubah.
@@ -8,8 +8,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "portfolio" / "content" / "youtube.json"
-cfg = json.loads((ROOT / "portfolio" / "content" / "data.json").read_text(encoding="utf-8")).get("youtube") or {}
+OUT = ROOT / "content" / "youtube.json"
+cfg = json.loads((ROOT / "content" / "data.json").read_text(encoding="utf-8")).get("youtube") or {}
 HANDLE = (cfg.get("handle") or "@FebryCoeg").strip()
 if not HANDLE.startswith("@"):
     HANDLE = "@" + HANDLE

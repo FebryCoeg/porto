@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-13T19:39:33+00:00",
+  "diperbarui": "2026-11-14T06:18:31+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,9 +11,16 @@
   },
   "video": [
     {
+      "id": "pZBVhPho_KE",
+      "judul": "KOTA MATI YANG BAKAL RILIS NANTI - NEVERNESS TO EVERNESS",
+      "ditonton": "158",
+      "durasi": "13:45",
+      "tanggal": "2026-11-14T05:18:31+00:00"
+    },
+    {
       "id": "Tl3juNUiVD0",
       "judul": "COMPLETE LILY BUILD, TEAM, BUILD - WUTHERING WAVES [TOP-UP AT FEBRY.STORE]",
-      "ditonton": "2.9K",
+      "ditonton": "3K",
       "durasi": "12:26",
       "tanggal": "2026-11-12T05:11:06+00:00"
     },
@@ -27,7 +34,7 @@
     {
       "id": "BI_uCXMfNwE",
       "judul": "YOU NEED TO KNOW THIS! - NEVERNESS TO EVERNESS",
-      "ditonton": "5.5K",
+      "ditonton": "5.6K",
       "durasi": "5:59",
       "tanggal": "2026-11-11T01:13:03+00:00"
     },
@@ -41,14 +48,14 @@
     {
       "id": "sz_t6Rq9dU8",
       "judul": "NEW HOBBY LOGISTICS HUB GUIDE - NEVERNESS TO EVERNESS",
-      "ditonton": "4.3K",
+      "ditonton": "4.4K",
       "durasi": "8:52",
       "tanggal": "2026-11-09T06:55:44+00:00"
     },
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "6.2K",
+      "ditonton": "6.3K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
@@ -76,7 +83,7 @@
     {
       "id": "19AWi6HUGAQ",
       "judul": "I'M A BIT WORRIED ABOUT THIS GAME - SILVER PALACE",
-      "ditonton": "8.6K",
+      "ditonton": "8.7K",
       "durasi": "4:39",
       "tanggal": "2026-11-04T20:55:44+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "2.9K",
       "durasi": "6:24",
       "tanggal": "2026-11-02T20:55:44+00:00"
-    },
-    {
-      "id": "h6RJLSpCKp8",
-      "judul": "IT'S CRAZY, THE RELEASE IS MOVED UP - SILVER PALACE",
-      "ditonton": "3.2K",
-      "durasi": "4:32",
-      "tanggal": "2026-10-31T20:55:44+00:00"
     }
   ]
 }

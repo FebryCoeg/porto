@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-14T22:22:06+00:00",
+  "diperbarui": "2026-11-15T06:26:09+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,16 +11,23 @@
   },
   "video": [
     {
+      "id": "TLD2C9QXApE",
+      "judul": "SUDAHKAH 90K SCOREMU? HUNTER CRUCIBLE - NEVERNESS TO EVERNESS",
+      "ditonton": "12",
+      "durasi": "11:29",
+      "tanggal": "2026-11-15T06:18:09+00:00"
+    },
+    {
       "id": "pZBVhPho_KE",
       "judul": "THE DEAD CITY COMING SOON - NEVERNESS TO EVERNESS",
-      "ditonton": "3.7K",
+      "ditonton": "4.2K",
       "durasi": "13:45",
       "tanggal": "2026-11-14T05:18:31+00:00"
     },
     {
       "id": "Tl3juNUiVD0",
       "judul": "COMPLETE LILY BUILD, TEAM, BUILD - WUTHERING WAVES [TOP-UP AT FEBRY.STORE]",
-      "ditonton": "3.3K",
+      "ditonton": "3.4K",
       "durasi": "12:26",
       "tanggal": "2026-11-12T05:11:06+00:00"
     },
@@ -55,7 +62,7 @@
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "6.6K",
+      "ditonton": "6.7K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "8.7K",
       "durasi": "4:39",
       "tanggal": "2026-11-04T20:55:44+00:00"
-    },
-    {
-      "id": "gCtR0ZaAuTU",
-      "judul": "KIT PRE-ANALYSIS ELYMS & EXE - NEVERNESS TO EVERNESS",
-      "ditonton": "2.9K",
-      "durasi": "6:24",
-      "tanggal": "2026-11-02T20:55:44+00:00"
     }
   ]
 }

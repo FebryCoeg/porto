@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-16T21:59:14+00:00",
+  "diperbarui": "2026-11-17T07:52:38+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -10,6 +10,13 @@
     "video": "3.7K"
   },
   "video": [
+    {
+      "id": "iB-jJObeBKk",
+      "judul": "WE CRUSH IT USING AWAKENING 6 T5 - NEVERNESS TO EVERNESS",
+      "ditonton": "65",
+      "durasi": "16:52",
+      "tanggal": "2026-11-17T06:52:38+00:00"
+    },
     {
       "id": "TLD2C9QXApE",
       "judul": "HAVE YOU REACHED 90K SCORE? HUNTER CRUCIBLE - NEVERNESS TO EVERNESS",
@@ -62,7 +69,7 @@
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "7.2K",
+      "ditonton": "7.3K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "4.5K",
       "durasi": "9:14",
       "tanggal": "2026-11-06T20:55:44+00:00"
-    },
-    {
-      "id": "19AWi6HUGAQ",
-      "judul": "I'M A BIT WORRIED ABOUT THIS GAME - SILVER PALACE",
-      "ditonton": "8.8K",
-      "durasi": "4:39",
-      "tanggal": "2026-11-04T20:55:44+00:00"
     }
   ]
 }

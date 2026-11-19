@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-19T07:22:19+00:00",
+  "diperbarui": "2026-11-19T20:33:45+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,16 +11,23 @@
   },
   "video": [
     {
+      "id": "jNTcpMBFWPs",
+      "judul": "FIRST TIME PLAYING FULL TANK AHEAD - NEEVERNESS TO EVERNESS",
+      "ditonton": "451",
+      "durasi": "9:38",
+      "tanggal": "2026-11-19T14:33:45+00:00"
+    },
+    {
       "id": "UfC6OSzJbl0",
       "judul": "FREE 1000 ANNULITH - NEVERNESS TO EVRNESS",
-      "ditonton": "1.8K",
+      "ditonton": "2.2K",
       "durasi": "4:22",
       "tanggal": "2026-11-18T12:28:55+00:00"
     },
     {
       "id": "iB-jJObeBKk",
       "judul": "WE CRUSH IT USING AWAKENING 6 T5 - NEVERNESS TO EVERNESS",
-      "ditonton": "1.5K",
+      "ditonton": "1.6K",
       "durasi": "16:52",
       "tanggal": "2026-11-17T06:52:38+00:00"
     },
@@ -41,7 +48,7 @@
     {
       "id": "Tl3juNUiVD0",
       "judul": "COMPLETE LILY BUILD, TEAM, BUILD - WUTHERING WAVES [TOP-UP AT FEBRY.STORE]",
-      "ditonton": "3.9K",
+      "ditonton": "4K",
       "durasi": "12:26",
       "tanggal": "2026-11-12T05:11:06+00:00"
     },
@@ -76,7 +83,7 @@
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "7.6K",
+      "ditonton": "7.8K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "1.8K",
       "durasi": "4:57",
       "tanggal": "2026-11-07T20:55:44+00:00"
-    },
-    {
-      "id": "zqr2u5rGiqU",
-      "judul": "FIX GUA BAKAL GACHA TANK INI - NEVERNESS TO EVERNESS",
-      "ditonton": "3.4K",
-      "durasi": "7:49",
-      "tanggal": "2026-11-06T20:55:44+00:00"
     }
   ]
 }

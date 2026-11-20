@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-19T20:33:45+00:00",
+  "diperbarui": "2026-11-20T07:12:18+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,9 +11,16 @@
   },
   "video": [
     {
+      "id": "AZcmLZupQnY",
+      "judul": "YOU MUST TRY THIS - NEVERNESS TO EVERNESS [TOP UP AT FEBRY.STORE]",
+      "ditonton": "840",
+      "durasi": "14:41",
+      "tanggal": "2026-11-19T23:12:18+00:00"
+    },
+    {
       "id": "jNTcpMBFWPs",
       "judul": "FIRST TIME PLAYING FULL TANK AHEAD - NEEVERNESS TO EVERNESS",
-      "ditonton": "451",
+      "ditonton": "669",
       "durasi": "9:38",
       "tanggal": "2026-11-19T14:33:45+00:00"
     },
@@ -83,16 +90,9 @@
     {
       "id": "Pih2Na90lq8",
       "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "7.8K",
+      "ditonton": "7.9K",
       "durasi": "14:47",
       "tanggal": "2026-11-08T20:55:44+00:00"
-    },
-    {
-      "id": "2U1AxQKaep0",
-      "judul": "ELYMS SKIN REVIEW - NEVERNESS TO EVERNESS",
-      "ditonton": "1.8K",
-      "durasi": "4:57",
-      "tanggal": "2026-11-07T20:55:44+00:00"
     }
   ]
 }

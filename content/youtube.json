@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-23T07:33:47+00:00",
+  "diperbarui": "2026-11-23T23:51:17+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,9 +11,16 @@
   },
   "video": [
     {
+      "id": "fWXrqLAEHWg",
+      "judul": "FINALLY THIS EVENT IS BACK!! - NEVERNESS TO EVERNESS",
+      "ditonton": "416",
+      "durasi": "3:44",
+      "tanggal": "2026-11-23T14:51:17+00:00"
+    },
+    {
       "id": "TY3Cty37XG8",
       "judul": "SERIOUSLY, WHO ELSE JUST FOUND THIS OUT? - NEVERNESS TO EVERNESS",
-      "ditonton": "4.7K",
+      "ditonton": "5.2K",
       "durasi": "3:33",
       "tanggal": "2026-11-21T09:13:06+00:00"
     },
@@ -34,7 +41,7 @@
     {
       "id": "iB-jJObeBKk",
       "judul": "WE CRUSH IT USING AWAKENING 6 T5 - NEVERNESS TO EVERNESS",
-      "ditonton": "1.6K",
+      "ditonton": "1.7K",
       "durasi": "16:52",
       "tanggal": "2026-11-17T06:52:38+00:00"
     },
@@ -55,7 +62,7 @@
     {
       "id": "Tl3juNUiVD0",
       "judul": "COMPLETE LILY BUILD, TEAM, BUILD - WUTHERING WAVES [TOP-UP AT FEBRY.STORE]",
-      "ditonton": "4.2K",
+      "ditonton": "4.3K",
       "durasi": "12:26",
       "tanggal": "2026-11-12T05:11:06+00:00"
     },
@@ -69,7 +76,7 @@
     {
       "id": "BI_uCXMfNwE",
       "judul": "YOU NEED TO KNOW THIS! - NEVERNESS TO EVERNESS",
-      "ditonton": "6.1K",
+      "ditonton": "6.2K",
       "durasi": "5:59",
       "tanggal": "2026-11-11T01:13:03+00:00"
     },
@@ -83,16 +90,9 @@
     {
       "id": "sz_t6Rq9dU8",
       "judul": "NEW HOBBY LOGISTICS HUB GUIDE - NEVERNESS TO EVERNESS",
-      "ditonton": "5.3K",
+      "ditonton": "5.4K",
       "durasi": "8:52",
       "tanggal": "2026-11-09T06:55:44+00:00"
-    },
-    {
-      "id": "Pih2Na90lq8",
-      "judul": "COMPLETE ELYMS GUIDE | BUILD, TEAM & ROTATION - NEVERNESS TO EVERNESS",
-      "ditonton": "8.4K",
-      "durasi": "14:47",
-      "tanggal": "2026-11-08T20:55:44+00:00"
     }
   ]
 }

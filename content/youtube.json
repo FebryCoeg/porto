@@ -1,26 +1,33 @@
 {
-  "diperbarui": "2026-11-27T08:26:11+00:00",
+  "diperbarui": "2026-11-27T21:15:10+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
     "url": "https://www.youtube.com/@FebryCoeg",
     "avatar": "https://yt3.googleusercontent.com/4WiQ9gzrPvF03b1QvxA01q1vzPoWQqE85THmhWiGcKrWiMRixsszkRQZe3KgQkc5QYw29rCH4A=s160-c-k-c0x00ffffff-no-rj",
     "banner": "https://yt3.googleusercontent.com/91XOGsxZvNcR_D6pYXTuR0aotrnPtb2PPtTKJzalfxxcDx_sEKrvnGjX_AWzHNY9UHug5KgIBw=w2560-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-    "subscriber": "62.1K",
+    "subscriber": "62.2K",
     "video": "3.7K"
   },
   "video": [
     {
+      "id": "fqjASSLXS6c",
+      "judul": "EXE BUILD GUIDE | KIT TEAM ROTATION - NEVERNESS TO EVERNESS",
+      "ditonton": "668",
+      "durasi": "9:47",
+      "tanggal": "2026-11-27T15:15:10+00:00"
+    },
+    {
       "id": "mOJqxiWCl9w",
       "judul": "REVIEW EXE |  KALIAN BAKAL PULL? - NEVERNESS TO EVERNESS",
-      "ditonton": "1.1K",
+      "ditonton": "2.7K",
       "durasi": "7:16",
       "tanggal": "2026-11-27T02:26:11+00:00"
     },
     {
       "id": "fWXrqLAEHWg",
       "judul": "FINALLY THIS EVENT IS BACK!! - NEVERNESS TO EVERNESS",
-      "ditonton": "887",
+      "ditonton": "898",
       "durasi": "3:44",
       "tanggal": "2026-11-23T14:51:17+00:00"
     },
@@ -86,13 +93,6 @@
       "ditonton": "6.2K",
       "durasi": "5:59",
       "tanggal": "2026-11-11T01:13:03+00:00"
-    },
-    {
-      "id": "-maAfoMxGH8",
-      "judul": "FEATURES THAT WILL HELP YOU IN 1.5 - NEVERNESS TO EVERNESS",
-      "ditonton": "4.2K",
-      "durasi": "8:11",
-      "tanggal": "2026-11-10T11:42:04+00:00"
     }
   ]
 }

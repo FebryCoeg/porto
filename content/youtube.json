@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-26T21:28:58+00:00",
+  "diperbarui": "2026-11-27T08:26:11+00:00",
   "channel": {
     "nama": "Febry Coeg",
     "handle": "@FebryCoeg",
@@ -11,16 +11,23 @@
   },
   "video": [
     {
+      "id": "mOJqxiWCl9w",
+      "judul": "REVIEW EXE |  KALIAN BAKAL PULL? - NEVERNESS TO EVERNESS",
+      "ditonton": "1.1K",
+      "durasi": "7:16",
+      "tanggal": "2026-11-27T02:26:11+00:00"
+    },
+    {
       "id": "fWXrqLAEHWg",
       "judul": "FINALLY THIS EVENT IS BACK!! - NEVERNESS TO EVERNESS",
-      "ditonton": "877",
+      "ditonton": "887",
       "durasi": "3:44",
       "tanggal": "2026-11-23T14:51:17+00:00"
     },
     {
       "id": "TY3Cty37XG8",
       "judul": "SERIOUSLY, WHO ELSE JUST FOUND THIS OUT? - NEVERNESS TO EVERNESS",
-      "ditonton": "5.4K",
+      "ditonton": "5.5K",
       "durasi": "3:33",
       "tanggal": "2026-11-21T09:13:06+00:00"
     },
@@ -83,16 +90,9 @@
     {
       "id": "-maAfoMxGH8",
       "judul": "FEATURES THAT WILL HELP YOU IN 1.5 - NEVERNESS TO EVERNESS",
-      "ditonton": "4.1K",
+      "ditonton": "4.2K",
       "durasi": "8:11",
       "tanggal": "2026-11-10T11:42:04+00:00"
-    },
-    {
-      "id": "sz_t6Rq9dU8",
-      "judul": "NEW HOBBY LOGISTICS HUB GUIDE - NEVERNESS TO EVERNESS",
-      "ditonton": "5.4K",
-      "durasi": "8:52",
-      "tanggal": "2026-11-09T06:55:44+00:00"
     }
   ]
 }
